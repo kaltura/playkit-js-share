@@ -1,5 +1,8 @@
 {
   "de": {
+    "controls": {
+      "share": "Teilen"
+    },
     "share": {
       "title": "Teilen",
       "embed_options": "Einbettungsoptionen",

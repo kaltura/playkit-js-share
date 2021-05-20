@@ -1,5 +1,8 @@
 {
   "nl": {
+    "controls": {
+      "share": "Delen"
+    },
     "share": {
       "title": "Delen",
       "embed_options": "Insluitopties",

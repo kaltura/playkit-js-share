@@ -2,6 +2,7 @@
 import {KalturaPlayer, BasePlugin} from 'kaltura-player-js';
 import {Share as ShareComponent} from './components/share/share';
 
+const pluginName: string = 'share';
 /**
  * The Share plugin.
  * @class Share
@@ -16,15 +17,18 @@ class Share extends BasePlugin {
    * @static
    * @memberof Share
    */
-  static defaultConfig: Object = {};
+  static defaultConfig: ShareConfig = {};
 
   getUIComponents() {
     return [
       {
-        label: 'dismissibleFloatingButtonComponent',
-        presets: ['Playback', 'Live', 'Error', 'Ads', 'Idle'],
+        label: 'shareButtonComponent',
+        presets: ['Playback', 'Live'],
         container: 'TopBarRightControls',
-        get: ShareComponent
+        get: ShareComponent,
+        props: {
+          config: this.config
+        }
       }
     ];
   }
@@ -71,4 +75,4 @@ class Share extends BasePlugin {
   destroy(): void {}
 }
 
-export {Share};
+export {Share, pluginName};

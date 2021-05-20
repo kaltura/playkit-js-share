@@ -1,5 +1,8 @@
 {
   "ko": {
+    "controls": {
+      "share": "공유"
+    },
     "share": {
       "title": "공유",
       "embed_options": "옵션 포함",

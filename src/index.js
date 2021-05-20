@@ -1,6 +1,6 @@
 // @flow
 import {registerPlugin} from 'kaltura-player-js';
-import {Share} from './share';
+import {Share, pluginName} from './share';
 
 declare var __VERSION__: string;
 declare var __NAME__: string;
@@ -10,7 +10,5 @@ const NAME = __NAME__;
 
 export {Share as Plugin};
 export {VERSION, NAME};
-
-const pluginName: string = 'share';
 
 registerPlugin(pluginName, Share);

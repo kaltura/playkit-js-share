@@ -1,17 +1,23 @@
-//@flow
+// @flow
+/**
+ * @jsx h
+ * @ignore
+ */
 import {ui} from 'kaltura-player-js';
-// import {ShareOverlay} from '../share-overlay/share-overlay';
+import {ShareOverlay} from '../share-overlay/share-overlay';
+import {pluginName} from '../../share';
 import {defaultConfig} from './default-config';
-const {preact, preacti18n, Components, style, Event, Utils, redux, Reducers} = ui;
+const {preact, preacti18n, Components, style, Utils, redux, Reducers, createPortal} = ui;
 const {h, Component} = preact;
-const {createPortal} = 'preact/compat';
 const {withText} = preacti18n;
-const {Tooltip, ToolTipType, Button, ButtonControl, withLogger, Icon, IconType} = Components;
-const {withPlayer} = Event;
+const {Tooltip, ToolTipType, Button, ButtonControl, withLogger, Icon, IconState, withPlayer} = Components;
 const {bindActions} = Utils;
 const {shell} = Reducers;
 const {actions} = shell;
 const {connect} = redux;
+
+const ICON_PATH: string =
+  'M318.641 446.219l236.155-142.257c-0.086-1.754-0.129-3.52-0.129-5.295 0-58.91 47.756-106.667 106.667-106.667s106.667 47.756 106.667 106.667c0 58.91-47.756 106.667-106.667 106.667-33.894 0-64.095-15.808-83.633-40.454l-236.467 142.445c-0.132-3.064-0.394-6.095-0.779-9.087l7.271-12.835-0.117 53.333-7.183-12.743c0.399-3.046 0.67-6.131 0.806-9.252l236.467 142.383c19.538-24.648 49.741-40.457 83.636-40.457 58.91 0 106.667 47.756 106.667 106.667s-47.756 106.667-106.667 106.667c-58.91 0-106.667-47.756-106.667-106.667 0-1.775 0.043-3.539 0.129-5.293l-236.19-142.216c-19.528 24.867-49.868 40.841-83.939 40.841-58.91 0-106.667-47.756-106.667-106.667s47.756-106.667 106.667-106.667c34.091 0 64.447 15.993 83.974 40.886zM234.667 554.667c23.564 0 42.667-19.103 42.667-42.667s-19.103-42.667-42.667-42.667c-23.564 0-42.667 19.103-42.667 42.667s19.103 42.667 42.667 42.667zM661.333 341.333c23.564 0 42.667-19.103 42.667-42.667s-19.103-42.667-42.667-42.667c-23.564 0-42.667 19.103-42.667 42.667s19.103 42.667 42.667 42.667zM661.333 768c23.564 0 42.667-19.103 42.667-42.667s-19.103-42.667-42.667-42.667c-23.564 0-42.667 19.103-42.667 42.667s19.103 42.667 42.667 42.667z';
 
 /**
  * mapping state to props
@@ -19,9 +25,8 @@ const {connect} = redux;
  * @returns {Object} - mapped state to this component
  */
 const mapStateToProps = state => ({
-  open: state.share.overlayOpen,
-  isPlaying: state.engine.isPlaying,
-  config: state.config.components.share
+  overlayOpen: state.shell.overlayOpen,
+  isPlaying: state.engine.isPlaying
 });
 
 const COMPONENT_NAME = 'Share';
@@ -50,11 +55,10 @@ class Share extends Component {
   toggleOverlay = (): void => {
     this.setState(
       prevState => {
-        return {overlay: !prevState.overlay, previousIsPlaying: this.props.isPlaying || prevState.previousIsPlaying};
+        return {overlayActive: !this.state.overlayActive, previousIsPlaying: this.props.isPlaying || prevState.previousIsPlaying};
       },
       () => {
-        this.props.toggleShareOverlay(this.state.overlay);
-        if (this.state.overlay) {
+        if (this.state.overlayActive) {
           this.props.player.pause();
         } else if (this.state.previousIsPlaying) {
           this.props.player.play();
@@ -87,7 +91,7 @@ class Share extends Component {
     }
     const shareConfig = this._getMergedShareConfig();
     const portalSelector = `#${this.props.player.config.targetId} .overlay-portal`;
-    return this.state.overlay ? (
+    return this.state.overlayActive ? (
       createPortal(
         <ShareOverlay
           shareUrl={shareUrl}
@@ -103,7 +107,7 @@ class Share extends Component {
       <ButtonControl name={COMPONENT_NAME}>
         <Tooltip label={this.props.shareTxt} type={this.props.toolTipType ? this.props.toolTipType : ToolTipType.BottomLeft}>
           <Button aria-haspopup="true" className={style.controlButton} onClick={this.toggleOverlay} aria-label={this.props.shareTxt}>
-            <Icon type={IconType.Share} />
+            <Icon id={pluginName} path={ICON_PATH} state={IconState.INACTIVE} />
           </Button>
         </Tooltip>
       </ButtonControl>

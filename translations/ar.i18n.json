@@ -1,5 +1,8 @@
 {
   "ar": {
+    "controls": {
+      "share": "مشاركة"
+    },
     "share": {
       "title": "مشاركة",
       "embed_options": "خيارات التضمين",
