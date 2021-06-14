@@ -6,7 +6,6 @@
 import {ui} from 'kaltura-player-js';
 import {ShareOverlay} from '../share-overlay/share-overlay';
 import {pluginName} from '../../share';
-import {defaultConfig} from './default-config';
 const {preact, preacti18n, Components, style, Utils, redux, Reducers, createPortal} = ui;
 const {h, Component} = preact;
 const {withText} = preacti18n;
@@ -30,7 +29,6 @@ const mapStateToProps = state => ({
 });
 
 const COMPONENT_NAME = 'Share';
-
 /**
  * Share component
  *
@@ -69,27 +67,16 @@ class Share extends Component {
   };
 
   /**
-   * returns the merged share config
-   * @returns {Object[]} the merged share config
-   * @private
-   */
-  _getMergedShareConfig(): Array<Object> {
-    let appConfig = this.props.config.socialNetworks || [];
-    return appConfig.concat(defaultConfig.filter(item => !appConfig.find(appItem => appItem.name === item.name)));
-  }
-
-  /**
    * render element
    *
    * @returns {React$Element} component element
    * @memberof Share
    */
   render(): React$Element<any> | void {
-    const {embedUrl, enable, shareUrl, enableTimeOffset} = this.props.config;
-    if (!(enable && shareUrl && embedUrl)) {
+    const {embedUrl, shareUrl, enableTimeOffset, socialNetworks} = this.props.config;
+    if (!(shareUrl && embedUrl)) {
       return undefined;
     }
-    const shareConfig = this._getMergedShareConfig();
     const portalSelector = `#${this.props.player.config.targetId} .overlay-portal`;
     return this.state.overlayActive ? (
       createPortal(
@@ -97,7 +84,7 @@ class Share extends Component {
           shareUrl={shareUrl}
           embedUrl={embedUrl}
           enableTimeOffset={enableTimeOffset}
-          socialNetworks={shareConfig}
+          socialNetworks={socialNetworks}
           player={this.props.player}
           onClose={this.toggleOverlay}
         />,
