@@ -4,6 +4,7 @@ declare type ShareConfig = {
   embedUrl: string,
   enableTimeOffset: boolean,
   useParentUrl: boolean,
+  useNative: boolean,
   UiConfForSharing: string,
   socialNetworks: ShareSocialNetworks
 };

@@ -20,7 +20,9 @@ class Share extends BasePlugin {
    * @static
    * @memberof Share
    */
-  static defaultConfig: ShareConfig = {};
+  static defaultConfig: ShareConfig = {
+    useNative: false
+  };
 
   getUIComponents() {
     return [
@@ -81,21 +83,12 @@ class Share extends BasePlugin {
       }
     }
 
-    if (this.config.useParentUrl) {
-      this.config.shareUrl = this.config.embedUrl = window.location.href;
-    } else {
-      const entryId = this.player.getMediaInfo().entryId;
-      const partnerId = this.player.config.provider.partnerId;
-      const uiConfId = this.config.UiConfForSharing || this.player.config.provider.uiConfId;
-      const embedBaseUrl = this.config.embedBaseUrl;
-      if (entryId && partnerId && uiConfId && embedBaseUrl) {
-        if (!this.config.shareUrl) {
-          this.config.shareUrl = `${embedBaseUrl}/index.php/extwidget/preview/partner_id/${partnerId}/uiconf_id/${uiConfId}/entry_id/${entryId}/embed/dynamic`;
-        }
-        if (!this.config.embedUrl) {
-          this.config.embedUrl = `${embedBaseUrl}/p/${partnerId}/embedPlaykitJs/uiconf_id/${uiConfId}?iframeembed=true&entry_id=${entryId}`;
-        }
-      }
+    if (!this.config.shareUrl) {
+      this.config.shareUrl = window.location.href;
+    }
+
+    if (!this.config.embedUrl) {
+      this.config.embedUrl = window.location.href;
     }
   }
   /**

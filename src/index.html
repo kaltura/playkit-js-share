@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <script src="https://cdnapisec.kaltura.com/p/2215841/embedPlaykitJs/uiconf_id/42237501/"></script>
-  <script src="./playkit-broadpeak-smartlib.js"></script>
+  <script src="./playkit-share.js"></script>
 </head>
 
 <body>
@@ -19,15 +19,21 @@
       "provider": {
         "partnerId": "2215841",
         "uiConfId": "42237501"
+      },
+      plugins:{
+        share:{
+          //shareUrl: string - Default will take the parent url, empty and useParentUrl=false will take to kaltura
+          //embedUrl: string - Default will take the parent url, empty and useParentUrl=false will take to kaltura
+          //enableTimeOffset: boolean - Default false
+          //UiConfForSharing: string - use different UiConf then used on config,
+          //socialNetworks: ShareSocialNetworks - social network config
+        }
       }
     }
 
 
     var kalturaPlayer = KalturaPlayer.setup(config);
     kalturaPlayer.loadMedia({ entryId: "1_ebs5e9cy" });
-    function changeMedia(){
-      kalturaPlayer.loadMedia({entryId: '1_j09ivavh'});
-    }
   </script>
 </body>
 

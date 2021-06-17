@@ -3,7 +3,7 @@
  * @jsx h
  * @ignore
  */
-import {ui} from 'kaltura-player-js';
+import {ui, core} from 'kaltura-player-js';
 import shareStyle from './style.scss';
 
 const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers} = ui;
@@ -14,6 +14,7 @@ const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS} = U
 const {shell} = Reducers;
 const {actions} = shell;
 const {connect} = redux;
+const coreUtils = core.Utils;
 
 const shareOverlayView: Object = {
   Main: 'main',
@@ -282,11 +283,8 @@ class ShareOverlay extends Component {
    * @private
    */
   _getEmailTemplate(): string {
-    let name = 'this video';
     const {player} = this.props;
-    if (player.config.sources && player.config.sources.metadata && player.config.sources.metadata.name) {
-      name = player.config.sources.metadata.name;
-    }
+    let name = coreUtils.Object.getPropertyPath(player.config, 'sources.metadata.name') || 'The video';
     const emailSubject = encodeURIComponent(`Check out ${name}`);
     const emailBody = encodeURIComponent(`Check out ${name}: ${this.getShareUrl()}`);
     const mailTo = `mailto:?subject=${emailSubject}&body=${emailBody}`;
@@ -446,6 +444,7 @@ class ShareOverlay extends Component {
   render(props: any): React$Element<any> {
     return (
       <Overlay
+        open
         addAccessibleChild={this.props.addAccessibleChild}
         handleKeyDown={this.props.handleKeyDown}
         onClose={props.onClose}
