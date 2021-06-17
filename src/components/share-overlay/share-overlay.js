@@ -284,7 +284,7 @@ class ShareOverlay extends Component {
    */
   _getEmailTemplate(): string {
     const {player} = this.props;
-    let name = coreUtils.Object.getPropertyPath(player.config, 'sources.metadata.name') || 'The video';
+    let name = coreUtils.Object.getPropertyPath(player.config, 'sources.metadata.name') || 'the video';
     const emailSubject = encodeURIComponent(`Check out ${name}`);
     const emailBody = encodeURIComponent(`Check out ${name}: ${this.getShareUrl()}`);
     const mailTo = `mailto:?subject=${emailSubject}&body=${emailBody}`;

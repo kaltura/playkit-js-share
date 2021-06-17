@@ -53,10 +53,11 @@ class Share extends Component {
    */
   toggleOverlay = (): void => {
     if (this.props.config.useNative && navigator.share) {
-      let name = coreUtils.Object.getPropertyPath(this.props.player.config, 'sources.metadata.name') || 'The video';
+      let name = coreUtils.Object.getPropertyPath(this.props.player.config, 'sources.metadata.name') || 'the video';
       navigator
         .share({
-          title: name,
+          title: `Check out ${name}`,
+          text: `Check out ${name}`,
           url: this.props.config.shareUrl
         })
         .then(() => this.props.logger.debug('Successful sharing'))
