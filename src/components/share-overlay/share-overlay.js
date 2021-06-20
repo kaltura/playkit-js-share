@@ -3,7 +3,7 @@
  * @jsx h
  * @ignore
  */
-import {ui, core} from 'kaltura-player-js';
+import {ui} from 'kaltura-player-js';
 import shareStyle from './style.scss';
 
 const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers} = ui;
@@ -14,7 +14,6 @@ const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS} = U
 const {shell} = Reducers;
 const {actions} = shell;
 const {connect} = redux;
-const coreUtils = core.Utils;
 
 const shareOverlayView: Object = {
   Main: 'main',
@@ -41,23 +40,19 @@ const ShareButton = (props: Object): React$Element<any> => {
    */
   const onClick = (buttonType: string) => {
     const SHARE_URL = '{shareUrl}';
-    const NAME = '{name}';
+    const DESCRIPTION = '{description}';
     const {templateUrl, shareUrl} = props.config;
     let href = templateUrl;
 
-    if (templateUrl.indexOf(NAME)) {
-      try {
-        href = href.replace(NAME, encodeURIComponent(props.mediaName));
-      } catch (e) {
-        href = href.replace(NAME, props.mediaName);
-      }
+    if (templateUrl.indexOf(DESCRIPTION)) {
+      href = href.replaceAll(DESCRIPTION, props.videoDesc);
     }
 
     if (templateUrl.indexOf(SHARE_URL)) {
       try {
-        href = href.replace(SHARE_URL, encodeURIComponent(shareUrl));
+        href = href.replaceAll(SHARE_URL, encodeURIComponent(shareUrl));
       } catch (e) {
-        href = href.replace(SHARE_URL, shareUrl);
+        href = href.replaceAll(SHARE_URL, shareUrl);
       }
     }
 
@@ -278,20 +273,6 @@ class ShareOverlay extends Component {
   }
 
   /**
-   * Create the email mailto template string
-   * @returns {string} the mailto template
-   * @private
-   */
-  _getEmailTemplate(): string {
-    const {player} = this.props;
-    let name = coreUtils.Object.getPropertyPath(player.config, 'sources.metadata.name') || 'the video';
-    const emailSubject = encodeURIComponent(`Check out ${name}`);
-    const emailBody = encodeURIComponent(`Check out ${name}: ${this.getShareUrl()}`);
-    const mailTo = `mailto:?subject=${emailSubject}&body=${emailBody}`;
-    return mailTo;
-  }
-
-  /**
    * toggle start from option checkbox in the internal component state
    *
    * @returns {void}
@@ -338,11 +319,6 @@ class ShareOverlay extends Component {
    * @private
    */
   _createSocialNetworks(socialNetworksConfig: Array<Object>): React$Element<any>[] {
-    let name = 'the video';
-    const {player} = this.props;
-    if (player.config.sources && player.config.sources.metadata && player.config.sources.metadata.name) {
-      name = player.config.sources.metadata.name;
-    }
     return Object.keys(socialNetworksConfig).map(socialName => {
       const social = socialNetworksConfig[socialName];
       social.shareUrl = this.props.shareUrl;
@@ -350,7 +326,7 @@ class ShareOverlay extends Component {
         <ShareButton
           key={socialName}
           socialName={socialName}
-          mediaName={name}
+          videoDesc={this.props.videoDesc}
           config={social}
           addAccessibleChild={this.props.addAccessibleChild}
           updateShareOverlay={this._updateOverlay}

@@ -45,6 +45,10 @@ class Share extends Component {
   // ie11 fix (FEC-7312) - don't remove
   _portal: any;
 
+  _getVideoDesc(): string {
+    let name = coreUtils.Object.getPropertyPath(this.props.player.config, 'sources.metadata.name') || 'the video';
+    return encodeURIComponent(`Check out ${name}`);
+  }
   /**
    * toggle overlay internal component state
    *
@@ -53,11 +57,11 @@ class Share extends Component {
    */
   toggleOverlay = (): void => {
     if (this.props.config.useNative && navigator.share) {
-      let name = coreUtils.Object.getPropertyPath(this.props.player.config, 'sources.metadata.name') || 'the video';
+      const videoDesc = this._getVideoDesc();
       navigator
         .share({
-          title: `Check out ${name}`,
-          text: `Check out ${name}`,
+          title: videoDesc,
+          text: videoDesc,
           url: this.props.config.shareUrl
         })
         .then(() => this.props.logger.debug('Successful sharing'))
@@ -94,11 +98,13 @@ class Share extends Component {
       return undefined;
     }
     const portalSelector = `#${this.props.player.config.targetId} .overlay-portal`;
+    const videoDesc = this._getVideoDesc();
     return this.state.overlayActive ? (
       createPortal(
         <ShareOverlay
           shareUrl={shareUrl}
           embedUrl={embedUrl}
+          videoDesc={videoDesc}
           enableTimeOffset={enableTimeOffset}
           socialNetworks={socialNetworks}
           player={this.props.player}
