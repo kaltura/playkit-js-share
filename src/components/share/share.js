@@ -47,7 +47,7 @@ class Share extends Component {
 
   _getVideoDesc(): string {
     let name = coreUtils.Object.getPropertyPath(this.props.player.config, 'sources.metadata.name') || 'the video';
-    return encodeURIComponent(`Check out ${name}`);
+    return `Check out ${name}`;
   }
   /**
    * toggle overlay internal component state
