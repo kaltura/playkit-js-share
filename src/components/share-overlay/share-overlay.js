@@ -9,7 +9,7 @@ import shareStyle from './style.scss';
 const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers} = ui;
 const {h, Component} = preact;
 const {Text, Localizer} = preacti18n;
-const {Overlay, Icon, CopyButton, Button, withLogger, IconState} = Components;
+const {Overlay, Icon, CopyButton, Button, withLogger, IconState, Tooltip, ToolTipType, ButtonControl} = Components;
 const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS} = Utils;
 const {shell} = Reducers;
 const {actions} = shell;
@@ -23,6 +23,7 @@ const shareOverlayView: Object = {
 const LINK_ICON: string =
   'M355.028 445.537c12.497 12.497 12.497 32.758 0 45.255s-32.758 12.497-45.255 0l-24.141-24.141c-49.92-49.92-49.832-130.999 0.094-180.925 49.984-49.984 130.995-50.025 180.955-0.064l113.266 113.266c49.964 49.964 49.935 130.955-0.064 180.955-12.497 12.497-32.758 12.497-45.255 0s-12.497-32.758 0-45.255c25.013-25.013 25.027-65.482 0.064-90.445l-113.266-113.266c-24.957-24.957-65.445-24.936-90.445 0.064-24.955 24.955-24.998 65.511-0.094 90.416l24.141 24.141zM668.972 578.463c-12.497-12.497-12.497-32.758 0-45.255s32.758-12.497 45.255 0l24.141 24.141c49.92 49.92 49.832 130.999-0.094 180.925-49.984 49.984-130.995 50.025-180.955 0.064l-113.266-113.266c-49.964-49.964-49.935-130.955 0.064-180.955 12.497-12.497 32.758-12.497 45.255 0s12.497 32.758 0 45.255c-25.013 25.013-25.027 65.482-0.064 90.445l113.266 113.266c24.957 24.957 65.445 24.936 90.445-0.064 24.955-24.955 24.998-65.511 0.094-90.416l-24.141-24.141z';
 
+const EMBED = 'embed';
 /**
  * ShareButton component
  * @param {Object} props - the class props
@@ -30,6 +31,7 @@ const LINK_ICON: string =
  * @constructor
  */
 const ShareButton = (props: Object): React$Element<any> => {
+  const COMPONENT_NAME = 'ShareButton';
   const _updateOverlay = props.updateShareOverlay;
   /**
    * opens new window for share
@@ -39,29 +41,22 @@ const ShareButton = (props: Object): React$Element<any> => {
    * @memberof ShareOverlay
    */
   const onClick = (buttonType: string) => {
-    const SHARE_URL = '{shareUrl}';
-    const DESCRIPTION = '{description}';
     const {templateUrl, shareUrl} = props.config;
     let href = templateUrl;
 
-    if (templateUrl.indexOf(DESCRIPTION)) {
-      href = href.replaceAll(DESCRIPTION, props.videoDesc);
-    }
-
-    if (templateUrl.indexOf(SHARE_URL)) {
-      try {
-        href = href.replaceAll(SHARE_URL, encodeURIComponent(shareUrl));
-      } catch (e) {
-        href = href.replaceAll(SHARE_URL, shareUrl);
-      }
+    href = href.replaceAll('{description}', props.videoDesc);
+    try {
+      href = href.replaceAll('{shareUrl}', encodeURIComponent(shareUrl));
+    } catch (e) {
+      href = href.replaceAll('{shareUrl}', shareUrl);
     }
 
     switch (buttonType) {
       case 'email':
         location.href = href;
         break;
-      case 'embed':
-        _updateOverlay(shareOverlayView.EmbedOptions);
+      case EMBED:
+        _updateOverlay(shareOverlayView.EmbedOptions, href);
         break;
       default:
         window.open(href, '_blank', 'width=580,height=580');
@@ -71,18 +66,23 @@ const ShareButton = (props: Object): React$Element<any> => {
 
   return (
     <Localizer>
-      <Button
-        ref={el => {
-          props.addAccessibleChild(el);
-        }}
-        title={<Text id={props.config.title} />}
-        role="link"
-        aria-label={<Text id={props.config.ariaLabel} />}
-        aria-haspopup={props.socialName === 'embed'}
-        className={[style.btnRounded, 'playkit-' + props.socialName, props.socialName].join(' ')}
-        onClick={() => onClick(props.socialName)}>
-        <Icon id={props.socialName} color="#fff" path={props.config.svg} state={IconState.INACTIVE} />
-      </Button>
+      <ButtonControl name={COMPONENT_NAME}>
+        <Tooltip label={<Text id={props.config.title} />} type={props.toolTipType ? props.toolTipType : ToolTipType.BottomLeft}>
+          <Localizer>
+            <Button
+              ref={el => {
+                props.addAccessibleChild(el);
+              }}
+              role="link"
+              aria-label={<Text id={props.config.ariaLabel} />}
+              aria-haspopup={props.socialName === EMBED}
+              className={[style.btnRounded, 'playkit-' + props.socialName, props.socialName].join(' ')}
+              onClick={() => onClick(props.socialName)}>
+              <Icon id={props.socialName} color="#fff" path={props.config.svg} state={IconState.INACTIVE} />
+            </Button>
+          </Localizer>
+        </Tooltip>
+      </ButtonControl>
     </Localizer>
   );
 };
@@ -243,6 +243,11 @@ class ShareOverlay extends Component {
     this.props.setIsModal(true);
   }
 
+  _addUrlKalturaStartTimeParam(url: string): string {
+    const param = `kalturaStartTime=${this.state.startFromValue}`;
+    return url.indexOf('?') === -1 ? `${url}?${param}` : `${url}&${param}`;
+  }
+
   /**
    * get share url method
    *
@@ -250,9 +255,9 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   getShareUrl(): string {
-    let url = this.props.shareUrl;
+    let url = this.props.config.shareUrl;
     if (this.state.startFrom) {
-      url += `?kalturaStartTime=${this.state.startFromValue}`;
+      url = this._addUrlKalturaStartTimeParam(url);
     }
     return url;
   }
@@ -265,9 +270,9 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   getEmbedCode(): string {
-    let url = this.props.embedUrl;
+    let url = this.state.embedUrl;
     if (this.state.startFrom) {
-      url += `?kalturaStartTime=${this.state.startFromValue}`;
+      url = this._addUrlKalturaStartTimeParam(url);
     }
     return `<iframe src="${url}" style="width: 560px;height: 395px" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0" allow="accelerometer *; autoplay *; encrypted-media *; gyroscope *; picture-in-picture *"/>`;
   }
@@ -304,11 +309,12 @@ class ShareOverlay extends Component {
    * changing the overlay state
    *
    * @param {string} stateName state name
+   * @param {string} embedUrl embed urk
    * @returns {void}
    * @memberof ShareOverlay
    */
-  _updateOverlay = (stateName: string) => {
-    this.setState({view: stateName});
+  _updateOverlay = (stateName: string, embedUrl: string) => {
+    this.setState({view: stateName, embedUrl});
   };
 
   /**
@@ -320,14 +326,25 @@ class ShareOverlay extends Component {
    */
   _createSocialNetworks(socialNetworksConfig: Array<Object>): React$Element<any>[] {
     return Object.keys(socialNetworksConfig).map(socialName => {
-      const social = socialNetworksConfig[socialName];
-      social.shareUrl = this.props.shareUrl;
+      const {shareUrl, embedBaseUrl, partnerId, uiConfId, entryId} = this.props.config;
+      if (socialName === EMBED) {
+        if (embedBaseUrl && partnerId && uiConfId && entryId) {
+          socialNetworksConfig[socialName].templateUrl = socialNetworksConfig[socialName].templateUrl
+            .replaceAll('{embedBaseUrl}', embedBaseUrl)
+            .replaceAll('{partnerId}', partnerId)
+            .replaceAll('{uiConfId}', uiConfId)
+            .replaceAll('{entryId}', entryId);
+        } else {
+          return undefined;
+        }
+      }
+      const shareButtonConfig = {...socialNetworksConfig[socialName], shareUrl};
       return (
         <ShareButton
           key={socialName}
           socialName={socialName}
           videoDesc={this.props.videoDesc}
-          config={social}
+          config={shareButtonConfig}
           addAccessibleChild={this.props.addAccessibleChild}
           updateShareOverlay={this._updateOverlay}
         />
@@ -348,10 +365,10 @@ class ShareOverlay extends Component {
           <Text id="share.title" />
         </div>
         <div className={shareStyle.shareMainContainer}>
-          <div className={shareStyle.shareIcons}>{this._createSocialNetworks(this.props.socialNetworks)}</div>
+          <div className={shareStyle.shareIcons}>{this._createSocialNetworks(this.props.config.socialNetworks)}</div>
           <div className={shareStyle.linkOptionsContainer}>
             <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={this.getShareUrl()} copy={true} isIos={this.isIos} />
-            {this.props.enableTimeOffset ? (
+            {this.props.config.enableTimeOffset ? (
               <VideoStartOptions
                 addAccessibleChild={this.props.addAccessibleChild}
                 startFrom={this.state.startFrom}
@@ -378,7 +395,7 @@ class ShareOverlay extends Component {
         <div className={style.title}>{props.title}</div>
         <div className={shareStyle.linkOptionsContainer}>
           <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={props.shareUrl} copy={true} isIos={this.isIos} />
-          {this.props.enableTimeOffset ? (
+          {this.props.config.enableTimeOffset ? (
             <VideoStartOptions
               addAccessibleChild={this.props.addAccessibleChild}
               startFrom={this.state.startFrom}

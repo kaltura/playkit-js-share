@@ -93,23 +93,15 @@ class Share extends Component {
    * @memberof Share
    */
   render(): React$Element<any> | void {
-    const {embedUrl, shareUrl, enableTimeOffset, socialNetworks} = this.props.config;
-    if (!(shareUrl && embedUrl)) {
+    const {shareUrl, socialNetworks} = this.props.config;
+    if (!(shareUrl && socialNetworks)) {
       return undefined;
     }
     const portalSelector = `#${this.props.player.config.targetId} .overlay-portal`;
     const videoDesc = this._getVideoDesc();
     return this.state.overlayActive ? (
       createPortal(
-        <ShareOverlay
-          shareUrl={shareUrl}
-          embedUrl={embedUrl}
-          videoDesc={videoDesc}
-          enableTimeOffset={enableTimeOffset}
-          socialNetworks={socialNetworks}
-          player={this.props.player}
-          onClose={this.toggleOverlay}
-        />,
+        <ShareOverlay config={this.props.config} videoDesc={videoDesc} player={this.props.player} onClose={this.toggleOverlay} />,
         document.querySelector(portalSelector)
       )
     ) : (

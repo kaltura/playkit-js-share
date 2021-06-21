@@ -1,11 +1,9 @@
 // @flow
-import {KalturaPlayer, BasePlugin, core} from 'kaltura-player-js';
+import {KalturaPlayer, BasePlugin} from 'kaltura-player-js';
 import {Share as ShareComponent} from './components/share/share';
 import {defaultSocialNetworkConfig} from './default-social-network-config';
-const {Utils} = core;
 
 const pluginName: string = 'share';
-const KALTURA_PLAYER_START_TIME_QS: string = 'kalturaStartTime';
 /**
  * The Share plugin.
  * @class Share
@@ -21,7 +19,8 @@ class Share extends BasePlugin {
    * @memberof Share
    */
   static defaultConfig: ShareConfig = {
-    useNative: false
+    useNative: false,
+    enableTimeOffset: true
   };
 
   getUIComponents() {
@@ -70,25 +69,8 @@ class Share extends BasePlugin {
    * @instance
    */
   loadMedia() {
-    if (!Utils.Object.hasPropertyPath(this.player.config, 'sources.startTime')) {
-      let startTime;
-      if (window.URLSearchParams) {
-        const urlParams = new URLSearchParams(window.location.search);
-        startTime = parseFloat(urlParams.get(KALTURA_PLAYER_START_TIME_QS));
-      } else {
-        startTime = parseFloat(this._getUrlParameter(KALTURA_PLAYER_START_TIME_QS));
-      }
-      if (!isNaN(startTime)) {
-        this.player.configure({sources: {startTime}});
-      }
-    }
-
     if (!this.config.shareUrl) {
       this.config.shareUrl = window.location.href;
-    }
-
-    if (!this.config.embedUrl) {
-      this.config.embedUrl = window.location.href;
     }
   }
   /**
