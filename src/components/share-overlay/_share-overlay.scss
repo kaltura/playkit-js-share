@@ -2,27 +2,32 @@
   .share-icons {
     margin: 60px 0;
 
-    .btn-rounded {
-      margin: 0 8px;
-      transition: transform 100ms;
-      will-change: transform;
-      border: none;
-
+    .control-button-container {
       &:first-child {
         margin-left: 0;
       }
+
       &:last-child {
         margin-right: 0;
       }
 
-      &.facebook {
-        background-color: #3b5998;
-      }
-      &.twitter {
-        background-color: #1da1f2;
-      }
-      &.linkedin {
-        background-color: #00a0dc;
+      .btn-rounded {
+        margin: 0 8px;
+        transition: transform 100ms;
+        will-change: transform;
+        border: none;
+
+        &.facebook {
+          background-color: #3b5998;
+        }
+
+        &.twitter {
+          background-color: #1da1f2;
+        }
+
+        &.linkedin {
+          background-color: #00a0dc;
+        }
       }
     }
   }
