@@ -2,7 +2,6 @@
 declare type ShareSocialNetwork = {
   templateUrl: string,
   title: string,
-  ariaLabel: string,
   svg: string
 };
 

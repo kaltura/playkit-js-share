@@ -53,14 +53,11 @@ class Share extends BasePlugin {
     if (!this.config.socialNetworks || this.config.socialNetworks.length === 0) {
       this.config.socialNetworks = defaultSocialNetworkConfig;
     }
+    if (!this.config.shareUrl) {
+      this.config.shareUrl = window.location.href;
+    }
   }
 
-  _getUrlParameter(name: string) {
-    name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
-    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    const results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  }
   /**
    * load media the plugin.
    * @override
@@ -68,11 +65,7 @@ class Share extends BasePlugin {
    * @returns {void}
    * @instance
    */
-  loadMedia() {
-    if (!this.config.shareUrl) {
-      this.config.shareUrl = window.location.href;
-    }
-  }
+  loadMedia() {}
   /**
    * Resets the plugin.
    * @override

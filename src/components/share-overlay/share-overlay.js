@@ -38,6 +38,7 @@ const ShareButton = (props: Object): React$Element<any> => {
    * @memberof ShareOverlay
    */
   const onClick = (buttonType: string) => {
+    const EMAIL = 'email';
     const {templateUrl, shareUrl} = props.config;
     let href = templateUrl;
 
@@ -49,7 +50,7 @@ const ShareButton = (props: Object): React$Element<any> => {
     }
 
     switch (buttonType) {
-      case 'email':
+      case EMAIL:
         location.href = href;
         break;
       case EMBED:
@@ -71,9 +72,9 @@ const ShareButton = (props: Object): React$Element<any> => {
                 props.addAccessibleChild(el);
               }}
               role="link"
-              aria-label={<Text id={props.config.ariaLabel} />}
+              aria-label={<Text id={props.config.title} />}
               aria-haspopup={props.socialName === EMBED}
-              className={[style.btnBorderless, style.onlyIcon].join(' ')}
+              className={[style.btnBorderless, style.onlyIcon, shareStyle.btnSocialNetwork].join(' ')}
               onClick={() => onClick(props.socialName)}>
               <Icon id={props.socialName} color="#fff" path={props.config.svg} width="24" height="24" viewBox="0 0 24 24" />
             </Button>
