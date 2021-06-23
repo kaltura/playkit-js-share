@@ -12,4 +12,4 @@ export {VERSION, NAME};
 export {Plugin};
 export {Share};
 
-registerPlugin(pluginName, Share);
+registerPlugin(pluginName, Plugin);

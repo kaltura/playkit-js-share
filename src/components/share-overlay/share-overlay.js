@@ -9,7 +9,7 @@ import shareStyle from './style.scss';
 const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers} = ui;
 const {h, Component} = preact;
 const {Text, Localizer} = preacti18n;
-const {Overlay, Icon, CopyButton, Button, withLogger, IconState, Tooltip, ButtonControl} = Components;
+const {Overlay, Icon, CopyButton, Button, withLogger, Tooltip, ButtonControl} = Components;
 const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS} = Utils;
 const {shell} = Reducers;
 const {actions} = shell;
@@ -75,15 +75,7 @@ const ShareButton = (props: Object): React$Element<any> => {
               aria-haspopup={props.socialName === EMBED}
               className={[style.btnBorderless, style.onlyIcon].join(' ')}
               onClick={() => onClick(props.socialName)}>
-              <Icon
-                id={props.socialName}
-                color="#fff"
-                path={props.config.svg}
-                state={IconState.INACTIVE}
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              />
+              <Icon id={props.socialName} color="#fff" path={props.config.svg} width="24" height="24" viewBox="0 0 24 24" />
             </Button>
           </Localizer>
         </Tooltip>
