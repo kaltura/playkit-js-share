@@ -11,23 +11,11 @@
         margin-right: 0;
       }
 
-      .btn-rounded {
+      .btn-borderless {
         margin: 0 8px;
         transition: transform 100ms;
         will-change: transform;
         border: none;
-
-        &.facebook {
-          background-color: #3b5998;
-        }
-
-        &.twitter {
-          background-color: #1da1f2;
-        }
-
-        &.linkedin {
-          background-color: #00a0dc;
-        }
       }
     }
   }
@@ -48,7 +36,8 @@
       .btn-copy-url {
         .icon {
           width: 32px;
-          margin-top: 5px;
+          margin-top: 0px;
+          border: 0px;
         }
       }
     }

@@ -9,7 +9,7 @@ import {pluginName} from '../../share';
 const {preact, preacti18n, Components, style, Utils, redux, Reducers, createPortal} = ui;
 const {h, Component} = preact;
 const {withText} = preacti18n;
-const {Tooltip, ToolTipType, Button, ButtonControl, withLogger, Icon, IconState, withPlayer} = Components;
+const {Tooltip, Button, ButtonControl, withLogger, Icon, IconState, withPlayer} = Components;
 const {bindActions} = Utils;
 const {shell} = Reducers;
 const {actions} = shell;
@@ -106,7 +106,7 @@ class Share extends Component {
       )
     ) : (
       <ButtonControl name={COMPONENT_NAME}>
-        <Tooltip label={this.props.shareTxt} type={this.props.toolTipType ? this.props.toolTipType : ToolTipType.BottomLeft}>
+        <Tooltip label={this.props.shareTxt}>
           <Button aria-haspopup="true" className={style.controlButton} onClick={this.toggleOverlay} aria-label={this.props.shareTxt}>
             <Icon id={pluginName} path={ICON_PATH} state={IconState.INACTIVE} />
           </Button>

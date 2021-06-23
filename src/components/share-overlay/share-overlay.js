@@ -9,7 +9,7 @@ import shareStyle from './style.scss';
 const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers} = ui;
 const {h, Component} = preact;
 const {Text, Localizer} = preacti18n;
-const {Overlay, Icon, CopyButton, Button, withLogger, IconState, Tooltip, ToolTipType, ButtonControl} = Components;
+const {Overlay, Icon, CopyButton, Button, withLogger, IconState, Tooltip, ButtonControl} = Components;
 const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS} = Utils;
 const {shell} = Reducers;
 const {actions} = shell;
@@ -19,9 +19,6 @@ const shareOverlayView: Object = {
   Main: 'main',
   EmbedOptions: 'embed-options'
 };
-
-const LINK_ICON: string =
-  'M355.028 445.537c12.497 12.497 12.497 32.758 0 45.255s-32.758 12.497-45.255 0l-24.141-24.141c-49.92-49.92-49.832-130.999 0.094-180.925 49.984-49.984 130.995-50.025 180.955-0.064l113.266 113.266c49.964 49.964 49.935 130.955-0.064 180.955-12.497 12.497-32.758 12.497-45.255 0s-12.497-32.758 0-45.255c25.013-25.013 25.027-65.482 0.064-90.445l-113.266-113.266c-24.957-24.957-65.445-24.936-90.445 0.064-24.955 24.955-24.998 65.511-0.094 90.416l24.141 24.141zM668.972 578.463c-12.497-12.497-12.497-32.758 0-45.255s32.758-12.497 45.255 0l24.141 24.141c49.92 49.92 49.832 130.999-0.094 180.925-49.984 49.984-130.995 50.025-180.955 0.064l-113.266-113.266c-49.964-49.964-49.935-130.955 0.064-180.955 12.497-12.497 32.758-12.497 45.255 0s12.497 32.758 0 45.255c-25.013 25.013-25.027 65.482-0.064 90.445l113.266 113.266c24.957 24.957 65.445 24.936 90.445-0.064 24.955-24.955 24.998-65.511 0.094-90.416l-24.141-24.141z';
 
 const EMBED = 'embed';
 /**
@@ -67,7 +64,7 @@ const ShareButton = (props: Object): React$Element<any> => {
   return (
     <Localizer>
       <ButtonControl name={COMPONENT_NAME}>
-        <Tooltip label={<Text id={props.config.title} />} type={props.toolTipType ? props.toolTipType : ToolTipType.BottomLeft}>
+        <Tooltip label={<Text id={props.config.title} />}>
           <Localizer>
             <Button
               ref={el => {
@@ -76,9 +73,17 @@ const ShareButton = (props: Object): React$Element<any> => {
               role="link"
               aria-label={<Text id={props.config.ariaLabel} />}
               aria-haspopup={props.socialName === EMBED}
-              className={[style.btnRounded, 'playkit-' + props.socialName, props.socialName].join(' ')}
+              className={[style.btnBorderless, style.onlyIcon].join(' ')}
               onClick={() => onClick(props.socialName)}>
-              <Icon id={props.socialName} color="#fff" path={props.config.svg} state={IconState.INACTIVE} />
+              <Icon
+                id={props.socialName}
+                color="#fff"
+                path={props.config.svg}
+                state={IconState.INACTIVE}
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              />
             </Button>
           </Localizer>
         </Tooltip>
@@ -117,9 +122,8 @@ const ShareUrl = (props: Object): React$Element<any> => {
 
   return (
     <div className={props.copy ? style.copyUrlRow : ''}>
-      <div className={[style.formGroup, style.hasIcon, style.inputCopyUrl].join(' ')} style="width: 350px;">
+      <div className={[style.formGroup, style.inputCopyUrl].join(' ')} style="width: 350px;">
         <input tabIndex="-1" type="text" ref={c => (c ? (_ref = c) : undefined)} className={style.formControl} value={props.shareUrl} readOnly />
-        <Icon id="link" path={LINK_ICON} state={IconState.INACTIVE} />
       </div>
       {props.copy && <CopyButton addAccessibleChild={props.addAccessibleChild} copy={copyUrl} />}
     </div>
