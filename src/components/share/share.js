@@ -25,7 +25,6 @@ const ICON_PATH: string =
  * @returns {Object} - mapped state to this component
  */
 const mapStateToProps = state => ({
-  overlayOpen: state.shell.overlayOpen,
   isPlaying: state.engine.isPlaying
 });
 
