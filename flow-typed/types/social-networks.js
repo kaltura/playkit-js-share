@@ -2,7 +2,7 @@
 declare type ShareSocialNetwork = {
   templateUrl: string,
   title: string,
-  svg: string
+  svg: any
 };
 
 declare type ShareSocialNetworks = {
