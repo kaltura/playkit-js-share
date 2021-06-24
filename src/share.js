@@ -20,15 +20,20 @@ class Share extends BasePlugin {
    */
   static defaultConfig: ShareConfig = {
     useNative: false,
-    enableTimeOffset: true
+    enableTimeOffset: true,
+    uiComponent: {
+      label: 'shareButtonComponent',
+      presets: ['Playback', 'Live'],
+      area: 'TopBarRightControls'
+    }
   };
 
   getUIComponents() {
+    const mergedUiComponent = this.config.uiComponent;
+    delete this.config.uiComponent;
     return [
       {
-        label: 'shareButtonComponent',
-        presets: ['Playback', 'Live'],
-        container: 'TopBarRightControls',
+        ...mergedUiComponent,
         get: ShareComponent,
         props: {
           config: this.config
