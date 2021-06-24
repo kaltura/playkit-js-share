@@ -22,7 +22,7 @@ var config = {
   uiConfId?: string, // optional
   partnerId?: string, // optional
   entryId?: string, // optional
-  uiComponent?: KPPluginUIComponent // optional
+  uiComponent?: KPUIComponentOptions // optional
 }
 ```
 
@@ -97,7 +97,7 @@ var config = {
 
 > ### config.uiComponent
 >
-> ##### Type: `KPPluginUIComponent`
+> ##### Type: `KPUIComponentOptions`
 >
 > ##### Description: Defines the ui components configuration.
 

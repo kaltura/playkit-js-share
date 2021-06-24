@@ -29,11 +29,9 @@ class Share extends BasePlugin {
   };
 
   getUIComponents() {
-    const mergedUiComponent = this.config.uiComponent;
-    delete this.config.uiComponent;
     return [
       {
-        ...mergedUiComponent,
+        ...this.config.uiComponent,
         get: ShareComponent,
         props: {
           config: this.config
@@ -58,36 +56,27 @@ class Share extends BasePlugin {
     if (!this.config.socialNetworks || this.config.socialNetworks.length === 0) {
       this.config.socialNetworks = defaultSocialNetworkConfig;
     }
+    this._filterNonDisplaySocialNetworks();
     if (!this.config.shareUrl) {
       this.config.shareUrl = window.location.href;
     }
   }
 
+  _filterNonDisplaySocialNetworks(): any {
+    this.config.socialNetworks = Object.keys(this.config.socialNetworks)
+      .filter(key => this.config.socialNetworks[key].display)
+      .reduce((res, key) => ((res[key] = this.config.socialNetworks[key]), res), {});
+  }
   /**
-   * load media the plugin.
-   * @override
+   * Updates the config of the plugin.
+   * @param {Object} update - The updated configuration.
    * @public
    * @returns {void}
-   * @instance
    */
-  loadMedia() {}
-  /**
-   * Resets the plugin.
-   * @override
-   * @public
-   * @returns {void}
-   * @instance
-   */
-  reset(): void {}
-
-  /**
-   * Destroys the plugin.
-   * @override
-   * @public
-   * @returns {void}
-   * @instance
-   */
-  destroy(): void {}
+  updateConfig(update: Object): void {
+    super.updateConfig(update);
+    this._filterNonDisplaySocialNetworks();
+  }
 }
 
 export {Share, pluginName};

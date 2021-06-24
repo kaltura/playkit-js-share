@@ -8,5 +8,5 @@ declare type ShareConfig = {
   uiConfId?: string,
   partnerId?: string,
   entryId?: string,
-  uiComponent?: KPPluginUIComponent
+  uiComponent?: KPUIComponentOptions
 };
