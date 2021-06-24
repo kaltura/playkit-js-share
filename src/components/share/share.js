@@ -1,17 +1,23 @@
-//@flow
-import {ui} from 'kaltura-player-js';
-// import {ShareOverlay} from '../share-overlay/share-overlay';
-import {defaultConfig} from './default-config';
-const {preact, preacti18n, Components, style, Event, Utils, redux, Reducers} = ui;
+// @flow
+/**
+ * @jsx h
+ * @ignore
+ */
+import {ui, core} from 'kaltura-player-js';
+import {ShareOverlay} from '../share-overlay/share-overlay';
+import {pluginName} from '../../share';
+const {preact, preacti18n, Components, style, Utils, redux, Reducers, createPortal} = ui;
 const {h, Component} = preact;
-const {createPortal} = 'preact/compat';
 const {withText} = preacti18n;
-const {Tooltip, ToolTipType, Button, ButtonControl, withLogger, Icon, IconType} = Components;
-const {withPlayer} = Event;
+const {Tooltip, Button, ButtonControl, withLogger, Icon, withPlayer} = Components;
 const {bindActions} = Utils;
 const {shell} = Reducers;
 const {actions} = shell;
 const {connect} = redux;
+const coreUtils = core.Utils;
+
+const ICON_PATH: string =
+  'M318.641 446.219l236.155-142.257c-0.086-1.754-0.129-3.52-0.129-5.295 0-58.91 47.756-106.667 106.667-106.667s106.667 47.756 106.667 106.667c0 58.91-47.756 106.667-106.667 106.667-33.894 0-64.095-15.808-83.633-40.454l-236.467 142.445c-0.132-3.064-0.394-6.095-0.779-9.087l7.271-12.835-0.117 53.333-7.183-12.743c0.399-3.046 0.67-6.131 0.806-9.252l236.467 142.383c19.538-24.648 49.741-40.457 83.636-40.457 58.91 0 106.667 47.756 106.667 106.667s-47.756 106.667-106.667 106.667c-58.91 0-106.667-47.756-106.667-106.667 0-1.775 0.043-3.539 0.129-5.293l-236.19-142.216c-19.528 24.867-49.868 40.841-83.939 40.841-58.91 0-106.667-47.756-106.667-106.667s47.756-106.667 106.667-106.667c34.091 0 64.447 15.993 83.974 40.886zM234.667 554.667c23.564 0 42.667-19.103 42.667-42.667s-19.103-42.667-42.667-42.667c-23.564 0-42.667 19.103-42.667 42.667s19.103 42.667 42.667 42.667zM661.333 341.333c23.564 0 42.667-19.103 42.667-42.667s-19.103-42.667-42.667-42.667c-23.564 0-42.667 19.103-42.667 42.667s19.103 42.667 42.667 42.667zM661.333 768c23.564 0 42.667-19.103 42.667-42.667s-19.103-42.667-42.667-42.667c-23.564 0-42.667 19.103-42.667 42.667s19.103 42.667 42.667 42.667z';
 
 /**
  * mapping state to props
@@ -19,13 +25,11 @@ const {connect} = redux;
  * @returns {Object} - mapped state to this component
  */
 const mapStateToProps = state => ({
-  open: state.share.overlayOpen,
-  isPlaying: state.engine.isPlaying,
-  config: state.config.components.share
+  overlayOpen: state.shell.overlayOpen,
+  isPlaying: state.engine.isPlaying
 });
 
 const COMPONENT_NAME = 'Share';
-
 /**
  * Share component
  *
@@ -41,6 +45,10 @@ class Share extends Component {
   // ie11 fix (FEC-7312) - don't remove
   _portal: any;
 
+  _getVideoDesc(): string {
+    let name = coreUtils.Object.getPropertyPath(this.props.player.config, 'sources.metadata.name') || 'the video';
+    return `Check out ${name}`;
+  }
   /**
    * toggle overlay internal component state
    *
@@ -48,31 +56,35 @@ class Share extends Component {
    * @memberof Share
    */
   toggleOverlay = (): void => {
-    this.setState(
-      prevState => {
-        return {overlay: !prevState.overlay, previousIsPlaying: this.props.isPlaying || prevState.previousIsPlaying};
-      },
-      () => {
-        this.props.toggleShareOverlay(this.state.overlay);
-        if (this.state.overlay) {
-          this.props.player.pause();
-        } else if (this.state.previousIsPlaying) {
-          this.props.player.play();
-          this.setState({previousIsPlaying: false});
+    if (this.props.config.useNative && navigator.share) {
+      const videoDesc = this._getVideoDesc();
+      navigator
+        .share({
+          title: videoDesc,
+          text: videoDesc,
+          url: this.props.config.shareUrl
+        })
+        .then(() => this.props.logger.debug('Successful sharing'))
+        .catch(error => this.props.logger.error('Failed sharing', error));
+    } else {
+      this.setState(
+        prevState => {
+          return {
+            overlayActive: !this.state.overlayActive,
+            previousIsPlaying: this.props.isPlaying || prevState.previousIsPlaying
+          };
+        },
+        () => {
+          if (this.state.overlayActive) {
+            this.props.player.pause();
+          } else if (this.state.previousIsPlaying) {
+            this.props.player.play();
+            this.setState({previousIsPlaying: false});
+          }
         }
-      }
-    );
+      );
+    }
   };
-
-  /**
-   * returns the merged share config
-   * @returns {Object[]} the merged share config
-   * @private
-   */
-  _getMergedShareConfig(): Array<Object> {
-    let appConfig = this.props.config.socialNetworks || [];
-    return appConfig.concat(defaultConfig.filter(item => !appConfig.find(appItem => appItem.name === item.name)));
-  }
 
   /**
    * render element
@@ -81,29 +93,22 @@ class Share extends Component {
    * @memberof Share
    */
   render(): React$Element<any> | void {
-    const {embedUrl, enable, shareUrl, enableTimeOffset} = this.props.config;
-    if (!(enable && shareUrl && embedUrl)) {
+    const {shareUrl, socialNetworks} = this.props.config;
+    if (!(shareUrl && socialNetworks)) {
       return undefined;
     }
-    const shareConfig = this._getMergedShareConfig();
     const portalSelector = `#${this.props.player.config.targetId} .overlay-portal`;
-    return this.state.overlay ? (
+    const videoDesc = this._getVideoDesc();
+    return this.state.overlayActive ? (
       createPortal(
-        <ShareOverlay
-          shareUrl={shareUrl}
-          embedUrl={embedUrl}
-          enableTimeOffset={enableTimeOffset}
-          socialNetworks={shareConfig}
-          player={this.props.player}
-          onClose={this.toggleOverlay}
-        />,
+        <ShareOverlay config={this.props.config} videoDesc={videoDesc} player={this.props.player} onClose={this.toggleOverlay} />,
         document.querySelector(portalSelector)
       )
     ) : (
       <ButtonControl name={COMPONENT_NAME}>
-        <Tooltip label={this.props.shareTxt} type={this.props.toolTipType ? this.props.toolTipType : ToolTipType.BottomLeft}>
+        <Tooltip label={this.props.shareTxt}>
           <Button aria-haspopup="true" className={style.controlButton} onClick={this.toggleOverlay} aria-label={this.props.shareTxt}>
-            <Icon type={IconType.Share} />
+            <Icon id={pluginName} path={ICON_PATH} />
           </Button>
         </Tooltip>
       </ButtonControl>

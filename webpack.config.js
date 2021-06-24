@@ -3,6 +3,15 @@
 const webpack = require('webpack');
 const path = require('path');
 const packageData = require('./package.json');
+const CSS_MODULE_PREFIX = 'playkit';
+
+let plugins = [
+  new webpack.DefinePlugin({
+    __VERSION__: JSON.stringify(packageData.version),
+    __CSS_MODULE_PREFIX__: JSON.stringify(CSS_MODULE_PREFIX),
+    __NAME__: JSON.stringify(packageData.name)
+  })
+];
 
 module.exports = {
   context: __dirname + '/src',
@@ -16,12 +25,7 @@ module.exports = {
     devtoolModuleFilenameTemplate: './share/[resource-path]'
   },
   devtool: 'source-map',
-  plugins: [
-    new webpack.DefinePlugin({
-      __VERSION__: JSON.stringify(packageData.version),
-      __NAME__: JSON.stringify(packageData.name)
-    })
-  ],
+  plugins: plugins,
   module: {
     rules: [
       {
@@ -50,33 +54,22 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
+            options: {attributes: {id: `${packageData.name}`}}
           },
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true
+              localsConvention: 'camelCase',
+              modules: {
+                localIdentName: `${CSS_MODULE_PREFIX}-[local]`
+              }
             }
           },
           {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader'
+            loader: 'sass-loader'
           }
         ]
       }

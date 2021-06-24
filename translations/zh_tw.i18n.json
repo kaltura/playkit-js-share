@@ -1,5 +1,8 @@
 {
   "zh_tw": {
+    "controls": {
+      "share": "分享"
+    },
     "share": {
       "title": "分享",
       "embed_options": "内嵌選項",

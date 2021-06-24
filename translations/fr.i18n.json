@@ -1,5 +1,8 @@
 {
   "fr": {
+    "controls": {
+      "share": "Partager"
+    },
     "share": {
       "title": "Partager",
       "embed_options": "Options intégrées",

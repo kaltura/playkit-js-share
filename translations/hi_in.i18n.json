@@ -1,5 +1,8 @@
 {
   "hi_in": {
+    "controls": {
+      "share": "साझा करें"
+    },
     "share": {
       "title": "साझा करें",
       "embed_options": "एम्बेड विकल्प",

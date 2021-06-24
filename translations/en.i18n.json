@@ -1,5 +1,8 @@
 {
   "en": {
+    "controls": {
+      "share": "Share"
+    },
     "share": {
       "title": "Share",
       "embed_options": "Embed Options",

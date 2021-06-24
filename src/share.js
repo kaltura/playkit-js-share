@@ -1,7 +1,9 @@
 // @flow
 import {KalturaPlayer, BasePlugin} from 'kaltura-player-js';
 import {Share as ShareComponent} from './components/share/share';
+import {defaultSocialNetworkConfig} from './default-social-network-config';
 
+const pluginName: string = 'share';
 /**
  * The Share plugin.
  * @class Share
@@ -16,15 +18,21 @@ class Share extends BasePlugin {
    * @static
    * @memberof Share
    */
-  static defaultConfig: Object = {};
+  static defaultConfig: ShareConfig = {
+    useNative: false,
+    enableTimeOffset: true
+  };
 
   getUIComponents() {
     return [
       {
-        label: 'dismissibleFloatingButtonComponent',
-        presets: ['Playback', 'Live', 'Error', 'Ads', 'Idle'],
+        label: 'shareButtonComponent',
+        presets: ['Playback', 'Live'],
         container: 'TopBarRightControls',
-        get: ShareComponent
+        get: ShareComponent,
+        props: {
+          config: this.config
+        }
       }
     ];
   }
@@ -42,6 +50,12 @@ class Share extends BasePlugin {
 
   constructor(name: string, player: KalturaPlayer, config: Object) {
     super(name, player, config);
+    if (!this.config.socialNetworks || this.config.socialNetworks.length === 0) {
+      this.config.socialNetworks = defaultSocialNetworkConfig;
+    }
+    if (!this.config.shareUrl) {
+      this.config.shareUrl = window.location.href;
+    }
   }
 
   /**
@@ -71,4 +85,4 @@ class Share extends BasePlugin {
   destroy(): void {}
 }
 
-export {Share};
+export {Share, pluginName};
