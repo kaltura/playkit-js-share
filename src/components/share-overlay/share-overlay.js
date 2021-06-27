@@ -316,21 +316,20 @@ class ShareOverlay extends Component {
 
   /**
    * render the partial social network DOM
-   * @param {Array<Object>} socialNetworksConfig - the social network config
-   * @param {Function} addAccessibleChild - pass the addAccessibleChild so the share button can add its accessible elements
+   * @param {ShareSocialNetworks} socialNetworksConfig - the social network config
    * @returns {React$Element<*>[]} partial social network DOM
    * @private
    */
-  _createSocialNetworks(socialNetworksConfig: Array<Object>): React$Element<any>[] {
+  _createSocialNetworks(socialNetworksConfig: ShareSocialNetworks): any[] {
     return Object.keys(socialNetworksConfig).map(socialName => {
       const {shareUrl, embedBaseUrl, partnerId, uiConfId, entryId} = this.props.config;
       if (socialName === EMBED) {
         if (embedBaseUrl && partnerId && uiConfId && entryId) {
           socialNetworksConfig[socialName].templateUrl = socialNetworksConfig[socialName].templateUrl
-            .replaceAll('{embedBaseUrl}', embedBaseUrl)
-            .replaceAll('{partnerId}', partnerId)
-            .replaceAll('{uiConfId}', uiConfId)
-            .replaceAll('{entryId}', entryId);
+            .replace(/{embedBaseUrl}/gi, embedBaseUrl)
+            .replace(/{partnerId}/gi, partnerId)
+            .replace(/{uiConfId}/gi, uiConfId)
+            .replace(/{entryId}/gi, entryId);
         } else {
           return undefined;
         }
