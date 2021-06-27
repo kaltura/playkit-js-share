@@ -80,7 +80,7 @@ jobs:
           branch: master
       after_deploy:
         - ./scripts/after_deploy.sh "$JENKINS_CANARY_TOKEN"
-     Required tests
+    # Required tests
     - stage: Tests
       if: (branch = master) OR (tag IS present) OR (type = pull_request)
       name: 'Running lint'
