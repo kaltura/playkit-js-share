@@ -1,11 +1,11 @@
-# PlayKit JS Live BroadPeak - [broadpeak] Adapter Plugin for the [Kaltura Player JS]
+# PlayKit JS Share - [Share] UI Plugin for the [Kaltura Player JS]
 
-[![Build Status](https://travis-ci.com/kaltura/playkit-js-avplay.svg?branch=master)](https://travis-ci.org/kaltura/playkit-js-broadpeak-smartlib)
+[![Build Status](https://travis-ci.com/kaltura/playkit-js-avplay.svg?branch=master)](https://travis-ci.org/kaltura/playkit-js-share)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-live-fallback/latest.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-broadpeak-smartlib)
-[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-live-fallback/canary.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-broadpeak-smartlib/v/canary)
+[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-share/latest.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-share)
+[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-share/canary.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-share/v/canary)
 
-PlayKit JS Broadpeak Smartlib is written in [ECMAScript6], statically analysed using [Flow] and transpiled in ECMAScript5 using [Babel].
+PlayKit JS Share is written in [ECMAScript6], statically analysed using [Flow] and transpiled in ECMAScript5 using [Babel].
 
 [flow]: https://flow.org/
 [ecmascript6]: https://github.com/ericdouglas/ES6-Learning#articles--tutorials
@@ -25,8 +25,8 @@ First, clone and run [yarn] to install dependencies:
 [yarn]: https://yarnpkg.com/lang/en/
 
 ```
-git clone https://github.com/kaltura/playkit-js-broadpeak-smartlib.git
-cd playkit-js-broadpeak-smartlib
+git clone https://github.com/kaltura/playkit-js-share.git
+cd playkit-js-share
 yarn install
 ```
 
@@ -44,7 +44,7 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 
 ```html
 <script type="text/javascript" src="/PATH/TO/FILE/kaltura-{ovp/ott}-player.js"></script>
-<script type="text/javascript" src="/PATH/TO/FILE/playkit-js-broadpeak-smartlib.js"></script>
+<script type="text/javascript" src="/PATH/TO/FILE/playkit-js-share.js"></script>
 <div id="player-placeholder"" style="height:360px; width:640px">
 <script type="text/javascript">
   var config = {
@@ -55,7 +55,16 @@ Finally, add the bundle as a script tag in your page, and initialize the player
     },
     ...
     plugins: {
-        broadpeak: {}
+      'share': {
+        'shareUrl': '', //string - Default will take the parent url
+        'enableTimeOffset': '', //boolean - Default false
+        'useNative': false, //boolean - use native API
+        'socialNetworks': null, //ShareSocialNetworks - social network config
+        'uiComponent': {
+          'presets': ['Playback', 'Live'],
+          'area': 'BottomBarRightControls'
+        }
+      }
     }
   ...
   };
@@ -63,6 +72,11 @@ Finally, add the bundle as a script tag in your page, and initialize the player
   player.play();
 </script>
 ```
+
+## Documentation
+
+- **[Configuration](docs/configuration.md)**
+
 ## Running the tests
 
 Tests can be run locally via [Karma], which will run on Chrome, Firefox and Safari
@@ -95,7 +109,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/kaltura/playkit-js-broadpeak-smartlib/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/kaltura/playkit-js-share/tags).
 
 ## License
 

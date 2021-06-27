@@ -7,5 +7,6 @@ declare type ShareConfig = {
   embedBaseUrl?: string,
   uiConfId?: string,
   partnerId?: string,
-  entryId?: string
+  entryId?: string,
+  uiComponent?: KPUIComponentOptions
 };

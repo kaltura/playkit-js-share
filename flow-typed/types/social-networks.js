@@ -1,8 +1,9 @@
 // @flow
 declare type ShareSocialNetwork = {
+  display: boolean,
   templateUrl: string,
   title: string,
-  svg: string
+  svg: any
 };
 
 declare type ShareSocialNetworks = {
