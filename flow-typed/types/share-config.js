@@ -1,9 +1,9 @@
 // @flow
 declare type ShareConfig = {
-  shareUrl: string,
+  shareUrl?: string,
   enableTimeOffset: boolean,
   useNative: boolean,
-  socialNetworks: ShareSocialNetworks,
+  socialNetworks?: ShareSocialNetworks,
   embedBaseUrl?: string,
   uiConfId?: string,
   partnerId?: string,
