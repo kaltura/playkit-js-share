@@ -1,19 +1,13 @@
 .overlay.share-overlay {
+  .control-button-container {
+    margin: 0 0;
+  }
+
   .share-icons {
-    margin: 60px 0;
+    margin: 40px 0 16px 0;
 
-    .control-button-container {
-      &:first-child {
-        margin-left: 0;
-      }
-
-      &:last-child {
-        margin-right: 0;
-      }
-
-      .btn-social-network {
-        margin: 0 8px;
-      }
+    .btn-social-network {
+      margin: 0 8px;
     }
   }
 
@@ -32,14 +26,14 @@
       }
       .btn-copy-url {
         .icon {
-          width: 32px;
           margin-top: 0px;
           border: 0px;
         }
       }
     }
     .video-start-options-row {
-      margin-top: 24px;
+      margin-top: 16px;
+      text-align: center;
 
       .checkbox {
         margin-right: 15px;
@@ -58,22 +52,16 @@
   text-align: center;
 }
 
-.player:not(.touch) .overlay.share-overlay .share-icons .btn-rounded:hover {
-  transform: scale(1.1667);
-}
-
-.player.size-md {
+.player.size-sm,
+.player.size-xs {
   .overlay.share-overlay {
     .share-icons {
-      margin: 40px 0;
+      margin: 24px 0 8px 0;
     }
   }
-}
-
-.player.size-sm {
-  .overlay.share-overlay {
-    .share-icons {
-      margin: 20px 0;
+  .link-options-container {
+    .video-start-options-row {
+      margin-top: 8px;
     }
   }
 }
