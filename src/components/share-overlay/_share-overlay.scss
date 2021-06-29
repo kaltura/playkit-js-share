@@ -32,14 +32,13 @@
       }
       .btn-copy-url {
         .icon {
-          width: 32px;
           margin-top: 0px;
           border: 0px;
         }
       }
     }
     .video-start-options-row {
-      margin-top: 24px;
+      margin-top: 16px;
 
       .checkbox {
         margin-right: 15px;
@@ -58,22 +57,19 @@
   text-align: center;
 }
 
-.player:not(.touch) .overlay.share-overlay .share-icons .btn-rounded:hover {
-  transform: scale(1.1667);
-}
-
 .player.size-md {
   .overlay.share-overlay {
     .share-icons {
-      margin: 40px 0;
+      margin: 40px 0 16px 0;
     }
   }
 }
 
-.player.size-sm {
+.player.size-sm,
+.player.size-xs {
   .overlay.share-overlay {
     .share-icons {
-      margin: 20px 0;
+      margin: 24px 0 16px 0;
     }
   }
 }
