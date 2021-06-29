@@ -55,13 +55,13 @@ class Share extends BasePlugin {
 
   constructor(name: string, player: KalturaPlayer, config: Object) {
     super(name, player, config);
-    if (!this.config.shareOptions || this.config.shareOptions.length === 0) {
+    if (!this.config.shareOptions && Object.keys(this.config.shareOptions).length === 0) {
       this.config.shareOptions = defaultShareOptionsConfig;
     } else {
-      const defualtSocialWhichConfigured = Object.keys(this.config.shareOptions)
+      const defaultSocialWhichConfigured = Object.keys(this.config.shareOptions)
         .filter(key => defaultShareOptionsConfig[key])
         .reduce((res, key) => ((res[key] = defaultShareOptionsConfig[key]), res), {});
-      this.config.shareOptions = Utils.Object.mergeDeep({}, defualtSocialWhichConfigured, this.config.shareOptions);
+      this.config.shareOptions = Utils.Object.mergeDeep({}, defaultSocialWhichConfigured, this.config.shareOptions);
     }
     this._filterNonDisplayShareOptions();
     if (!this.config.shareUrl) {
