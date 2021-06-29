@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.com/kaltura/playkit-js-avplay.svg?branch=master)](https://travis-ci.org/kaltura/playkit-js-share)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-share/latest.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-share)
-[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-share/canary.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-share/v/canary)
+[![](https://img.shields.io/npm/v/@playkit-js/share/latest.svg)](https://www.npmjs.com/package/@playkit-js/share)
+[![](https://img.shields.io/npm/v/@playkit-js/share/canary.svg)](https://www.npmjs.com/package/@playkit-js/share/v/canary)
 
 PlayKit JS Share is written in [ECMAScript6], statically analysed using [Flow] and transpiled in ECMAScript5 using [Babel].
 
