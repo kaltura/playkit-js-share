@@ -324,16 +324,21 @@ class ShareOverlay extends Component {
    */
   _createShareOptions(shareOptionsConfig: ShareOptions): any[] {
     return Object.keys(shareOptionsConfig).map(socialName => {
-      const {shareUrl, embedBaseUrl, partnerId, uiConfId, entryId} = this.props.config;
+      const {shareUrl} = this.props.config;
       let {embedUrl} = this.props.config;
-      if (socialName === EMBED && embedUrl.indexOf('{') !== -1 && embedUrl.indexOf('}') !== -1) {
-        if (embedBaseUrl && partnerId && uiConfId && entryId) {
-          embedUrl = embedUrl
-            .replace(/{embedBaseUrl}/gi, embedBaseUrl)
-            .replace(/{partnerId}/gi, partnerId)
-            .replace(/{uiConfId}/gi, uiConfId)
-            .replace(/{entryId}/gi, entryId);
-        } else {
+      if (socialName === EMBED) {
+        const validEmbedUrl = ['embedBaseUrl', 'partnerId', 'uiConfId', 'entryId'].every(prop => {
+          if (embedUrl.indexOf(`{${prop}}`) > -1) {
+            if (this.props.config[prop]) {
+              embedUrl = embedUrl.replace(new RegExp(`{${prop}}`, 'g'), this.props.config[prop]);
+              return true;
+            } else {
+              return false;
+            }
+          }
+          return true;
+        });
+        if (!validEmbedUrl) {
           return undefined;
         }
       }
