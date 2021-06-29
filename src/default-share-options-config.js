@@ -22,7 +22,7 @@ const defaultShareOptionsConfig = {
   },
   email: {
     display: true,
-    templateUrl: 'mailto:?subject={description}&body={description} - {shareUrl}',
+    templateUrl: 'mailto:?subject=Check out {description}&body=Check out {description} - {shareUrl}',
     title: 'share.email',
     icon: {
       'fill-rule': 'evenodd',
