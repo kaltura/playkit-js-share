@@ -60,7 +60,7 @@ class Share extends BasePlugin {
     } else {
       const defualtSocialWhichConfigured = Object.keys(this.config.shareOptions)
         .filter(key => defaultShareOptionsConfig[key])
-        .reduce((res, key) => ((res[key] = this.config.shareOptions[key]), res), {});
+        .reduce((res, key) => ((res[key] = defaultShareOptionsConfig[key]), res), {});
       this.config.shareOptions = Utils.Object.mergeDeep({}, defualtSocialWhichConfigured, this.config.shareOptions);
     }
     this._filterNonDisplayShareOptions();
