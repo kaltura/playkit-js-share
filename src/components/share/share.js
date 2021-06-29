@@ -92,8 +92,8 @@ class Share extends Component {
    * @memberof Share
    */
   render(): React$Element<any> | void {
-    const {shareUrl, socialNetworks} = this.props.config;
-    if (!(shareUrl && socialNetworks)) {
+    const {shareUrl, shareOptions} = this.props.config;
+    if (!(shareUrl && shareOptions)) {
       return undefined;
     }
     const portalSelector = `#${this.props.player.config.targetId} .overlay-portal`;

@@ -1,11 +1,11 @@
 // @flow
-declare type ShareSocialNetwork = {
+declare type ShareOption = {
   display: boolean,
   templateUrl: string,
   title: string,
-  svg: any
+  icon: any
 };
 
-declare type ShareSocialNetworks = {
-  [name: string]: ShareSocialNetwork
+declare type ShareOptions = {
+  [name: string]: ShareOption
 };

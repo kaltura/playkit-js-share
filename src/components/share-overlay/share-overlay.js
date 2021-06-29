@@ -39,7 +39,7 @@ const ShareButton = (props: Object): React$Element<any> => {
    */
   const onClick = (buttonType: string) => {
     const EMAIL = 'email';
-    const {templateUrl, shareUrl} = props.config;
+    const {templateUrl, shareUrl, embedUrl} = props.config;
     let href = templateUrl;
 
     href = href.replaceAll('{description}', props.videoDesc);
@@ -54,7 +54,7 @@ const ShareButton = (props: Object): React$Element<any> => {
         location.href = href;
         break;
       case EMBED:
-        _updateOverlay(shareOverlayView.EmbedOptions, href);
+        _updateOverlay(shareOverlayView.EmbedOptions, href, embedUrl);
         break;
       default:
         window.open(href, '_blank', 'width=580,height=580');
@@ -76,7 +76,7 @@ const ShareButton = (props: Object): React$Element<any> => {
               aria-haspopup={props.socialName === EMBED}
               className={[style.btnBorderless, style.onlyIcon, shareStyle.btnSocialNetwork].join(' ')}
               onClick={() => onClick(props.socialName)}>
-              <Icon id={props.socialName} color="#fff" path={props.config.svg} width="24" height="24" viewBox="0 0 24 24" />
+              <Icon id={props.socialName} color="#fff" path={props.config.icon} width="24" height="24" viewBox="0 0 24 24" />
             </Button>
           </Localizer>
         </Tooltip>
@@ -268,10 +268,11 @@ class ShareOverlay extends Component {
    */
   getEmbedCode(): string {
     let url = this.state.embedUrl;
+    const template = this.state.embedTemplate;
     if (this.state.startFrom) {
       url = this._addUrlKalturaStartTimeParam(url);
     }
-    return `<iframe src="${url}" style="width: 560px;height: 395px" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0" allow="accelerometer *; autoplay *; encrypted-media *; gyroscope *; picture-in-picture *"/>`;
+    return template.replace(/{embedUrl}/, url);
   }
 
   /**
@@ -306,26 +307,28 @@ class ShareOverlay extends Component {
    * changing the overlay state
    *
    * @param {string} stateName state name
+   * @param {string} embedTemplate embed urk
    * @param {string} embedUrl embed urk
    * @returns {void}
    * @memberof ShareOverlay
    */
-  _updateOverlay = (stateName: string, embedUrl: string) => {
-    this.setState({view: stateName, embedUrl});
+  _updateOverlay = (stateName: string, embedTemplate: string, embedUrl: string) => {
+    this.setState({view: stateName, embedTemplate, embedUrl});
   };
 
   /**
    * render the partial social network DOM
-   * @param {ShareSocialNetworks} socialNetworksConfig - the social network config
+   * @param {ShareOptions} shareOptionsConfig - the social network config
    * @returns {React$Element<*>[]} partial social network DOM
    * @private
    */
-  _createSocialNetworks(socialNetworksConfig: ShareSocialNetworks): any[] {
-    return Object.keys(socialNetworksConfig).map(socialName => {
+  _createShareOptions(shareOptionsConfig: ShareOptions): any[] {
+    return Object.keys(shareOptionsConfig).map(socialName => {
       const {shareUrl, embedBaseUrl, partnerId, uiConfId, entryId} = this.props.config;
-      if (socialName === EMBED) {
+      let {embedUrl} = this.props.config;
+      if (socialName === EMBED && embedUrl.indexOf('{') !== -1 && embedUrl.indexOf('}') !== -1) {
         if (embedBaseUrl && partnerId && uiConfId && entryId) {
-          socialNetworksConfig[socialName].templateUrl = socialNetworksConfig[socialName].templateUrl
+          embedUrl = embedUrl
             .replace(/{embedBaseUrl}/gi, embedBaseUrl)
             .replace(/{partnerId}/gi, partnerId)
             .replace(/{uiConfId}/gi, uiConfId)
@@ -334,7 +337,7 @@ class ShareOverlay extends Component {
           return undefined;
         }
       }
-      const shareButtonConfig = {...socialNetworksConfig[socialName], shareUrl};
+      const shareButtonConfig = {...shareOptionsConfig[socialName], shareUrl, embedUrl};
       return (
         <ShareButton
           key={socialName}
@@ -361,7 +364,7 @@ class ShareOverlay extends Component {
           <Text id="share.title" />
         </div>
         <div className={shareStyle.shareMainContainer}>
-          <div className={shareStyle.shareIcons}>{this._createSocialNetworks(this.props.config.socialNetworks)}</div>
+          <div className={shareStyle.shareIcons}>{this._createShareOptions(this.props.config.shareOptions)}</div>
           <div className={shareStyle.linkOptionsContainer}>
             <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={this.getShareUrl()} copy={true} isIos={this.isIos} />
             {this.props.config.enableTimeOffset ? (
