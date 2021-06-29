@@ -15,13 +15,10 @@ var config = {
 ```js
 {
   shareUrl: string,
+  embedUrl: string,
   enableTimeOffset: boolean,
   useNative: boolean,
   shareOptions: ShareOptions,
-  embedBaseUrl?: string, // optional
-  uiConfId?: string, // optional
-  partnerId?: string, // optional
-  entryId?: string, // optional
   uiComponent?: KPUIComponentOptions // optional
 }
 ```
@@ -38,6 +35,13 @@ var config = {
 
 ##
 
+> ### config.embedUrl
+>
+> ##### Type: `string`
+>
+> ##### Description: Defines the embed url.
+
+##
 > ### config.enableTimeOffset
 >
 > ##### Type: `boolean`
