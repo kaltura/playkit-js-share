@@ -1,7 +1,8 @@
 // @flow
-import {KalturaPlayer, BasePlugin} from 'kaltura-player-js';
+import {KalturaPlayer, BasePlugin, core} from 'kaltura-player-js';
 import {Share as ShareComponent} from './components/share/share';
-import {defaultSocialNetworkConfig} from './default-social-network-config';
+import {defaultShareOptionsConfig} from './default-share-options-config';
+const {Utils} = core;
 
 const pluginName: string = 'share';
 /**
@@ -20,6 +21,7 @@ class Share extends BasePlugin {
    */
   static defaultConfig: ShareConfig = {
     useNative: false,
+    embedUrl: '{embedBaseUrl}/p/{partnerId}/embedPlaykitJs/uiconf_id/{uiConfId}?iframeembed=true&entry_id={entryId}',
     enableTimeOffset: true,
     uiComponent: {
       label: 'shareButtonComponent',
@@ -53,19 +55,24 @@ class Share extends BasePlugin {
 
   constructor(name: string, player: KalturaPlayer, config: Object) {
     super(name, player, config);
-    if (!this.config.socialNetworks || this.config.socialNetworks.length === 0) {
-      this.config.socialNetworks = defaultSocialNetworkConfig;
+    if (!this.config.shareOptions && Object.keys(this.config.shareOptions).length === 0) {
+      this.config.shareOptions = defaultShareOptionsConfig;
+    } else {
+      const defaultSocialWhichConfigured = Object.keys(this.config.shareOptions)
+        .filter(key => defaultShareOptionsConfig[key])
+        .reduce((res, key) => ((res[key] = defaultShareOptionsConfig[key]), res), {});
+      this.config.shareOptions = Utils.Object.mergeDeep({}, defaultSocialWhichConfigured, this.config.shareOptions);
     }
-    this._filterNonDisplaySocialNetworks();
+    this._filterNonDisplayShareOptions();
     if (!this.config.shareUrl) {
       this.config.shareUrl = window.location.href;
     }
   }
 
-  _filterNonDisplaySocialNetworks(): any {
-    this.config.socialNetworks = Object.keys(this.config.socialNetworks)
-      .filter(key => this.config.socialNetworks[key].display)
-      .reduce((res, key) => ((res[key] = this.config.socialNetworks[key]), res), {});
+  _filterNonDisplayShareOptions(): any {
+    this.config.shareOptions = Object.keys(this.config.shareOptions)
+      .filter(key => this.config.shareOptions[key].display)
+      .reduce((res, key) => ((res[key] = this.config.shareOptions[key]), res), {});
   }
   /**
    * Updates the config of the plugin.
@@ -75,7 +82,7 @@ class Share extends BasePlugin {
    */
   updateConfig(update: Object): void {
     super.updateConfig(update);
-    this._filterNonDisplaySocialNetworks();
+    this._filterNonDisplayShareOptions();
   }
 }
 

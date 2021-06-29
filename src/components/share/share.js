@@ -46,7 +46,7 @@ class Share extends Component {
 
   _getVideoDesc(): string {
     let name = coreUtils.Object.getPropertyPath(this.props.player.config, 'sources.metadata.name') || 'the video';
-    return `Check out ${name}`;
+    return `${name}`;
   }
   /**
    * toggle overlay internal component state
@@ -59,8 +59,8 @@ class Share extends Component {
       const videoDesc = this._getVideoDesc();
       navigator
         .share({
-          title: videoDesc,
-          text: videoDesc,
+          title: `Check out ${videoDesc}`,
+          text: `Check out ${videoDesc}`,
           url: this.props.config.shareUrl
         })
         .then(() => this.props.logger.debug('Successful sharing'))
@@ -92,8 +92,8 @@ class Share extends Component {
    * @memberof Share
    */
   render(): React$Element<any> | void {
-    const {shareUrl, socialNetworks} = this.props.config;
-    if (!(shareUrl && socialNetworks)) {
+    const {shareUrl, shareOptions} = this.props.config;
+    if (!(shareUrl && shareOptions)) {
       return undefined;
     }
     const portalSelector = `#${this.props.player.config.targetId} .overlay-portal`;
