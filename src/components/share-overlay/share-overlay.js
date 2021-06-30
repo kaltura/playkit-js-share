@@ -338,7 +338,7 @@ class ShareOverlay extends Component {
           }
           return true;
         });
-        if (!validEmbedUrl) {
+        if (!validEmbedUrl || !embedUrl) {
           return undefined;
         }
       }
