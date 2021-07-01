@@ -42,11 +42,11 @@ const ShareButton = (props: Object): React$Element<any> => {
     const {templateUrl, shareUrl, embedUrl} = props.config;
     let href = templateUrl;
 
-    href = href.replaceAll('{description}', props.videoDesc);
+    href = href.replace(/{description}/g, props.videoDesc);
     try {
-      href = href.replaceAll('{shareUrl}', encodeURIComponent(shareUrl));
+      href = href.replace(/{shareUrl}/g, encodeURIComponent(shareUrl));
     } catch (e) {
-      href = href.replaceAll('{shareUrl}', shareUrl);
+      href = href.replace(/{shareUrl}/g, shareUrl);
     }
 
     switch (buttonType) {
@@ -272,7 +272,7 @@ class ShareOverlay extends Component {
     if (this.state.startFrom) {
       url = this._addUrlKalturaStartTimeParam(url);
     }
-    return template.replace(/{embedUrl}/, url);
+    return template.replace(/{embedUrl}/g, url);
   }
 
   /**
