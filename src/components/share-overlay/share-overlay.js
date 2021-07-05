@@ -193,12 +193,21 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
 const COMPONENT_NAME = 'ShareOverlay';
 
 /**
+ * mapping state to props
+ * @param {*} state - redux store state
+ * @returns {Object} - mapped state to this component
+ */
+const mapStateToProps = state => ({
+  isLive: state.engine.isLive
+});
+
+/**
  * ShareOverlay component
  *
  * @class ShareOverlay
  * @extends {Component}
  */
-@connect(null, bindActions(actions))
+@connect(mapStateToProps, bindActions(actions))
 @withLogger(COMPONENT_NAME)
 @withKeyboardA11y
 class ShareOverlay extends Component {
@@ -372,7 +381,7 @@ class ShareOverlay extends Component {
           <div className={shareStyle.shareIcons}>{this._createShareOptions(this.props.config.shareOptions)}</div>
           <div className={shareStyle.linkOptionsContainer}>
             <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={this.getShareUrl()} copy={true} isIos={this.isIos} />
-            {this.props.config.enableTimeOffset ? (
+            {this.props.config.enableTimeOffset && !this.props.isLive ? (
               <VideoStartOptions
                 addAccessibleChild={this.props.addAccessibleChild}
                 startFrom={this.state.startFrom}
@@ -399,7 +408,7 @@ class ShareOverlay extends Component {
         <div className={style.title}>{props.title}</div>
         <div className={shareStyle.linkOptionsContainer}>
           <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={props.shareUrl} copy={true} isIos={this.isIos} />
-          {this.props.config.enableTimeOffset ? (
+          {this.props.config.enableTimeOffset && !this.props.isLive ? (
             <VideoStartOptions
               addAccessibleChild={this.props.addAccessibleChild}
               startFrom={this.state.startFrom}
