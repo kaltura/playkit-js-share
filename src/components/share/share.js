@@ -96,7 +96,7 @@ class Share extends Component {
     if (!(shareUrl && shareOptions)) {
       return undefined;
     }
-    const targetId = document.getElementById(this.props.player.config.targetId);
+    const targetId = document.getElementById(this.props.player.config.targetId) || document;
     const portalSelector = `.overlay-portal`;
     const videoDesc = this._getVideoDesc();
     return this.state.overlayActive ? (
