@@ -96,12 +96,13 @@ class Share extends Component {
     if (!(shareUrl && shareOptions)) {
       return undefined;
     }
-    const portalSelector = `#${this.props.player.config.targetId} .overlay-portal`;
+    const targetId = document.getElementById(this.props.player.config.targetId);
+    const portalSelector = `.overlay-portal`;
     const videoDesc = this._getVideoDesc();
     return this.state.overlayActive ? (
       createPortal(
         <ShareOverlay config={this.props.config} videoDesc={videoDesc} player={this.props.player} onClose={this.toggleOverlay} />,
-        document.querySelector(portalSelector)
+        targetId.querySelector(portalSelector)
       )
     ) : (
       <ButtonControl name={COMPONENT_NAME}>
