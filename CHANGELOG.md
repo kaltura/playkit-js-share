@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/kaltura/playkit-js-share/compare/v1.1.0...v1.1.1) (2021-07-27)
+
+
+### Bug Fixes
+
+* **FEC-11253:** Remove start time from UI when sharing a live stream ([#8](https://github.com/kaltura/playkit-js-share/issues/8)) ([4eadb84](https://github.com/kaltura/playkit-js-share/commit/4eadb84d8dae47bac07b3e19ab1bd9172e9d5547))
+* **FEC-11392:** document.querySelector breaks ([#9](https://github.com/kaltura/playkit-js-share/issues/9)) ([bcaee25](https://github.com/kaltura/playkit-js-share/commit/bcaee25f141cd0105beb1af27c609991c46bbfba))
+
+
+### Build System
+
+* Ignore tests for release & tag commit ([6f57feb](https://github.com/kaltura/playkit-js-share/commit/6f57feb300148980be8fc6a5afbacd163a909066))
+* **FEC-11389:** reduce builds from travis ([2b578bb](https://github.com/kaltura/playkit-js-share/commit/2b578bb292f64ab85183c454d4f437da3991fe88))
+
 ## 1.1.0 (2021-07-01)
 
 
