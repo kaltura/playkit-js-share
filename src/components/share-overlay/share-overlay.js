@@ -42,7 +42,7 @@ const ShareButton = (props: Object): React$Element<any> => {
     const {templateUrl, shareUrl, embedUrl} = props.config;
     let href = templateUrl;
 
-    href = href.replace(/{description}/g, props.videoDesc);
+    href = href.replace(/{description}/g, encodeURIComponent(props.videoDesc));
     try {
       href = href.replace(/{shareUrl}/g, encodeURIComponent(shareUrl));
     } catch (e) {
