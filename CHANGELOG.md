@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/kaltura/playkit-js-share/compare/v1.1.2...v1.1.3) (2022-06-09)
+
+
+### Bug Fixes
+
+* **FEC-12266:** v7 Share button generates mostly blank email, due to Ampersand ([#11](https://github.com/kaltura/playkit-js-share/issues/11)) ([eb948e4](https://github.com/kaltura/playkit-js-share/commit/eb948e40afb37e578d97033964db8ad8625eb210))
+
+
+### Build System
+
+* set prerelease false ([12ee1c0](https://github.com/kaltura/playkit-js-share/commit/12ee1c079eecc9b4cce8118786419f9b8d56d420))
+
 ### [1.1.2](https://github.com/kaltura/playkit-js-share/compare/v1.1.1...v1.1.2) (2021-07-27)
 
 ### [1.1.1](https://github.com/kaltura/playkit-js-share/compare/v1.1.0...v1.1.1) (2021-07-27)
