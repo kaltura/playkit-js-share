@@ -77,18 +77,45 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 
 ## Documentation
 
-Share plugin enabale to share the currenly viewd content or some other related prev defined url on the social media.
+Share plugin enables to share the current content or some other content related url to the social media.
 
-Share pluging enables customizing the sharing attributes. 
+Share plugin also enables customizing the sharing attributes. 
 
-If share plugin is enabled, a sharing icon will added to the player's top right corner (configurable).
-If the share icon is clicked users will have the ability to choose how to share the desired content using plauer custom UI or the native share api
+If share plugin is enabled  share icon will be added to the player's top right corner configurable using the uiComponent [area](https://github.com/kaltura/playkit-js-ui/blob/master/docs/ui-components.md#general) attribute.
+
+```
+"uiComponent": {
+          "label": 'shareButtonComponent',
+          "presets": ['Playback', 'Live'],
+          "area": 'TopBarRightControls'
+},
+```
 
 
-#### Saring Options
+
+#### Sharing Capabilities
+
 * Share to a social networks
-* Email a link to your video
-* Copy a code which enables your video to be embedded
+* Email a link to the video
+* Copy a code which enables the video to be embedded
+
+#### shareUrl
+
+* The shareUrl to use if we want to force such and not using the default share url
+
+#### embedUrl
+
+* The suggested embedUrl to use if default one is not what app requires
+
+#### enableTimeOffset
+* Whether to add also start postion to the shared media
+
+#### useNative
+* If the share icon is clicked users will have the ability to choose how to share the desired content using plauer custom UI or the native share api
+
+#### shareOptions
+`shareOptions` are optional plugin will work with shareUrl or embedUrl stand alone
+once it is added the plugin use uts configured attributes and will disply only the named plugins in the list and in the same order it was added means FB will be displayed before Linkedin for the below example. 
 
 **[Configuration](./docs/configuration.md)**
 
