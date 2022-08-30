@@ -58,7 +58,7 @@ var config = {
 >
 > ##### Default: `false`
 >
-> ##### Description: Defines whenever to use native share.
+> ##### Description: Defines whenever to use native share (uses native share API).
 
 ##
 
