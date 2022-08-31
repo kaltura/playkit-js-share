@@ -99,9 +99,15 @@ If share plugin is enabled  share icon will be added to the player's top right c
 * Email a link to the video
 * Copy a code which enables the video to be embedded
 
+#### UI Examples
+
+![example](./images/shareIcon.png)
+
+![example](./images/shareScreen.png)
+
 #### shareUrl
 
-* The shareUrl to use if we want to force such and not using the default share url
+* The shareUrl to use if we want to force such and not using the default share url (using this option will override the definition you have given in `shareOptions`)
 
 #### embedUrl
 
