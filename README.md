@@ -114,7 +114,7 @@ If share plugin is enabled  share icon will be added to the player's top right c
 * If the share icon is clicked users will have the ability to choose how to share the desired content using plauer custom UI or the native share api
 
 #### shareOptions
-`shareOptions` are optional plugin will work with shareUrl or embedUrl stand alone
+`shareOptions` are optional, the plugin can work only with shareUrl or embedUrl stand alone
 once it is added the plugin use uts configured attributes and will disply only the named plugins in the list and in the same order it was added means FB will be displayed before Linkedin for the below example. 
 
 **[Configuration](./docs/configuration.md)**
