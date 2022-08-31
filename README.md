@@ -105,6 +105,7 @@ If share plugin is enabled  share icon will be added to the player's top right c
 
 ![example](./images/shareScreen.png)
 
+#### Configuration attributes:
 #### shareUrl
 
 * The shareUrl to use if we want to force such and not using the default share url (using this option will override the definition you have given in `shareOptions`)
