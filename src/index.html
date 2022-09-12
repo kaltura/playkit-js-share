@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <script src="https://cdnapisec.kaltura.com/p/2215841/embedPlaykitJs/uiconf_id/42237501/"></script>
+  <script src="https://raw.githack.com/kaltura/kaltura-player-js/master/dist/kaltura-ovp-player.js"></script>
+  <script src="https://raw.githack.com/kaltura/playkit-js-ui-managers/master/dist/playkit-ui-managers.js"></script>
   <script src="./playkit-share.js"></script>
 </head>
 
@@ -16,11 +17,29 @@
     let config = {
       logLevel: "DEBUG",
       "targetId": "player-placeholder",
-      "provider": {
-        "partnerId": "2215841",
-        "uiConfId": "42237501"
+      "provider": {},
+      // translations - for local environment
+      ui: {
+        translations: {
+          "en": {
+            "controls": {
+              "share": "Share"
+            },
+            "share": {
+              "title": "Share",
+              "embed_options": "Embed Options",
+              "start_video_at": "Start video at",
+              "email": "Share on Email",
+              "embed": "Get embed code",
+              "share-on-facebook": "Share on Facebook",
+              "share-on-linkedin": "Share on Linkedin",
+              "share-on-twitter": "Share on Twitter"
+            }
+          }
+        },
       },
       plugins:{
+        uiManagers: {},
         share:{
           // shareUrl: string - Default will take the parent url
           // enableTimeOffset: boolean - Default false

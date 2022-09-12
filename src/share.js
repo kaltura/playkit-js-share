@@ -1,6 +1,11 @@
 // @flow
+/**
+ * @jsx h
+ * @ignore
+ */
+import {h} from 'preact';
 import {KalturaPlayer, BasePlugin, core} from 'kaltura-player-js';
-import {Share as ShareComponent} from './components/share/share';
+import {ICON_PATH, Share as ShareComponent} from './components/share/share';
 import {defaultShareOptionsConfig} from './default-share-options-config';
 const {Utils} = core;
 
@@ -30,18 +35,6 @@ class Share extends BasePlugin {
     }
   };
 
-  getUIComponents() {
-    return [
-      {
-        ...this.config.uiComponent,
-        get: ShareComponent,
-        props: {
-          config: this.config
-        }
-      }
-    ];
-  }
-
   /**
    * Whether the Share plugin is valid.
    * @static
@@ -67,6 +60,20 @@ class Share extends BasePlugin {
     if (!this.config.shareUrl) {
       this.config.shareUrl = window.location.href;
     }
+
+    this._addIcon();
+  }
+
+  _addIcon() {
+    this.player.ready().then(() => {
+      const ShareWrapper = () => <ShareComponent config={this.config} ref={this.ref} />;
+      this.iconId = this.player.getService('upperBarManager').add({
+        label: pluginName,
+        component: ShareWrapper,
+        svgIcon: {path: ICON_PATH},
+        onClick: () => {}
+      });
+    });
   }
 
   _filterNonDisplayShareOptions(): any {
