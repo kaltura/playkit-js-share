@@ -106,9 +106,9 @@ class Share extends Component {
       )
     ) : (
       <Tooltip label={this.props.shareTxt}>
-        <div tabIndex={0} aria-haspopup="true" className={style.upperBarIcon} onClick={this.toggleOverlay} aria-label={this.props.shareTxt}>
+        <button tabIndex={0} aria-haspopup="true" className={style.upperBarIcon} onClick={this.toggleOverlay} aria-label={this.props.shareTxt}>
           <Icon id={pluginName} path={ICON_PATH} />
-        </div>
+        </button>
       </Tooltip>
     );
   }
