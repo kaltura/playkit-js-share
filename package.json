@@ -15,6 +15,10 @@
   "repository": "https://github.com/kaltura/playkit-js-share",
   "license": "AGPL-3.0",
   "main": "dist/playkit-share.js",
+  "kalturaName": "share",
+  "kalturaDependencies": [
+    "uiManagers"
+  ],
   "scripts": {
     "prebuild": "npm run clean",
     "build": "webpack --mode production",
