@@ -116,5 +116,11 @@
   "kcc": {
     "name": "playkit-share"
   },
-  "author": "yuval.keidar <keidaryu@gmail.com>"
+  "author": "yuval.keidar <keidaryu@gmail.com>",
+  "kaltura": {
+    "name": "share",
+    "dependencies": {
+      "playkit-ui-managers": "1.2.2"
+    }
+  }
 }
