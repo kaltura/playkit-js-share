@@ -77,7 +77,7 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 
 ## Documentation
 
-Share plugin enables to share the current content or some other content related url to the social media.
+Share plugin enables sharing the current content or some other content-related url to social media platforms.
 
 Share plugin also enables customizing the sharing attributes. 
 
