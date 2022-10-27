@@ -95,7 +95,7 @@ If share plugin is enabled, a share icon will be added to the player's top right
 
 #### Sharing Capabilities
 
-* Share to a social networks
+* Share to social networks
 * Email a link to the video
 * Copy a code which enables the video to be embedded
 
