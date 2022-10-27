@@ -81,7 +81,7 @@ Share plugin enables sharing the current content or some other content-related u
 
 Share plugin also enables customizing the sharing attributes. 
 
-If share plugin is enabled  share icon will be added to the player's top right corner configurable using the uiComponent [area](https://github.com/kaltura/playkit-js-ui/blob/master/docs/ui-components.md#general) attribute.
+If share plugin is enabled, a share icon will be added to the player's top right corner - this is configurable using the uiComponent [area](https://github.com/kaltura/playkit-js-ui/blob/master/docs/ui-components.md#general) attribute.
 
 ```
 "uiComponent": {
