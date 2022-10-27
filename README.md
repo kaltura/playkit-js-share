@@ -122,7 +122,7 @@ If share plugin is enabled, a share icon will be added to the player's top right
 
 #### shareOptions
 `shareOptions` are optional, the plugin can work only with shareUrl or embedUrl stand alone
-once it is added the plugin use uts configured attributes and will disply only the named plugins in the list and in the same order it was added means FB will be displayed before Linkedin for the below example. 
+once set, the plugin use the configured attributes and will display only the named sharing targets, in the same order they were added, meaning FB will be displayed before Linkedin for the example below. 
 
 **[Configuration](./docs/configuration.md)**
 
