@@ -118,7 +118,7 @@ If share plugin is enabled, a share icon will be added to the player's top right
 * Whether to also set start position for the shared media
 
 #### useNative
-* If the share icon is clicked users will have the ability to choose how to share the desired content using plauer custom UI or the native share api
+* If the share icon is clicked users will have the ability to choose how to share the desired content using player custom UI or the native share api
 
 #### shareOptions
 `shareOptions` are optional, the plugin can work only with shareUrl or embedUrl stand alone
