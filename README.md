@@ -115,7 +115,7 @@ If share plugin is enabled, a share icon will be added to the player's top right
 * The suggested embedUrl to use if default one is not what app requires
 
 #### enableTimeOffset
-* Whether to add also start postion to the shared media
+* Whether to also set start position for the shared media
 
 #### useNative
 * If the share icon is clicked users will have the ability to choose how to share the desired content using plauer custom UI or the native share api
