@@ -183,7 +183,8 @@ once set, the plugin use the configured attributes and will display only the nam
 
 #### Example
 
-**[Share Plugin Example](https://codepen.io/giladna/pen/KKoOrLV)**
+**[Share Plugin Example](https://kaltura.github.io/playkit-js-share/demo/index.html)**
+
 
 </br>
 
