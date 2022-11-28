@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <script src="https://raw.githack.com/kaltura/kaltura-player-js/master/dist/kaltura-ovp-player.js"></script>
-  <script src="https://raw.githack.com/kaltura/playkit-js-ui-managers/master/dist/playkit-ui-managers.js"></script>
+<!--  <script src="https://qa-apache-php7.dev.kaltura.com/p/1091/embedPlaykitJs/uiconf_id/15460556"></script>-->
+  <script src="https://cdnapisec.kaltura.com/p/1804331/embedPlaykitJs/uiconf_id/51444112"></script>
+  <script src="https://unpkg.com/@playkit-js/ui-managers@latest/dist/playkit-ui-managers.js"></script>
   <script src="./playkit-share.js"></script>
 </head>
 
@@ -17,7 +18,9 @@
     let config = {
       logLevel: "DEBUG",
       "targetId": "player-placeholder",
-      "provider": {},
+      "provider": {
+        partnerId: 1804331,
+      },
       // translations - for local environment
       ui: {
         translations: {
@@ -55,8 +58,7 @@
 
 
     var kalturaPlayer = KalturaPlayer.setup(config);
-    kalturaPlayer.loadMedia({ entryId: "1_ebs5e9cy" });
+    kalturaPlayer.loadMedia({ entryId: "1_r62g23gz" });
   </script>
 </body>
-
 </html>
