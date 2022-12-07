@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.4](https://github.com/kaltura/playkit-js-share/compare/v1.1.3...v1.1.4) (2022-12-07)
+
+
+### Bug Fixes
+
+* **FEC-12559:** Share plugin - integration with the new Upper Bar Manager service API ([#14](https://github.com/kaltura/playkit-js-share/issues/14)) ([e419b4d](https://github.com/kaltura/playkit-js-share/commit/e419b4dd5b5b250474ccff33294ce68ed0f129f2)), closes [kaltura/playkit-js-ui-managers#10](https://github.com/kaltura/playkit-js-ui-managers/issues/10)
+
 ### [1.1.3](https://github.com/kaltura/playkit-js-share/compare/v1.1.2...v1.1.3) (2022-06-09)
 
 
