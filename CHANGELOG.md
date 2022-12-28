@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.6](https://github.com/kaltura/playkit-js-share/compare/v1.1.5...v1.1.6) (2022-12-28)
+
+
+### Bug Fixes
+
+* **FEC-12809:** Incorrect order of plugins ([#16](https://github.com/kaltura/playkit-js-share/issues/16)) ([5724af5](https://github.com/kaltura/playkit-js-share/commit/5724af52490620d09a7c224018189ebd9ac8e0b2))
+
 ### [1.1.5](https://github.com/kaltura/playkit-js-share/compare/v1.1.4...v1.1.5) (2022-12-07)
 
 ### [1.1.4](https://github.com/kaltura/playkit-js-share/compare/v1.1.3...v1.1.4) (2022-12-07)
