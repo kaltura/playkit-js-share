@@ -10,7 +10,10 @@ sudo: required
 dist: xenial
 language: node_js
 node_js:
-  - '17'
+  - 17
+env:
+  global:
+    - NODE_OPTIONS="--openssl-legacy-provider"
 
 addons:
   chrome: stable
