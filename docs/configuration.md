@@ -18,8 +18,7 @@ var config = {
   embedUrl: string,
   enableTimeOffset: boolean,
   useNative: boolean,
-  shareOptions: ShareOptions,
-  uiComponent?: KPUIComponentOptions // optional
+  shareOptions: ShareOptions
 }
 ```
 
@@ -84,15 +83,3 @@ var config = {
 > >  }
 > > }
 > > ```
-
-##
-
-> ### config.uiComponent
->
-> ##### Type: `KPUIComponentOptions`
->
-> ##### Description: Defines the ui components configuration.
-
-##
-
-> See guide [ui-components](https://github.com/kaltura/playkit-js-ui/blob/master/docs/ui-components.md)

@@ -60,10 +60,6 @@ Finally, add the bundle as a script tag in your page, and initialize the player
         'embedUrl': 'YOUR EMBED URL', //string
         'enableTimeOffset': true, //boolean - Default false
         'useNative': true, //boolean - use native API
-        'uiComponent': {
-          'presets': ['Playback', 'Live'],
-          'area': 'TopBarRightControls'
-        }
       }
     }
   ...

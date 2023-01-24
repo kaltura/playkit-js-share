@@ -4,9 +4,11 @@
  * @ignore
  */
 import {h} from 'preact';
-import {KalturaPlayer, BasePlugin, core} from 'kaltura-player-js';
+import {KalturaPlayer, BasePlugin, core, ui} from 'kaltura-player-js';
 import {ICON_PATH, Share as ShareComponent} from './components/share/share';
 import {defaultShareOptionsConfig} from './default-share-options-config';
+import {ShareButton} from './components/plugin-button/plugin-button';
+const {ReservedPresetNames} = ui;
 const {Utils} = core;
 
 const pluginName: string = 'share';
@@ -27,12 +29,7 @@ class Share extends BasePlugin {
   static defaultConfig: ShareConfig = {
     useNative: false,
     embedUrl: '{embedBaseUrl}/p/{partnerId}/embedPlaykitJs/uiconf_id/{uiConfId}?iframeembed=true&entry_id={entryId}',
-    enableTimeOffset: true,
-    uiComponent: {
-      label: 'shareButtonComponent',
-      presets: ['Playback', 'Live'],
-      area: 'TopBarRightControls'
-    }
+    enableTimeOffset: true
   };
 
   /**
@@ -60,20 +57,68 @@ class Share extends BasePlugin {
     if (!this.config.shareUrl) {
       this.config.shareUrl = window.location.href;
     }
-
+    this._wasPlayed = false; // keep state of the player so we can resume if needed
     this._addIcon();
   }
 
   _addIcon() {
     this.player.ready().then(() => {
-      const ShareWrapper = () => <ShareComponent config={this.config} />;
+      const ShareWrapper = () => <ShareButton config={this.config} />;
       this.iconId = this.player.getService('upperBarManager').add({
         label: 'Share',
         component: ShareWrapper,
         svgIcon: {path: ICON_PATH},
-        onClick: () => {}
+        onClick: this._openShareOverlay.bind(this)
       });
     });
+  }
+
+  _openShareOverlay() {
+    if (!this.player.paused) {
+      this.player.pause();
+      this._wasPlayed = true;
+    }
+    if (this.config.useNative && navigator.share) {
+      const videoDesc = this._getVideoDesc();
+      navigator
+        .share({
+          title: `Check out ${videoDesc}`,
+          text: `Check out ${videoDesc}`,
+          url: this.config.shareUrl
+        })
+        .then(() => this.logger.debug('Successful sharing'))
+        .catch(error => this.logger.error('Failed sharing', error));
+    } else {
+      this._setOverlay(
+        this.player.ui.addComponent({
+          label: 'info-overlay',
+          area: 'GuiArea',
+          presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
+          // eslint-disable-next-line react/display-name
+          get: () => <ShareComponent onClose={this._closeShareOverlay.bind(this)} config={this.config} />
+        })
+      );
+    }
+  }
+
+  _closeShareOverlay() {
+    this._removeOverlay();
+    if (this._wasPlayed) {
+      this.player.play();
+      this._wasPlayed = false;
+    }
+  }
+
+  _setOverlay(fn: Function) {
+    this._removeOverlay();
+    this._removeActiveOverlay = fn;
+  }
+
+  _removeOverlay() {
+    if (this._removeActiveOverlay) {
+      this._removeActiveOverlay();
+      this._removeActiveOverlay = null;
+    }
   }
 
   _filterNonDisplayShareOptions(): any {
@@ -90,6 +135,15 @@ class Share extends BasePlugin {
   updateConfig(update: Object): void {
     super.updateConfig(update);
     this._filterNonDisplayShareOptions();
+  }
+
+  reset() {
+    this._closeShareOverlay();
+  }
+
+  destroy() {
+    this._removeOverlay();
+    this.player.getService('upperBarManager').remove(this.iconId);
   }
 }
 
