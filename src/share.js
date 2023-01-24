@@ -95,7 +95,7 @@ class Share extends BasePlugin {
           area: 'GuiArea',
           presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
           // eslint-disable-next-line react/display-name
-          get: () => <ShareComponent onClose={this._closeShareOverlay.bind(this)} config={this.config}/>
+          get: () => <ShareComponent onClose={this._closeShareOverlay.bind(this)} config={this.config} />
         })
       );
     }
