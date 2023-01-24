@@ -136,6 +136,15 @@ class Share extends BasePlugin {
     super.updateConfig(update);
     this._filterNonDisplayShareOptions();
   }
+
+  reset() {
+    this._closeShareOverlay();
+  }
+
+  destroy() {
+    this._removeOverlay();
+    this.player.getService('upperBarManager').remove(this.iconId);
+  }
 }
 
 export {Share, pluginName};
