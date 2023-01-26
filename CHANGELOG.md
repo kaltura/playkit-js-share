@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.7](https://github.com/kaltura/playkit-js-share/compare/v1.1.6...v1.1.7) (2023-01-26)
+
+
+### Bug Fixes
+
+* **FEC-12879:** share plugin does not work when the share icon inside the more plugin ([#17](https://github.com/kaltura/playkit-js-share/issues/17)) ([a17b45e](https://github.com/kaltura/playkit-js-share/commit/a17b45ef944c35bba2940b7d9a348b46193d1015))
+* **FEC-12896:** update version -  "playkit-ui-managers": "1.3.4" ([#18](https://github.com/kaltura/playkit-js-share/issues/18)) ([1e885fd](https://github.com/kaltura/playkit-js-share/commit/1e885fd88a2a0c360bcc743f187bca1527fc8d4f))
+
 ### [1.1.6](https://github.com/kaltura/playkit-js-share/compare/v1.1.5...v1.1.6) (2022-12-28)
 
 
