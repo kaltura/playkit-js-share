@@ -6,8 +6,9 @@
 import {ui} from 'kaltura-player-js';
 import shareStyle from './style.scss';
 
-const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers} = ui;
+const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers, preactHooks} = ui;
 const {h, Component} = preact;
+const {useRef, useEffect} = preactHooks;
 const {Text, Localizer} = preacti18n;
 const {Overlay, Icon, CopyButton, Button, withLogger, Tooltip, ButtonControl} = Components;
 const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS} = Utils;
@@ -130,6 +131,27 @@ const ShareUrl = (props: Object): React$Element<any> => {
  * @constructor
  */
 const VideoStartOptions = (props: Object): React$Element<any> => {
+  let _inputRefElement = useRef<HTMLInputElement>();
+
+  const onInputFocusOutHandler = event => {
+    props.handleStartFromChange(event);
+  };
+
+  useEffect(() => {
+    if (_inputRefElement) {
+      props.startFrom ? _inputRefElement.removeAttribute('disabled') : _inputRefElement.setAttribute('disabled', '');
+    }
+  }, [props.startFrom]);
+
+  useEffect(() => {
+    _inputRefElement?.addEventListener('focusout', function onFocusOut(event) {
+      onInputFocusOutHandler(event);
+    });
+    return () => {
+      _inputRefElement?.removeEventListener('focusout', onInputFocusOutHandler);
+    };
+  }, []);
+
   /**
    * on click handler
    *
@@ -150,7 +172,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
    * @memberof VideoStartOptions
    */
   const onKeyDown = (e: KeyboardEvent): void => {
-    if (e.keyCode === KeyMap.ENTER) {
+    if (e.keyCode === KeyMap.ENTER || e.keyCode === KeyMap.SPACE) {
       e.preventDefault();
       props.toggleStartFrom();
     }
@@ -177,11 +199,12 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
         <input
           aria-labelledby="start-from-label"
           ref={el => {
+            _inputRefElement = el;
             props.addAccessibleChild(el);
           }}
+          aria-disabled={props.startFrom ? 'false' : 'true'}
           type="text"
           className={style.formControl}
-          onChange={props.handleStartFromChange}
           value={toHHMMSS(props.startFromValue)}
           style="width: 72px;"
         />
@@ -308,8 +331,9 @@ class ShareOverlay extends Component {
     let seconds = toSecondsFromHHMMSS(e.target.value);
     if (seconds >= this.props.player.duration) {
       this.setState({startFromValue: 1});
+    } else {
+      this.setState({startFromValue: seconds});
     }
-    this.setState({startFromValue: seconds});
   };
 
   /**
