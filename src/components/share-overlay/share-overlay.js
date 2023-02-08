@@ -172,7 +172,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
    * @memberof VideoStartOptions
    */
   const onKeyDown = (e: KeyboardEvent): void => {
-    if (e.keyCode === KeyMap.ENTER || e.keyCode === KeyMap.SPACE) {
+    if ([KeyMap.ENTER, KeyMap.SPACE].includes(e.keyCode)) {
       e.preventDefault();
       props.toggleStartFrom();
     }
