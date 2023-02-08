@@ -144,7 +144,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
   }, [props.startFrom]);
 
   useEffect(() => {
-    _inputRefElement?.addEventListener('focusout', function onFocusOut(event) {
+    _inputRefElement?.addEventListener('focusout', event => {
       onInputFocusOutHandler(event);
     });
     return () => {
