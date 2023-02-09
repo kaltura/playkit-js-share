@@ -11,7 +11,7 @@ const {h, Component} = preact;
 const {useRef} = preactHooks;
 const {Text, Localizer} = preacti18n;
 const {Overlay, Icon, CopyButton, Button, withLogger, Tooltip, ButtonControl} = Components;
-const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS, formatOnlyNumbersInput, hasOnlyNumbers} = Utils;
+const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS, formatOnlyNumbersInput} = Utils;
 const {shell} = Reducers;
 const {actions} = shell;
 const {connect} = redux;
@@ -141,7 +141,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
    * @memberof VideoStartOptions
    */
   const formatInput = (inputValue: string): string => {
-    return hasOnlyNumbers(inputValue) ? formatOnlyNumbersInput(inputValue) : inputValue;
+    return isNaN(inputValue) ? inputValue : formatOnlyNumbersInput(inputValue);
   };
 
   /**
@@ -192,7 +192,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
   const onInputChangeHandler = (val: string): void => {
     for (let index = 0; index < val.length; index++) {
       const char = val.charAt(index);
-      if (!/\d/.test(char) && char !== ':') {
+      if (isNaN(char) && char !== ':') {
         _inputRefElement.value = val.replace(char, '');
         break;
       }
