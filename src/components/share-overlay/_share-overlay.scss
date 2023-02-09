@@ -76,11 +76,3 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 }
-
-input[type="time"]::-webkit-calendar-picker-indicator {
-  background: none;
-  display:none;
-}
-input[type="time"] {
-  font-family: Lato,Helvetica Neue,Segoe UI,sans-serif;
-}
