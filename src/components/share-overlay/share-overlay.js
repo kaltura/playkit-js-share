@@ -8,10 +8,10 @@ import shareStyle from './style.scss';
 
 const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers, preactHooks} = ui;
 const {h, Component} = preact;
-const {useRef, useEffect} = preactHooks;
+const {useRef} = preactHooks;
 const {Text, Localizer} = preacti18n;
 const {Overlay, Icon, CopyButton, Button, withLogger, Tooltip, ButtonControl} = Components;
-const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS} = Utils;
+const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS, formatOnlyNumbersInput, hasOnlyNumbers} = Utils;
 const {shell} = Reducers;
 const {actions} = shell;
 const {connect} = redux;
@@ -133,24 +133,28 @@ const ShareUrl = (props: Object): React$Element<any> => {
 const VideoStartOptions = (props: Object): React$Element<any> => {
   let _inputRefElement = useRef<HTMLInputElement>();
 
-  const onInputFocusOutHandler = event => {
-    props.handleStartFromChange(event);
+  /**
+   * format the value in input element
+   *
+   * @param {string} inputValue - the value from the input element
+   * @returns {string} the formatted value
+   * @memberof VideoStartOptions
+   */
+  const formatInput = (inputValue: string): string => {
+    return hasOnlyNumbers(inputValue) ? formatOnlyNumbersInput(inputValue) : inputValue;
   };
 
-  useEffect(() => {
-    if (_inputRefElement) {
-      props.startFrom ? _inputRefElement.removeAttribute('disabled') : _inputRefElement.setAttribute('disabled', '');
-    }
-  }, [props.startFrom]);
-
-  useEffect(() => {
-    _inputRefElement?.addEventListener('focusout', event => {
-      onInputFocusOutHandler(event);
-    });
-    return () => {
-      _inputRefElement?.removeEventListener('focusout', onInputFocusOutHandler);
-    };
-  }, []);
+  /**
+   * on focusout handler
+   *
+   * @param {*} event - the focusout event
+   * @returns {void}
+   * @memberof VideoStartOptions
+   */
+  const onInputFocusOutHandler = (event: any): void => {
+    const formattedInput = formatInput(event.target.value);
+    props.handleStartFromChange(formattedInput);
+  };
 
   /**
    * on click handler
@@ -178,6 +182,37 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
     }
   };
 
+  /**
+   * on change handler
+   * prevent invalid chars in input (only numbers and ':' are valid)
+   * @param {string} val - the value from the input element
+   * @returns {void}
+   * @memberof VideoStartOptions
+   */
+  const onInputChangeHandler = (val: string): void => {
+    for (let index = 0; index < val.length; index++) {
+      const char = val.charAt(index);
+      if (!/\d/.test(char) && char !== ':') {
+        _inputRefElement.value = val.replace(char, '');
+        break;
+      }
+    }
+  };
+
+  const inputProps = {
+    'aria-labelledby': 'start-from-label',
+    'aria-disabled': props.startFrom ? 'false' : 'true',
+    type: 'text',
+    value: toHHMMSS(props.startFromValue),
+    className: [style.formControl, shareStyle.startAtInput, !props.startFrom ? shareStyle.disabled : ''].join(' '),
+    style: props.videoHasHours ? 'width: 85px;' : 'width: 56px;',
+    onChange: e => onInputChangeHandler(e.target.value),
+    onBlur: onInputFocusOutHandler
+  };
+  if (!props.startFrom) {
+    inputProps.disabled = true;
+  }
+
   return (
     <div className={shareStyle.videoStartOptionsRow}>
       <div
@@ -197,16 +232,11 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
       </div>
       <div className={[style.formGroup, style.dInlineBlock].join(' ')}>
         <input
-          aria-labelledby="start-from-label"
           ref={el => {
             _inputRefElement = el;
             props.addAccessibleChild(el);
           }}
-          aria-disabled={props.startFrom ? 'false' : 'true'}
-          type="text"
-          className={style.formControl}
-          value={toHHMMSS(props.startFromValue)}
-          style="width: 72px;"
+          {...inputProps}
         />
       </div>
     </div>
@@ -323,17 +353,14 @@ class ShareOverlay extends Component {
    * start from input change handler.
    * converts to seconds and save the new value in internal component state
    *
-   * @param {*} e - input change event
+   * @param {string} value - input change event
    * @returns {void}
    * @memberof ShareOverlay
    */
-  _handleStartFromChange = (e: any): void => {
-    let seconds = toSecondsFromHHMMSS(e.target.value);
-    if (seconds >= this.props.player.duration) {
-      this.setState({startFromValue: 1});
-    } else {
-      this.setState({startFromValue: seconds});
-    }
+  _handleStartFromChange = (value: string): void => {
+    let seconds = toSecondsFromHHMMSS(value);
+    const val = seconds >= this.props.player.duration ? this.props.player.duration : seconds;
+    this.setState({startFromValue: val});
   };
 
   /**
@@ -412,6 +439,7 @@ class ShareOverlay extends Component {
                 startFromValue={this.state.startFromValue}
                 handleStartFromChange={this._handleStartFromChange}
                 toggleStartFrom={this._toggleStartFrom}
+                videoHasHours={this.props.player.duration >= 3600}
               />
             ) : undefined}
           </div>
