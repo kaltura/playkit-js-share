@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.8](https://github.com/kaltura/playkit-js-share/compare/v1.1.7...v1.1.8) (2023-02-22)
+
+
+### Bug Fixes
+
+* **FEC-12916:** share Plugin Keyboard Functionality ([#19](https://github.com/kaltura/playkit-js-share/issues/19)) ([4dcbb19](https://github.com/kaltura/playkit-js-share/commit/4dcbb192e55a7a02f65f48a57a583d769ebf632f))
+
 ### [1.1.7](https://github.com/kaltura/playkit-js-share/compare/v1.1.6...v1.1.7) (2023-01-26)
 
 
