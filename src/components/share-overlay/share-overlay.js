@@ -3,7 +3,7 @@
  * @jsx h
  * @ignore
  */
-import {ui} from 'kaltura-player-js';
+import {ui} from '@playkit-js/kaltura-player-js';
 import shareStyle from './style.scss';
 
 const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers, preactHooks} = ui;

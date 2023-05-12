@@ -4,7 +4,7 @@
  * @ignore
  */
 import {h} from 'preact';
-import {KalturaPlayer, BasePlugin, core, ui} from 'kaltura-player-js';
+import {KalturaPlayer, BasePlugin, core, ui} from '@playkit-js/kaltura-player-js';
 import {ICON_PATH, Share as ShareComponent} from './components/share/share';
 import {defaultShareOptionsConfig} from './default-share-options-config';
 import {ShareButton} from './components/plugin-button/plugin-button';

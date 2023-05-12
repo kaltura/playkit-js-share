@@ -3,7 +3,7 @@
  * @jsx h
  * @ignore
  */
-import {ui, core} from 'kaltura-player-js';
+import {ui, core} from '@playkit-js/kaltura-player-js';
 import {ShareOverlay} from '../share-overlay/share-overlay';
 const {preact, preacti18n, Components, Utils, redux, Reducers, createPortal} = ui;
 const {h, Component} = preact;
