@@ -1,6 +1,6 @@
 ## Canary CI/CD
-name: Canary Full Flow
-run-name: Canary Full Flow
+name: Canary Full Flow Manual
+run-name: Canary Full Flow Manual
 
 on:
   workflow_dispatch:
