@@ -5,6 +5,7 @@
  */
 import {ui} from '@playkit-js/kaltura-player-js';
 import shareStyle from './style.scss';
+import {FakeEvent} from '@playkit-js/playkit-js';
 
 const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers, preactHooks} = ui;
 const {h, Component} = preact;
@@ -61,6 +62,7 @@ const ShareButton = (props: Object): React$Element<any> => {
         window.open(href, '_blank', 'width=580,height=580');
         break;
     }
+    props.player.dispatchEvent(new FakeEvent(props.player.Event.SHARE_NETWORK, {shareNetworkName: buttonType}));
   };
 
   return (
@@ -224,7 +226,8 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
         tabIndex="0"
         onClick={onClick}
         onKeyDown={onKeyDown}
-        className={[style.checkbox, style.dInlineBlock].join(' ')}>
+        className={[style.checkbox, style.dInlineBlock].join(' ')}
+      >
         <input type="checkbox" id="start-from" checked={props.startFrom} />
         <label id="start-from-label" htmlFor="start-from">
           <Text id={'share.start_video_at'} />
@@ -411,6 +414,7 @@ class ShareOverlay extends Component {
           config={shareButtonConfig}
           addAccessibleChild={this.props.addAccessibleChild}
           updateShareOverlay={this._updateOverlay}
+          player={this.props.player}
         />
       );
     });
@@ -506,7 +510,8 @@ class ShareOverlay extends Component {
         addAccessibleChild={this.props.addAccessibleChild}
         handleKeyDown={this.props.handleKeyDown}
         onClose={props.onClose}
-        type="playkit-share">
+        type="playkit-share"
+      >
         {this.renderStateContent()}
       </Overlay>
     );

@@ -78,6 +78,7 @@ class Share extends BasePlugin {
       this.player.pause();
       this._wasPlayed = true;
     }
+    this.dispatchEvent(this.player.Event.SHARE_CLICKED);
     if (this.config.useNative && navigator.share) {
       const videoDesc = this._getVideoDesc();
       navigator
