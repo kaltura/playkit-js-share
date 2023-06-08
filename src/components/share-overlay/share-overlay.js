@@ -226,8 +226,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
         tabIndex="0"
         onClick={onClick}
         onKeyDown={onKeyDown}
-        className={[style.checkbox, style.dInlineBlock].join(' ')}
-      >
+        className={[style.checkbox, style.dInlineBlock].join(' ')}>
         <input type="checkbox" id="start-from" checked={props.startFrom} />
         <label id="start-from-label" htmlFor="start-from">
           <Text id={'share.start_video_at'} />
@@ -510,8 +509,7 @@ class ShareOverlay extends Component {
         addAccessibleChild={this.props.addAccessibleChild}
         handleKeyDown={this.props.handleKeyDown}
         onClose={props.onClose}
-        type="playkit-share"
-      >
+        type="playkit-share">
         {this.renderStateContent()}
       </Overlay>
     );
