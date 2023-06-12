@@ -6,6 +6,7 @@
 import {ui} from '@playkit-js/kaltura-player-js';
 import shareStyle from './style.scss';
 import {FakeEvent} from '@playkit-js/playkit-js';
+import {ShareEvent} from '../../event';
 
 const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers, preactHooks} = ui;
 const {h, Component} = preact;
@@ -62,7 +63,7 @@ const ShareButton = (props: Object): React$Element<any> => {
         window.open(href, '_blank', 'width=580,height=580');
         break;
     }
-    props.player.dispatchEvent(new FakeEvent(props.player.Event.SHARE_NETWORK, {shareNetworkName: buttonType}));
+    props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_NETWORK, {shareNetworkName: buttonType}));
   };
 
   return (
