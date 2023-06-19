@@ -8,6 +8,7 @@ import {KalturaPlayer, BasePlugin, core, ui} from '@playkit-js/kaltura-player-js
 import {ICON_PATH, Share as ShareComponent} from './components/share/share';
 import {defaultShareOptionsConfig} from './default-share-options-config';
 import {ShareButton} from './components/plugin-button/plugin-button';
+import {ShareEvent} from './event';
 const {ReservedPresetNames} = ui;
 const {Utils} = core;
 
@@ -78,6 +79,7 @@ class Share extends BasePlugin {
       this.player.pause();
       this._wasPlayed = true;
     }
+    this.dispatchEvent(ShareEvent.SHARE_CLICKED);
     if (this.config.useNative && navigator.share) {
       const videoDesc = this._getVideoDesc();
       navigator
