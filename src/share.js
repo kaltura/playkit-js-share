@@ -11,7 +11,7 @@ import {ShareButton} from './components/plugin-button/plugin-button';
 import {ShareEvent} from './event';
 const {ReservedPresetNames} = ui;
 const {Utils} = core;
-
+const {Text} = ui.preacti18n;
 const pluginName: string = 'share';
 /**
  * The Share plugin.
@@ -66,7 +66,7 @@ class Share extends BasePlugin {
     this.player.ready().then(() => {
       const ShareWrapper = () => <ShareButton config={this.config} />;
       this.iconId = this.player.getService('upperBarManager').add({
-        label: 'Share',
+        label: <Text id="controls.share">Share</Text>,
         component: ShareWrapper,
         svgIcon: {path: ICON_PATH},
         onClick: this._openShareOverlay.bind(this)
