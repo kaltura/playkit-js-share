@@ -43,7 +43,7 @@ const ShareButton = (props: Object): React$Element<any> => {
   const onClick = (buttonType: string) => {
     const EMAIL = 'email';
     const {templateUrl, shareUrl, embedUrl} = props.config;
-    let href = templateUrl;
+    let href = decodeURIComponent(templateUrl);
 
     href = href.replace(/{description}/g, encodeURIComponent(props.videoDesc));
     try {
