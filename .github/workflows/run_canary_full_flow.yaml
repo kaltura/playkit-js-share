@@ -24,4 +24,3 @@ jobs:
       stage: "canary"
       schema-type: "playerV3Versions"
       tests-yarn-run-to-execute: 'build eslint flow test'
-
