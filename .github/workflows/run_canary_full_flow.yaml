@@ -19,9 +19,9 @@ jobs:
       PLAYER_LAMBDA_NAME: ${{ secrets.PLAYER_LAMBDA_NAME }}
       PLAYER_MSTEAMS_WEBHOOK: ${{ secrets.PLAYER_MSTEAMS_WEBHOOK }}
       PLAYER_GITHUB_BOT_TOKEN: ${{ secrets.PLAYER_GITHUB_BOT_TOKEN }}
+      PLAYER_GITHUB_KCONF_TOKEN: ${{ secrets.PLAYER_GITHUB_KCONF_TOKEN }}
     with:
       type: "plugin"
       stage: "canary"
       schema-type: "playerV3Versions"
       tests-yarn-run-to-execute: 'build eslint flow test'
-
