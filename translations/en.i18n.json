@@ -7,6 +7,8 @@
       "title": "Share",
       "embed_options": "Embed Options",
       "start_video_at": "Start video at",
+      "full_video": "Full video",
+      "clip_video": "Clip video",
       "email": "Share on Email",
       "embed": "Get embed code",
       "share-on-facebook": "Share on Facebook",

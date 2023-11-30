@@ -8,7 +8,7 @@ import shareStyle from './style.scss';
 import {FakeEvent} from '@playkit-js/playkit-js';
 import {ShareEvent} from '../../event';
 
-const {preact, preacti18n, Components, Event, Utils, style, redux, Reducers, preactHooks} = ui;
+const {preact, preacti18n, Components, Utils, style, redux, Reducers, preactHooks} = ui;
 const {h, Component} = preact;
 const {useRef} = preactHooks;
 const {Text, Localizer} = preacti18n;
@@ -127,6 +127,12 @@ const ShareUrl = (props: Object): React$Element<any> => {
   );
 };
 
+const VIDEO_CLIPPING_OPTIONS = {
+  FULL_VIDEO: 'full',
+  START_FROM: 'start-from',
+  CLIP: 'clip'
+};
+
 /**
  * The video start options
  * @param {Object} props - the class props
@@ -134,7 +140,9 @@ const ShareUrl = (props: Object): React$Element<any> => {
  * @constructor
  */
 const VideoStartOptions = (props: Object): React$Element<any> => {
-  let _inputRefElement = useRef<HTMLInputElement>();
+  let _startFromInputRef = useRef<HTMLInputElement>();
+  let _clipStartTimeInputRef = useRef<HTMLInputElement>();
+  let _clipEndTimeInputRef = useRef<HTMLInputElement>();
 
   /**
    * format the value in input element
@@ -151,37 +159,40 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
    * on focusout handler
    *
    * @param {*} event - the focusout event
+   * @param {*} cb - the callback function to invoke
    * @returns {void}
    * @memberof VideoStartOptions
    */
-  const onInputFocusOutHandler = (event: any): void => {
+  const onInputFocusOutHandler = (event: any, cb: any): void => {
     const formattedInput = formatInput(event.target.value);
-    props.handleStartFromChange(formattedInput);
+    cb(formattedInput);
   };
 
   /**
    * on click handler
    *
    * @param {Event} e - event
+   * @param {string} option - the video clipping option to set
    * @returns {void}
    * @memberof VideoStartOptions
    */
-  const onClick = (e: Event): void => {
+  const onClick = (e: Event, option: string): void => {
     e.preventDefault();
-    props.toggleStartFrom();
+    props.setVideoClippingOption(option);
   };
 
   /**
    * on key down handler
    *
    * @param {KeyboardEvent} e - keyboard event
+   * @param {string} option - the video clipping option
    * @returns {void}
    * @memberof VideoStartOptions
    */
-  const onKeyDown = (e: KeyboardEvent): void => {
+  const onKeyDown = (e: KeyboardEvent, option: string): void => {
     if ([KeyMap.ENTER, KeyMap.SPACE].includes(e.keyCode)) {
       e.preventDefault();
-      props.toggleStartFrom();
+      props.setVideoClippingOption(option);
     }
   };
 
@@ -189,60 +200,225 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
    * on change handler
    * prevent invalid chars in input (only numbers and ':' are valid)
    * @param {string} val - the value from the input element
+   * @param {*} inputRefElement - the input ref element
    * @returns {void}
    * @memberof VideoStartOptions
    */
-  const onInputChangeHandler = (val: string): void => {
+  const onInputChangeHandler = (val: string, inputRefElement: any): void => {
     for (let index = 0; index < val.length; index++) {
       const char = val.charAt(index);
       if (isNaN(char) && char !== ':') {
-        _inputRefElement.value = val.replace(char, '');
+        inputRefElement.value = val.replace(char, '');
         break;
       }
     }
   };
 
-  const inputProps = {
-    'aria-labelledby': 'start-from-label',
-    'aria-disabled': props.startFrom ? 'false' : 'true',
-    type: 'text',
-    value: toHHMMSS(props.startFromValue),
-    className: [style.formControl, shareStyle.startAtInput, !props.startFrom ? shareStyle.disabled : ''].join(' '),
-    style: props.videoHasHours ? 'width: 85px;' : 'width: 56px;',
-    onChange: e => onInputChangeHandler(e.target.value),
-    onBlur: onInputFocusOutHandler
+  /**
+   * sets the video clipping option
+   *
+   * @param {string} option - the video clipping option to set
+   * @returns {void}
+   * @memberof VideoStartOptions
+   */
+  const setVideoClippingOption = (option: string): void => {
+    props.setVideoClippingOption(option);
   };
-  if (!props.startFrom) {
-    inputProps.disabled = true;
-  }
 
+  /**
+   * renders the start from input element
+   *
+   * @returns {void}
+   * @memberof VideoStartOptions
+   */
+  const _renderStartFromInput = () => {
+    const startFromInputProps = {
+      'aria-labelledby': 'start-from-label',
+      'aria-disabled': props.videoClippingOption === VIDEO_CLIPPING_OPTIONS.START_FROM ? 'false' : 'true',
+      type: 'text',
+      value: toHHMMSS(props.startFromValue),
+      className: [
+        style.formControl,
+        shareStyle.startAtInput,
+        props.videoClippingOption !== VIDEO_CLIPPING_OPTIONS.START_FROM ? shareStyle.disabled : ''
+      ].join(' '),
+      style: props.videoHasHours ? 'width: 85px;' : 'width: 56px;',
+      onChange: e => onInputChangeHandler(e.target.value, _startFromInputRef),
+      onBlur: e => onInputFocusOutHandler(e, props.handleStartFromChange)
+    };
+    if (props.videoClippingOption !== VIDEO_CLIPPING_OPTIONS.START_FROM) {
+      startFromInputProps.disabled = true;
+    }
+    return (
+      <div className={[style.formGroup, style.dInlineBlock].join(' ')}>
+        <input
+          ref={el => {
+            _startFromInputRef = el;
+            props.addAccessibleChild(el);
+          }}
+          {...startFromInputProps}
+        />
+      </div>
+    );
+  };
+
+  /**
+   * renders the input elements of the clipping option
+   *
+   * @returns {void}
+   * @memberof VideoStartOptions
+   */
+  const _renderClipTimeSlotsInput = () => {
+    const sharedAttr = {
+      'aria-disabled': props.videoClippingOption === VIDEO_CLIPPING_OPTIONS.CLIP ? 'false' : 'true',
+      type: 'text',
+      className: [
+        style.formControl,
+        shareStyle.startAtInput,
+        props.videoClippingOption !== VIDEO_CLIPPING_OPTIONS.CLIP ? shareStyle.disabled : ''
+      ].join(' '),
+      style: props.videoHasHours ? 'width: 85px;' : 'width: 56px;'
+    };
+
+    const clipStartTimeInputProps = {
+      'aria-labelledby': 'clip-seek-from-label',
+      value: toHHMMSS(props.clipStartTimeValue),
+      onChange: e => onInputChangeHandler(e.target.value, _clipStartTimeInputRef),
+      onBlur: e => onInputFocusOutHandler(e, props.handleClipStartTimeChange),
+      ...sharedAttr
+    };
+    if (props.videoClippingOption !== VIDEO_CLIPPING_OPTIONS.CLIP) {
+      clipStartTimeInputProps.disabled = true;
+    }
+
+    const clipToInputProps = {
+      'aria-labelledby': 'clip-to-label',
+      value: toHHMMSS(props.clipEndTimeValue),
+      onChange: e => onInputChangeHandler(e.target.value, _clipEndTimeInputRef),
+      onBlur: e => onInputFocusOutHandler(e, props.handleClipEndTimeChange),
+      ...sharedAttr
+    };
+    if (props.videoClippingOption !== VIDEO_CLIPPING_OPTIONS.CLIP) {
+      clipToInputProps.disabled = true;
+    }
+
+    return (
+      <div className={shareStyle.clipTimeSlotsContainer}>
+        <input
+          ref={el => {
+            _clipStartTimeInputRef = el;
+            props.addAccessibleChild(el);
+          }}
+          {...clipStartTimeInputProps}
+        />
+        <div className={shareStyle.clipRectangle} />
+        <input
+          ref={el => {
+            _clipEndTimeInputRef = el;
+            props.addAccessibleChild(el);
+          }}
+          {...clipToInputProps}
+        />
+      </div>
+    );
+  };
+
+  /**
+   * renders the video clipping option item
+   *
+   * @param {string} optionType - the video clipping option type
+   * @param {string} inputId - the input element id
+   * @param {string} labelId - the label element id
+   * @param {string} textId - the text id
+   * @returns {void}
+   * @memberof VideoStartOptions
+   */
+  const _renderVideoStartOptionsItem = (optionType: string, inputId: string, labelId: string, textId: string) => {
+    return (
+      <VideoStartOptionsItem
+        videoClippingOption={props.videoClippingOption}
+        addAccessibleChild={props.addAccessibleChild}
+        videoClippingType={optionType}
+        onKeyDown={(e: KeyboardEvent) => onKeyDown(e, optionType)}
+        onClick={(e: KeyboardEvent) => onClick(e, optionType)}
+        setVideoClippingOption={setVideoClippingOption}
+        inputId={inputId}
+        labelId={labelId}
+        textId={textId}>
+        {optionType === VIDEO_CLIPPING_OPTIONS.START_FROM && _renderStartFromInput()}
+        {optionType === VIDEO_CLIPPING_OPTIONS.CLIP && _renderClipTimeSlotsInput()}
+      </VideoStartOptionsItem>
+    );
+  };
+
+  return (
+    <div className={shareStyle.videoStartOptionsContainer} role="radiogroup">
+      {_renderVideoStartOptionsItem(VIDEO_CLIPPING_OPTIONS.FULL_VIDEO, 'full-video', 'full-video-label', 'share.full_video')}
+      {props.config.enableTimeOffset &&
+        _renderVideoStartOptionsItem(VIDEO_CLIPPING_OPTIONS.START_FROM, 'start-from', 'start-from-label', 'share.start_video_at')}
+      {props.config.enableClipping && _renderVideoStartOptionsItem(VIDEO_CLIPPING_OPTIONS.CLIP, 'clip', 'clip-label', 'share.clip_video')}
+    </div>
+  );
+};
+
+/**
+ * The video start options item
+ * @param {Object} props - the class props
+ * @returns {React$Element<any>} the video start options element
+ * @constructor
+ */
+const VideoStartOptionsItem = (props: Object): React$Element<any> => {
+  const isItemSelected = props.videoClippingOption === props.videoClippingType;
   return (
     <div className={shareStyle.videoStartOptionsRow}>
       <div
-        role="checkbox"
-        aria-checked={props.startFrom ? 'true' : 'false'}
+        role="radio"
+        aria-checked={isItemSelected}
         ref={el => {
           props.addAccessibleChild(el);
         }}
         tabIndex="0"
-        onClick={onClick}
-        onKeyDown={onKeyDown}
-        className={[style.checkbox, style.dInlineBlock].join(' ')}>
-        <input type="checkbox" id="start-from" checked={props.startFrom} />
-        <label id="start-from-label" htmlFor="start-from">
-          <Text id={'share.start_video_at'} />
+        onKeyDown={props.onKeyDown}
+        onClick={props.onClick}
+        className={shareStyle.radioButton}>
+        <input
+          type="radio"
+          id={props.inputId}
+          name={'videoClippingOption'}
+          checked={isItemSelected}
+          onChange={() => props.setVideoClippingOption(props.videoClippingType)}
+        />
+        {isItemSelected ? <RadioButtonSelected /> : <RadioButton />}
+        <label id={props.labelId} htmlFor={props.inputId}>
+          <Text id={props.textId} />
         </label>
       </div>
-      <div className={[style.formGroup, style.dInlineBlock].join(' ')}>
-        <input
-          ref={el => {
-            _inputRefElement = el;
-            props.addAccessibleChild(el);
-          }}
-          {...inputProps}
-        />
-      </div>
+      {props.children}
     </div>
+  );
+};
+
+/**
+ * The radio button of video start options
+ * @returns {React$Element<any>} the radio button element
+ */
+const RadioButton = (): React$Element<any> => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+      <circle cx="9.5" cy="9.89948" r="8.5" fill="black" stroke="#666666" />
+    </svg>
+  );
+};
+
+/**
+ * The selected radio button of video start options
+ * @returns {React$Element<any>} the selected radio button element
+ */
+const RadioButtonSelected = (): React$Element<any> => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+      <circle cx="9.5" cy="9.89948" r="6" fill="white" stroke="#006EFA" strokeWidth="6" />
+    </svg>
   );
 };
 
@@ -277,8 +453,10 @@ class ShareOverlay extends Component {
     this.isIos = this.props.player.env.os.name === 'iOS';
     this.setState({
       view: shareOverlayView.Main,
-      startFrom: false,
-      startFromValue: Math.floor(this.props.player.currentTime)
+      startFromValue: Math.floor(this.props.player.currentTime),
+      videoClippingOption: VIDEO_CLIPPING_OPTIONS.FULL_VIDEO,
+      clipStartTimeValue: Math.floor(this.props.player.currentTime),
+      clipEndTimeValue: Math.floor(this.props.player.duration)
     });
   }
 
@@ -305,6 +483,25 @@ class ShareOverlay extends Component {
     this.props.setIsModal(true);
   }
 
+  /**
+   * add seekFrom and clipTo query parameters to share url
+   *
+   * @param {string} url - the share url
+   * @returns {string} - share url with the query parameters
+   * @memberof ShareOverlay
+   */
+  _addKalturaClipParams(url: string): string {
+    const params = `kalturaSeekFrom=${this.state.clipStartTimeValue}&kalturaClipTo=${this.state.clipEndTimeValue}`;
+    return url.indexOf('?') === -1 ? `${url}?${params}` : `${url}&${params}`;
+  }
+
+  /**
+   * add start time query parameter to share url
+   *
+   * @param {string} url - the share url
+   * @returns {string} - share url with the query parameter
+   * @memberof ShareOverlay
+   */
   _addUrlKalturaStartTimeParam(url: string): string {
     const param = `kalturaStartTime=${this.state.startFromValue}`;
     return url.indexOf('?') === -1 ? `${url}?${param}` : `${url}&${param}`;
@@ -318,8 +515,21 @@ class ShareOverlay extends Component {
    */
   getShareUrl(): string {
     let url = this.props.config.shareUrl;
-    if (this.state.startFrom) {
+    return this._maybeAddParamsToUrl(url);
+  }
+
+  /**
+   * adds query parameters to the share url
+   *
+   * @param {string} url - the share url
+   * @returns {string} - the share url with query parameters
+   * @memberof ShareOverlay
+   */
+  _maybeAddParamsToUrl(url: string): string {
+    if (this.state.videoClippingOption === VIDEO_CLIPPING_OPTIONS.START_FROM) {
       url = this._addUrlKalturaStartTimeParam(url);
+    } else if (this.state.videoClippingOption === VIDEO_CLIPPING_OPTIONS.CLIP) {
+      url = this._addKalturaClipParams(url);
     }
     return url;
   }
@@ -334,36 +544,68 @@ class ShareOverlay extends Component {
   getEmbedCode(): string {
     let url = this.state.embedUrl;
     const template = this.state.embedTemplate;
-    if (this.state.startFrom) {
-      url = this._addUrlKalturaStartTimeParam(url);
-    }
+    url = this._maybeAddParamsToUrl(url);
     return template.replace(/{embedUrl}/g, url);
   }
 
   /**
-   * toggle start from option checkbox in the internal component state
+   * video clipping option radio button change handler.
+   * saves the new option value in internal component state
    *
+   * @param {string} option - the video clipping option to set
    * @returns {void}
    * @memberof ShareOverlay
    */
-  _toggleStartFrom = (): void => {
-    this.setState(prevState => {
-      return {startFrom: !prevState.startFrom};
-    });
+  _onVideoClippingOptionChange = (option: string): void => {
+    this.setState({videoClippingOption: option});
   };
 
   /**
    * start from input change handler.
-   * converts to seconds and save the new value in internal component state
+   * converts to second and save the new value in internal component state
    *
    * @param {string} value - input change event
    * @returns {void}
    * @memberof ShareOverlay
    */
   _handleStartFromChange = (value: string): void => {
+    this.setState({startFromValue: this._convertTimeValue(value)});
+  };
+
+  /**
+   * clip start time input change handler.
+   * sets clipStartTimeValue state with new value
+   *
+   * @param {string} value - the value of the clip start time
+   * @returns {void}
+   * @memberof ShareOverlay
+   */
+  _handleClipStartTimeChange = (value: string): void => {
+    this.setState({clipStartTimeValue: this._convertTimeValue(value)});
+  };
+
+  /**
+   * clip end time input change handler.
+   * sets clipEndTimeValue state with new value
+   *
+   * @param {string} value - the value of the clip end time
+   * @returns {void}
+   * @memberof ShareOverlay
+   */
+  _handleClipEndTimeChange = (value: string): void => {
+    this.setState({clipEndTimeValue: this._convertTimeValue(value)});
+  };
+
+  /**
+   * converts the new time value method
+   *
+   * @param {string} value - the time value to convert
+   * @returns {*} - the converted time
+   * @memberof ShareOverlay
+   */
+  _convertTimeValue = (value: string): any => {
     let seconds = toSecondsFromHHMMSS(value);
-    const val = seconds >= this.props.player.duration ? this.props.player.duration : seconds;
-    this.setState({startFromValue: val});
+    return seconds >= this.props.player.duration ? this.props.player.duration : seconds;
   };
 
   /**
@@ -436,20 +678,35 @@ class ShareOverlay extends Component {
           <div className={shareStyle.shareIcons}>{this._createShareOptions(this.props.config.shareOptions)}</div>
           <div className={shareStyle.linkOptionsContainer}>
             <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={this.getShareUrl()} copy={true} isIos={this.isIos} />
-            {this.props.config.enableTimeOffset && !this.props.isLive ? (
-              <VideoStartOptions
-                addAccessibleChild={this.props.addAccessibleChild}
-                startFrom={this.state.startFrom}
-                startFromValue={this.state.startFromValue}
-                handleStartFromChange={this._handleStartFromChange}
-                toggleStartFrom={this._toggleStartFrom}
-                videoHasHours={this.props.player.duration >= 3600}
-              />
-            ) : undefined}
+            {this._renderVideoClippingOptions()}
           </div>
         </div>
       </div>
     );
+  }
+
+  /**
+   * renders the video clipping options element
+   *
+   * @returns {React$Element} - video clipping options element
+   * @memberof ShareOverlay
+   */
+  _renderVideoClippingOptions(): React$Element<any> {
+    return (this.props.config.enableTimeOffset || this.props.config.enableClipping) && !this.props.isLive ? (
+      <VideoStartOptions
+        addAccessibleChild={this.props.addAccessibleChild}
+        startFromValue={this.state.startFromValue}
+        handleStartFromChange={this._handleStartFromChange}
+        videoHasHours={this.props.player.duration >= 3600}
+        config={this.props.config}
+        videoClippingOption={this.state.videoClippingOption}
+        setVideoClippingOption={this._onVideoClippingOptionChange}
+        clipStartTimeValue={this.state.clipStartTimeValue}
+        handleClipStartTimeChange={this._handleClipStartTimeChange}
+        handleClipEndTimeChange={this._handleClipEndTimeChange}
+        clipEndTimeValue={this.state.clipEndTimeValue}
+      />
+    ) : undefined;
   }
 
   /**
@@ -464,15 +721,7 @@ class ShareOverlay extends Component {
         <div className={style.title}>{props.title}</div>
         <div className={shareStyle.linkOptionsContainer}>
           <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={props.shareUrl} copy={true} isIos={this.isIos} />
-          {this.props.config.enableTimeOffset && !this.props.isLive ? (
-            <VideoStartOptions
-              addAccessibleChild={this.props.addAccessibleChild}
-              startFrom={this.state.startFrom}
-              startFromValue={this.state.startFromValue}
-              handleStartFromChange={this._handleStartFromChange}
-              toggleStartFrom={this._toggleStartFrom}
-            />
-          ) : undefined}
+          {this._renderVideoClippingOptions()}
         </div>
       </div>
     );

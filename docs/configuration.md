@@ -6,6 +6,7 @@ Configuration parameters could be provided upon instantiation of the share insta
 var config = {
   shareUrl: '', //will take the current url
   enableTimeOffset: true,
+  enableClipping: true,
   useNative: false
 };
 ```
@@ -17,6 +18,7 @@ var config = {
   shareUrl: string,
   embedUrl: string,
   enableTimeOffset: boolean,
+  enableClipping: boolean,
   useNative: boolean,
   shareOptions: ShareOptions
 }
@@ -48,6 +50,17 @@ var config = {
 > ##### Default: `true`
 >
 > ##### Description: Whether to show the start time.
+
+##
+
+##
+> ### config.enableClipping
+>
+> ##### Type: `boolean`
+>
+> ##### Default: `true`
+>
+> ##### Description: Whether to show the video clipping options.
 
 ##
 
