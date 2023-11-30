@@ -7,6 +7,7 @@ import {ui} from '@playkit-js/kaltura-player-js';
 import shareStyle from './style.scss';
 import {FakeEvent} from '@playkit-js/playkit-js';
 import {ShareEvent} from '../../event';
+import {RadioButton, RadioButtonSelected} from '../radio-button/radio-button';
 
 const {preact, preacti18n, Components, Utils, style, redux, Reducers, preactHooks} = ui;
 const {h, Component} = preact;
@@ -159,13 +160,13 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
    * on focusout handler
    *
    * @param {*} event - the focusout event
-   * @param {*} cb - the callback function to invoke
+   * @param {*} handleInputChangeCallback - the input change handler callback function to invoke
    * @returns {void}
    * @memberof VideoStartOptions
    */
-  const onInputFocusOutHandler = (event: any, cb: any): void => {
+  const onInputFocusOutHandler = (event: any, handleInputChangeCallback: any): void => {
     const formattedInput = formatInput(event.target.value);
-    cb(formattedInput);
+    handleInputChangeCallback(formattedInput);
   };
 
   /**
@@ -395,30 +396,6 @@ const VideoStartOptionsItem = (props: Object): React$Element<any> => {
       </div>
       {props.children}
     </div>
-  );
-};
-
-/**
- * The radio button of video start options
- * @returns {React$Element<any>} the radio button element
- */
-const RadioButton = (): React$Element<any> => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
-      <circle cx="9.5" cy="9.89948" r="8.5" fill="black" stroke="#666666" />
-    </svg>
-  );
-};
-
-/**
- * The selected radio button of video start options
- * @returns {React$Element<any>} the selected radio button element
- */
-const RadioButtonSelected = (): React$Element<any> => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
-      <circle cx="9.5" cy="9.89948" r="6" fill="white" stroke="#006EFA" strokeWidth="6" />
-    </svg>
   );
 };
 
