@@ -335,6 +335,10 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
    * @memberof VideoStartOptions
    */
   const _renderVideoStartOptionsItem = (optionType: string, inputId: string, labelId: string, textId: string) => {
+    const styleProps = {};
+    if (optionType === VIDEO_CLIPPING_OPTIONS.FULL_VIDEO) {
+      styleProps.style = 'width: 100%;';
+    }
     return (
       <VideoStartOptionsItem
         videoClippingOption={props.videoClippingOption}
@@ -345,7 +349,8 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
         setVideoClippingOption={setVideoClippingOption}
         inputId={inputId}
         labelId={labelId}
-        textId={textId}>
+        textId={textId}
+        {...styleProps}>
         {optionType === VIDEO_CLIPPING_OPTIONS.START_FROM && _renderStartFromInput()}
         {optionType === VIDEO_CLIPPING_OPTIONS.CLIP && _renderClipTimeSlotsInput()}
       </VideoStartOptionsItem>
@@ -370,6 +375,10 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
  */
 const VideoStartOptionsItem = (props: Object): React$Element<any> => {
   const isItemSelected = props.videoClippingOption === props.videoClippingType;
+  const radioButtonProps = {};
+  if (props.style) {
+    radioButtonProps.style = props.style;
+  }
   return (
     <div className={shareStyle.videoStartOptionsRow}>
       <div
@@ -381,7 +390,8 @@ const VideoStartOptionsItem = (props: Object): React$Element<any> => {
         tabIndex="0"
         onKeyDown={props.onKeyDown}
         onClick={props.onClick}
-        className={shareStyle.radioButton}>
+        className={shareStyle.radioButton}
+        {...radioButtonProps}>
         <input
           type="radio"
           id={props.inputId}

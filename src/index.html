@@ -12,7 +12,7 @@
 <body>
 <input type="button" onclick="changeMedia()" value="Change Media"/>
 
-  <div id="player-placeholder" style="width: 640px; height: 360px;"></div>
+  <div id="player-placeholder" style="width: 940px; height: 595px;"></div>
   <script>
     let config = {
       logLevel: "DEBUG",
@@ -30,7 +30,9 @@
             "share": {
               "title": "Share",
               "embed_options": "Embed Options",
-              "start_video_at": "Start video at",
+              "start_video_at": "Start at",
+              "full_video": "Full-length video",
+              "clip_video": "Share clip",
               "email": "Share on Email",
               "embed": "Get embed code",
               "share-on-facebook": "Share on Facebook",
@@ -44,7 +46,8 @@
         uiManagers: {},
         share:{
           // shareUrl: string - Default will take the parent url
-          // enableTimeOffset: boolean - Default false
+          // enableTimeOffset: boolean - Default true
+          // enableClipping: boolean - Default true
           // useNative: boolean - use native API
           // shareOptions: ShareOptions - social network config
           // embedBaseUrl?: string, base url for embed url
