@@ -3,6 +3,7 @@ declare type ShareConfig = {
   shareUrl?: string,
   embedUrl: string,
   enableTimeOffset: boolean,
+  enableClipping: boolean,
   useNative: boolean,
   shareOptions?: ShareOptions,
   embedBaseUrl?: string,

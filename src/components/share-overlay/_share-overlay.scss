@@ -31,22 +31,60 @@
         }
       }
     }
-    .video-start-options-row {
+    .video-start-options-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       margin-top: 16px;
-      text-align: center;
 
-      .checkbox {
-        margin-right: 15px;
-      }
-      .form-group {
-        margin: 0;
+      .video-start-options-row {
+        margin-top: 13px;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+
+        .radio-button {
+          font-size: 15px;
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-right: 14px;
+          width: 120px;
+
+          input {
+            display: none;
+          }
+          label {
+            margin-left: 8px;
+          }
+        }
+        .form-group {
+          margin: 0;
+        }
+
+        .clip-time-slots-container {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          .clip-rectangle {
+            width: 8px;
+            height: 2px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.4);
+            margin-right: 8px;
+            margin-left: 8px;
+          }
+        }
       }
     }
   }
 }
 
 .share-main-container {
-  width: 300px;
+  width: 312px;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;

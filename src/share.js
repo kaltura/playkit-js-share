@@ -30,7 +30,8 @@ class Share extends BasePlugin {
   static defaultConfig: ShareConfig = {
     useNative: false,
     embedUrl: '{embedBaseUrl}/p/{partnerId}/embedPlaykitJs/uiconf_id/{uiConfId}?iframeembed=true&entry_id={entryId}',
-    enableTimeOffset: true
+    enableTimeOffset: true,
+    enableClipping: true
   };
 
   /**
