@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.2.0 (2023-12-07)
+
+
+### Features
+
+* **FEC-13461:** add support for seekFrom clipTo ([#34](https://github.com/kaltura/playkit-js-share/issues/34)) ([4e0fde5](https://github.com/kaltura/playkit-js-share/commit/4e0fde5ed1b6ee4a930c3258185d8e92fac24a0a))
+
 ### 1.1.15 (2023-09-11)
 
 ### 1.1.14 (2023-09-11)
