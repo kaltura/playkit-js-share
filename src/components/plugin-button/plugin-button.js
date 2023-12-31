@@ -36,7 +36,7 @@ class ShareButton extends Component {
     }
     return (
       <Tooltip label={this.props.shareTxt}>
-        <button tabIndex={0} aria-haspopup="true" className={style.upperBarIcon} aria-label={this.props.shareTxt}>
+        <button tabIndex={0} aria-haspopup="true" className={style.upperBarIcon} aria-label={this.props.shareTxt} ref={this.props.setRef}>
           <Icon id={pluginName} path={ICON_PATH} />
         </button>
       </Tooltip>
