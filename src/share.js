@@ -116,7 +116,7 @@ class Share extends BasePlugin {
     if (byKeyboard) {
       // TODO: add focusElement to ts-typed
       // @ts-ignore
-      focusElement(this._pluginButtonRef, 100);
+      focusElement(this._pluginButtonRef);
     }
   }
 
