@@ -12,6 +12,7 @@ import {ShareEvent} from './event';
 const {ReservedPresetNames} = ui;
 const {Utils} = core;
 const {Text} = ui.preacti18n;
+const {focusElement} = ui.Utils;
 const pluginName: string = 'share';
 /**
  * The Share plugin.
@@ -33,6 +34,8 @@ class Share extends BasePlugin {
     enableTimeOffset: true,
     enableClipping: true
   };
+
+  _pluginButtonRef: HTMLButtonElement | null = null;
 
   /**
    * Whether the Share plugin is valid.
@@ -65,7 +68,7 @@ class Share extends BasePlugin {
 
   _addIcon() {
     this.player.ready().then(() => {
-      const ShareWrapper = () => <ShareButton config={this.config} />;
+      const ShareWrapper = () => <ShareButton config={this.config} setRef={this._setPluginButtonRef} />;
       this.iconId = this.player.getService('upperBarManager').add({
         label: <Text id="controls.share">Share</Text>,
         component: ShareWrapper,
@@ -104,12 +107,21 @@ class Share extends BasePlugin {
     }
   }
 
-  _closeShareOverlay() {
+  _closeShareOverlay(event?: OnClickEvent, byKeyboard?: boolean) {
     this._removeOverlay();
     if (this._wasPlayed) {
       this.player.play();
       this._wasPlayed = false;
     }
+    if (byKeyboard) {
+      // TODO: add focusElement to ts-typed
+      // @ts-ignore
+      focusElement(this._pluginButtonRef);
+    }
+  }
+
+  _setPluginButtonRef(ref: HTMLButtonElement | null) {
+    this._pluginButtonRef = ref;
   }
 
   _setOverlay(fn: Function) {
