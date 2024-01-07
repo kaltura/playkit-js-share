@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.2.3 (2024-01-07)
+
+
+### Bug Fixes
+
+* **ADA-133:** Share - focus should return to plugin button ([#37](https://github.com/kaltura/playkit-js-share/issues/37)) ([965a08f](https://github.com/kaltura/playkit-js-share/commit/965a08f974a8adcf5712c07566e44bfc7cd7ba8b))
+
 ### 1.2.2 (2023-12-21)
 
 ### 1.2.1 (2023-12-10)
