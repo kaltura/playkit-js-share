@@ -70,7 +70,8 @@ class Share extends BasePlugin {
     this.player.ready().then(() => {
       const ShareWrapper = () => <ShareButton config={this.config} setRef={this._setPluginButtonRef.bind(this)} />;
       this.iconId = this.player.getService('upperBarManager').add({
-        label: <Text id="controls.share">Share</Text>,
+        displayName: 'Share',
+        ariaLabel: <Text id="controls.share">Share</Text>,
         component: ShareWrapper,
         svgIcon: {path: ICON_PATH},
         onClick: this._openShareOverlay.bind(this)
