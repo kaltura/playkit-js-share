@@ -72,6 +72,7 @@ class Share extends BasePlugin {
       this.iconId = this.player.getService('upperBarManager').add({
         displayName: 'Share',
         ariaLabel: <Text id="controls.share">Share</Text>,
+        order: 70,
         component: ShareWrapper,
         svgIcon: {path: ICON_PATH},
         onClick: this._openShareOverlay.bind(this)
