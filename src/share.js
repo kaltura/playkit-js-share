@@ -85,7 +85,6 @@ class Share extends BasePlugin {
       this.player.pause();
       this._wasPlayed = true;
     }
-    this.dispatchEvent(ShareEvent.SHARE_CLICKED);
     if (this.config.useNative && navigator.share) {
       const videoDesc = this._getVideoDesc();
       navigator
@@ -107,6 +106,7 @@ class Share extends BasePlugin {
         })
       );
     }
+    this.dispatchEvent(ShareEvent.SHARE_EMBED_OPEN);
   }
 
   _closeShareOverlay(event?: OnClickEvent, byKeyboard?: boolean) {
@@ -120,6 +120,7 @@ class Share extends BasePlugin {
       // @ts-ignore
       focusElement(this._pluginButtonRef);
     }
+    this.dispatchEvent(ShareEvent.SHARE_EMBED_CLOSE);
   }
 
   _setPluginButtonRef(ref: HTMLButtonElement | null) {
@@ -165,3 +166,4 @@ class Share extends BasePlugin {
 }
 
 export {Share, pluginName};
+// https://web.facebook.com/login.php?skip_api_login=1&api_key=966242223397117&signed_next=1&next=https%3A%2F%2Fweb.facebook.com%2Fsharer%2Fsharer.php%3Fu%3Dhttp%253A%252F%252Flocalhost%253A8080%252F&cancel_url=https%3A%2F%2Fweb.facebook.com%2Fdialog%2Fclose_window%2F%3Fapp_id%3D966242223397117%26connect%3D0%23_%3D_&display=popup&locale=en_US

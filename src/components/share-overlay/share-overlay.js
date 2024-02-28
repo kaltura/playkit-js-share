@@ -64,7 +64,7 @@ const ShareButton = (props: Object): React$Element<any> => {
         window.open(href, '_blank', 'width=580,height=580');
         break;
     }
-    props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_NETWORK, {shareNetworkName: buttonType}));
+    props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_EMBED_SHARE_VIA_SOCIAL_NETWORK, {socialNetworkName: buttonType}));
   };
 
   return (
@@ -115,6 +115,8 @@ const ShareUrl = (props: Object): React$Element<any> => {
       }
       document.execCommand('copy');
       _ref.blur();
+      const {videoClippingOption} = props;
+      props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_EMBED_SHARE_VIA_COPY_URL, {videoClippingOption}));
     }
   };
 
@@ -707,7 +709,7 @@ class ShareOverlay extends Component {
       <div className={this.state.view === shareOverlayView.EmbedOptions ? 'overlay-screen active' : 'overlay-screen'}>
         <div className={style.title}>{props.title}</div>
         <div className={shareStyle.linkOptionsContainer}>
-          <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={props.shareUrl} copy={true} isIos={this.isIos} />
+          <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={props.shareUrl} videoClippingOption={this.state.videoClippingOption} copy={true} isIos={this.isIos} />
           {this._renderVideoClippingOptions()}
         </div>
       </div>
