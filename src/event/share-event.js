@@ -17,5 +17,5 @@ export const ShareEvent = {
   /**
    * Fired when the user clicks on Copy Url button.
    */
-  SHARE_EMBED_SHARE_VIA_COPY_URL: 'Share_embed_share_via_copy_url',
+  SHARE_EMBED_SHARE_VIA_COPY_URL: 'Share_embed_share_via_copy_url'
 };

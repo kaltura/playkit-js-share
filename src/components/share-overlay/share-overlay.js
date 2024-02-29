@@ -666,7 +666,14 @@ class ShareOverlay extends Component {
         <div className={shareStyle.shareMainContainer}>
           <div className={shareStyle.shareIcons}>{this._createShareOptions(this.props.config.shareOptions)}</div>
           <div className={shareStyle.linkOptionsContainer}>
-            <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={this.getShareUrl()} copy={true} isIos={this.isIos} />
+            <ShareUrl
+              player={this.props.player}
+              addAccessibleChild={this.props.addAccessibleChild}
+              shareUrl={this.getShareUrl()}
+              copy={true}
+              isIos={this.isIos}
+              videoClippingOption={this.state.videoClippingOption}
+            />
             {this._renderVideoClippingOptions()}
           </div>
         </div>
@@ -709,7 +716,14 @@ class ShareOverlay extends Component {
       <div className={this.state.view === shareOverlayView.EmbedOptions ? 'overlay-screen active' : 'overlay-screen'}>
         <div className={style.title}>{props.title}</div>
         <div className={shareStyle.linkOptionsContainer}>
-          <ShareUrl addAccessibleChild={this.props.addAccessibleChild} shareUrl={props.shareUrl} videoClippingOption={this.state.videoClippingOption} copy={true} isIos={this.isIos} />
+          <ShareUrl
+            player={this.props.player}
+            addAccessibleChild={this.props.addAccessibleChild}
+            shareUrl={props.shareUrl}
+            videoClippingOption={this.state.videoClippingOption}
+            copy={true}
+            isIos={this.isIos}
+          />
           {this._renderVideoClippingOptions()}
         </div>
       </div>
