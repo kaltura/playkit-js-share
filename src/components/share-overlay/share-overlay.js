@@ -64,7 +64,7 @@ const ShareButton = (props: Object): React$Element<any> => {
         window.open(href, '_blank', 'width=580,height=580');
         break;
     }
-    props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_EMBED_SHARE_VIA_SOCIAL_NETWORK, {socialNetworkName: buttonType}));
+    props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_NETWORK, {socialNetworkName: buttonType}));
   };
 
   return (
@@ -116,7 +116,7 @@ const ShareUrl = (props: Object): React$Element<any> => {
       document.execCommand('copy');
       _ref.blur();
       const {videoClippingOption} = props;
-      props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_EMBED_SHARE_VIA_COPY_URL, {videoClippingOption}));
+      props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_COPY, {videoClippingOption}));
     }
   };
 

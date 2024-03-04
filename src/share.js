@@ -106,7 +106,7 @@ class Share extends BasePlugin {
         })
       );
     }
-    this.dispatchEvent(ShareEvent.SHARE_EMBED_OPEN);
+    this.dispatchEvent(ShareEvent.SHARE_CLICKED);
   }
 
   _closeShareOverlay(event?: OnClickEvent, byKeyboard?: boolean) {
@@ -120,7 +120,7 @@ class Share extends BasePlugin {
       // @ts-ignore
       focusElement(this._pluginButtonRef);
     }
-    this.dispatchEvent(ShareEvent.SHARE_EMBED_CLOSE);
+    this.dispatchEvent(ShareEvent.SHARE_CLOSE);
   }
 
   _setPluginButtonRef(ref: HTMLButtonElement | null) {
