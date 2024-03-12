@@ -11,5 +11,6 @@ const NAME = __NAME__;
 export {VERSION, NAME};
 export {Plugin};
 export {Share};
+export {ShareEvent} from './event';
 
 registerPlugin(pluginName, Plugin);

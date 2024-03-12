@@ -85,7 +85,6 @@ class Share extends BasePlugin {
       this.player.pause();
       this._wasPlayed = true;
     }
-    this.dispatchEvent(ShareEvent.SHARE_CLICKED);
     if (this.config.useNative && navigator.share) {
       const videoDesc = this._getVideoDesc();
       navigator
@@ -107,6 +106,7 @@ class Share extends BasePlugin {
         })
       );
     }
+    this.dispatchEvent(ShareEvent.SHARE_CLICKED);
   }
 
   _closeShareOverlay(event?: OnClickEvent, byKeyboard?: boolean) {
@@ -120,6 +120,7 @@ class Share extends BasePlugin {
       // @ts-ignore
       focusElement(this._pluginButtonRef);
     }
+    this.dispatchEvent(ShareEvent.SHARE_CLOSE);
   }
 
   _setPluginButtonRef(ref: HTMLButtonElement | null) {
