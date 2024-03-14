@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.3.0 (2024-03-14)
+
+
+### Features
+
+* **FEC-13731:** [Share Plugin]: Add Events (used by kava analytics ([#40](https://github.com/kaltura/playkit-js-share/issues/40)) ([6d7cc6a](https://github.com/kaltura/playkit-js-share/commit/6d7cc6a345b6ca5131f69eac84d1cf329198786d))
+
 ### 1.2.4 (2024-02-04)
 
 
