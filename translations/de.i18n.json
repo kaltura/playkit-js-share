@@ -6,12 +6,14 @@
     "share": {
       "title": "Teilen",
       "embed_options": "Einbettungsoptionen",
-      "start_video_at": "Startzeitpunkt Video",
+      "start_video_at": "Start bei",
       "email": "Per E-Mail teilen",
       "embed": "Einbettungscode generieren",
+      "full_video": "Video in voller Länge",
+      "clip_video": "Clip teilen",
       "share-on-facebook": "Auf Facebook teilen",
-      "share-on-twitter": "Auf Twitter teilen",
-      "share-on-linkedin": "Auf Linkedin teilen"
+      "share-on-linkedin": "Auf Linkedin teilen",
+      "share-on-twitter": "Auf X teilen"
     }
   }
 }

@@ -6,9 +6,11 @@
     "share": {
       "title": "共有する",
       "embed_options": "オプションの埋め込み",
-      "start_video_at": "ビデオ再生開始地点",
+      "start_video_at": "次の時点から開始",
       "email": "メールで共有する",
-      "embed": "埋め込みコードを取得する"
+      "embed": "埋め込みコードを取得する",
+      "full_video": "フルレングスビデオ",
+      "clip_video": "クリップの共有"
     }
   }
 }

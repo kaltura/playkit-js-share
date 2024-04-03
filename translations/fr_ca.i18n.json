@@ -6,9 +6,11 @@
     "share": {
       "title": "Partager",
       "embed_options": "Options intégrées",
-      "start_video_at": "Commencer la vidéo à",
+      "start_video_at": "Commencer à",
       "email": "Partager par courriel",
-      "embed": "Obtenir le code intégré"
+      "embed": "Obtenir le code intégré",
+      "full_video": "Vidéo complète",
+      "clip_video": "Partager le clip"
     }
   }
 }

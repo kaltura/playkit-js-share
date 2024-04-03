@@ -6,9 +6,11 @@
     "share": {
       "title": "Jaa",
       "embed_options": "Upotusvaihtoehdot",
-      "start_video_at": "Aloita video",
+      "start_video_at": "Aloita kohdasta",
       "email": "Jaa sähköpostitse",
-      "embed": "Hanki upotuskoodi"
+      "embed": "Hanki upotuskoodi",
+      "full_video": "Täyspitkä video",
+      "clip_video": "Jaa leike"
     }
   }
 }
