@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.3.0 (2024-03-14)
+
+
+### Features
+
+* **FEC-13731:** [Share Plugin]: Add Events (used by kava analytics ([#40](https://github.com/kaltura/playkit-js-share/issues/40)) ([6d7cc6a](https://github.com/kaltura/playkit-js-share/commit/6d7cc6a345b6ca5131f69eac84d1cf329198786d))
+
+### 1.2.4 (2024-02-04)
+
+
+### Bug Fixes
+
+* **FEC-00000:** Upgrade Kaltura dependencies (automated) ([#39](https://github.com/kaltura/playkit-js-share/issues/39)) ([73fbd15](https://github.com/kaltura/playkit-js-share/commit/73fbd15f90c3c7811fea45c76c5a1109eb748705))
+
+### 1.2.3 (2024-01-07)
+
+
+### Bug Fixes
+
+* **ADA-133:** Share - focus should return to plugin button ([#37](https://github.com/kaltura/playkit-js-share/issues/37)) ([965a08f](https://github.com/kaltura/playkit-js-share/commit/965a08f974a8adcf5712c07566e44bfc7cd7ba8b))
+
+### 1.2.2 (2023-12-21)
+
+### 1.2.1 (2023-12-10)
+
+## 1.2.0 (2023-12-07)
+
+
+### Features
+
+* **FEC-13461:** add support for seekFrom clipTo ([#34](https://github.com/kaltura/playkit-js-share/issues/34)) ([4e0fde5](https://github.com/kaltura/playkit-js-share/commit/4e0fde5ed1b6ee4a930c3258185d8e92fac24a0a))
+
+### 1.1.15 (2023-09-11)
+
+### 1.1.14 (2023-09-11)
+
+
+### Bug Fixes
+
+* **FEC-13335:** Upgrade Kaltura dependencies (automated) ([#31](https://github.com/kaltura/playkit-js-share/issues/31)) ([a1ea644](https://github.com/kaltura/playkit-js-share/commit/a1ea6442d804d4e483d4d0a2f72f428b6c665d58))
+
+### 1.1.13 (2023-07-26)
+
+
+### Bug Fixes
+
+* **FEC-13265:** upd dependency script ([#29](https://github.com/kaltura/playkit-js-share/issues/29)) ([0a3482e](https://github.com/kaltura/playkit-js-share/commit/0a3482e549547ed0b9cc08d7dd2757dff50c6a66))
+
+### 1.1.12 (2023-06-28)
+
+
+### Bug Fixes
+
+* **FEC-13251:** upd dependencies ([#27](https://github.com/kaltura/playkit-js-share/issues/27)) ([41bc3ad](https://github.com/kaltura/playkit-js-share/commit/41bc3ad295dfb8ad274806f9b9f4086bc7afef66))
+
 ### 1.1.11 (2023-06-07)
 
 

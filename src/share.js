@@ -11,7 +11,8 @@ import {ShareButton} from './components/plugin-button/plugin-button';
 import {ShareEvent} from './event';
 const {ReservedPresetNames} = ui;
 const {Utils} = core;
-
+const {Text} = ui.preacti18n;
+const {focusElement} = ui.Utils;
 const pluginName: string = 'share';
 /**
  * The Share plugin.
@@ -30,8 +31,11 @@ class Share extends BasePlugin {
   static defaultConfig: ShareConfig = {
     useNative: false,
     embedUrl: '{embedBaseUrl}/p/{partnerId}/embedPlaykitJs/uiconf_id/{uiConfId}?iframeembed=true&entry_id={entryId}',
-    enableTimeOffset: true
+    enableTimeOffset: true,
+    enableClipping: true
   };
+
+  _pluginButtonRef: HTMLButtonElement | null = null;
 
   /**
    * Whether the Share plugin is valid.
@@ -64,9 +68,11 @@ class Share extends BasePlugin {
 
   _addIcon() {
     this.player.ready().then(() => {
-      const ShareWrapper = () => <ShareButton config={this.config} />;
+      const ShareWrapper = () => <ShareButton config={this.config} setRef={this._setPluginButtonRef.bind(this)} />;
       this.iconId = this.player.getService('upperBarManager').add({
-        label: 'Share',
+        displayName: 'Share',
+        ariaLabel: <Text id="controls.share">Share</Text>,
+        order: 70,
         component: ShareWrapper,
         svgIcon: {path: ICON_PATH},
         onClick: this._openShareOverlay.bind(this)
@@ -79,7 +85,6 @@ class Share extends BasePlugin {
       this.player.pause();
       this._wasPlayed = true;
     }
-    this.dispatchEvent(ShareEvent.SHARE_CLICKED);
     if (this.config.useNative && navigator.share) {
       const videoDesc = this._getVideoDesc();
       navigator
@@ -101,14 +106,25 @@ class Share extends BasePlugin {
         })
       );
     }
+    this.dispatchEvent(ShareEvent.SHARE_CLICKED);
   }
 
-  _closeShareOverlay() {
+  _closeShareOverlay(event?: OnClickEvent, byKeyboard?: boolean) {
     this._removeOverlay();
     if (this._wasPlayed) {
       this.player.play();
       this._wasPlayed = false;
     }
+    if (byKeyboard) {
+      // TODO: add focusElement to ts-typed
+      // @ts-ignore
+      focusElement(this._pluginButtonRef);
+    }
+    this.dispatchEvent(ShareEvent.SHARE_CLOSE);
+  }
+
+  _setPluginButtonRef(ref: HTMLButtonElement | null) {
+    this._pluginButtonRef = ref;
   }
 
   _setOverlay(fn: Function) {
