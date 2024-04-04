@@ -5,12 +5,12 @@ run-name: Canary Full Flow
 on:
   push:
     branches:
-      - master
+      - devops-deployment
 
 jobs:
   canary-full-flow:
     if: ${{ github.actor != 'PlaykitJs-Bot' }}
-    uses: kaltura/ovp-pipelines-pub/.github/workflows/player_cicd.yaml@master
+    uses: kaltura/ovp-pipelines-pub/.github/workflows/player_cicd.yaml@master-VCP-17108
     secrets:
       PLAYER_CENTRAL_ACCOUNT_ID: ${{ secrets.PLAYER_CENTRAL_ACCOUNT_ID }}
       PLAYER_SERVICES_ACCOUNT_ID: ${{ secrets.PLAYER_SERVICES_ACCOUNT_ID }}
@@ -20,6 +20,7 @@ jobs:
       PLAYER_LAMBDA_NAME: ${{ secrets.PLAYER_LAMBDA_NAME }}
       PLAYER_MSTEAMS_WEBHOOK: ${{ secrets.PLAYER_MSTEAMS_WEBHOOK }}
       PLAYER_GITHUB_BOT_TOKEN: ${{ secrets.PLAYER_GITHUB_BOT_TOKEN }}
+      PLAYER_GITHUB_KCONF_TOKEN: ${{ secrets.PLAYER_GITHUB_KCONF_TOKEN }}
     with:
       type: "plugin"
       stage: "canary"
