@@ -6,9 +6,11 @@
     "share": {
       "title": "分享",
       "embed_options": "内嵌選項",
-      "start_video_at": "影片開始時間",
+      "start_video_at": "開始於",
       "email": "以電子郵件分享",
-      "embed": "獲得嵌入代碼"
+      "embed": "獲得嵌入代碼",
+      "full_video": "完整影片",
+      "clip_video": "分享剪輯"
     }
   }
 }

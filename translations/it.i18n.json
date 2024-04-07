@@ -6,12 +6,14 @@
     "share": {
       "title": "Condividi",
       "embed_options": "Integra opzioni",
-      "start_video_at": "Avvia video a",
+      "start_video_at": "Avvia a",
       "email": "Condividi su e-mail",
       "embed": "Ottieni codice integrazione",
+      "full_video": "Video integrale",
+      "clip_video": "Condividi clip",
       "share-on-facebook": "Condividi su Facebook",
-      "share-on-twitter": "Condividi su Twitter",
-      "share-on-linkedin": "Condividi su Linkedin"
+      "share-on-linkedin": "Condividi su Linkedin",
+      "share-on-twitter": "Condividi su X"
     }
   }
 }

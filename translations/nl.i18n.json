@@ -6,9 +6,11 @@
     "share": {
       "title": "Delen",
       "embed_options": "Insluitopties",
-      "start_video_at": "Video starten op",
+      "start_video_at": "Starten op",
       "email": "Delen via e-mail",
-      "embed": "Ingebouwde code verkrijgen"
+      "embed": "Ingebouwde code verkrijgen",
+      "full_video": "Video met volledige lengte",
+      "clip_video": "Clip delen"
     }
   }
 }
