@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.3.1 (2024-04-09)
+
+
+### Bug Fixes
+
+* **FEC-13770:** Player v7 | Share & Embed | "X" aria-label and tooltip are incorrect. ([5fe4c64](https://github.com/kaltura/playkit-js-share/commit/5fe4c64b1508c1bff27ee6230bd499f29098d121))
+
 ## 1.3.0 (2024-03-14)
 
 
