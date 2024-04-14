@@ -100,7 +100,7 @@ class Share extends BasePlugin {
         this.player.ui.addComponent({
           label: 'info-overlay',
           area: 'GuiArea',
-          presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
+          presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, 'MiniAudioUI'],
           // eslint-disable-next-line react/display-name
           get: () => <ShareComponent onClose={this._closeShareOverlay.bind(this)} config={this.config} />
         })
