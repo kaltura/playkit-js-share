@@ -8,8 +8,7 @@ import shareStyle from './style.scss';
 import {FakeEvent} from '@playkit-js/playkit-js';
 import {ShareEvent} from '../../event';
 import {RadioButton, RadioButtonSelected} from '../radio-button/radio-button';
-
-const {preact, preacti18n, Components, Utils, style, redux, Reducers, preactHooks} = ui;
+const {preact, preacti18n, Components, Utils, style, redux, Reducers, preactHooks, ReservedPresetNames} = ui;
 const {h, Component} = preact;
 const {useRef} = preactHooks;
 const {Text, Localizer} = preacti18n;
@@ -419,7 +418,8 @@ const COMPONENT_NAME = 'ShareOverlay';
  * @returns {Object} - mapped state to this component
  */
 const mapStateToProps = state => ({
-  isLive: state.engine.isLive
+  isLive: state.engine.isLive,
+  activePresetName: state.shell.activePresetName
 });
 
 /**
@@ -674,7 +674,7 @@ class ShareOverlay extends Component {
               isIos={this.isIos}
               videoClippingOption={this.state.videoClippingOption}
             />
-            {this._renderVideoClippingOptions()}
+            {this.props.activePresetName !== ReservedPresetNames.MiniAudioUI && this._renderVideoClippingOptions()}
           </div>
         </div>
       </div>
