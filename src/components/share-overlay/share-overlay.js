@@ -503,8 +503,9 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   getShareUrl(): string {
-    let url = this.props.config.shareUrl;
-    return this._maybeAddParamsToUrl(url);
+    const {shareUrl, entryId} =  this.props.config;
+    const shareUrlCorrectedForTemplate = shareUrl.replace(/{entryId}/g, entryId);
+    return this._maybeAddParamsToUrl(shareUrlCorrectedForTemplate);
   }
 
   /**
