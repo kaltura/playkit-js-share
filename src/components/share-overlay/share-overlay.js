@@ -503,7 +503,7 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   getShareUrl(): string {
-    const {shareUrl, entryId} =  this.props.config;
+    const {shareUrl, entryId} = this.props.config;
     const shareUrlCorrectedForTemplate = shareUrl.replace(/{entryId}/g, entryId);
     return this._maybeAddParamsToUrl(shareUrlCorrectedForTemplate);
   }
