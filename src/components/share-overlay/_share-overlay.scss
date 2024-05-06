@@ -1,4 +1,8 @@
 .overlay.share-overlay {
+  .overlay-contents {
+    backdrop-filter: blur(16px);
+  }
+
   .control-button-container {
     margin: 0 0;
   }
