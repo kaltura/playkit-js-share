@@ -116,7 +116,7 @@
   "kaltura": {
     "name": "share",
     "dependencies": {
-      "playkit-ui-managers": "1.5.2"
+      "playkit-ui-managers": "1.5.3"
     }
   }
 }
