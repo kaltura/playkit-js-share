@@ -1,3 +1,5 @@
+@import '~@playkit-js/playkit-js-ui';
+
 .overlay.share-overlay {
   .overlay-contents {
     backdrop-filter: blur(16px);
@@ -27,6 +29,12 @@
 
       .input-copy-url {
         margin: 0;
+
+        .form-control {
+          background-color: $tone-8-color;
+          color: $tone-1-color;
+          border: 1px solid $tone-4-color;;
+        }
       }
       .btn-copy-url {
         .icon {
