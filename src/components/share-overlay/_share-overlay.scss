@@ -3,6 +3,7 @@
 .overlay.share-overlay {
   .overlay-contents {
     backdrop-filter: blur(16px);
+    color: $tone-1-color;
   }
 
   .control-button-container {
@@ -106,7 +107,7 @@
 .player.size-xs {
   .overlay.share-overlay {
     .share-icons {
-      margin: 24px 0 8px 0;
+      margin: 8px 0 8px 0;
     }
   }
   .link-options-container {
