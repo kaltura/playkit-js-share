@@ -619,7 +619,7 @@ class ShareOverlay extends Component {
    */
   _createShareOptions(shareOptionsConfig: ShareOptions): any[] {
     return Object.keys(shareOptionsConfig).map(socialName => {
-      const {shareUrl} = this.props.config;
+      const shareUrl = this.getShareUrl();
       let {embedUrl} = this.props.config;
       if (socialName === EMBED) {
         const validEmbedUrl = ['embedBaseUrl', 'partnerId', 'uiConfId', 'entryId'].every(prop => {
