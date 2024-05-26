@@ -538,8 +538,12 @@ class ShareOverlay extends Component {
     let url = this.state.embedUrl;
     const template = this.state.embedTemplate;
     url = this._maybeAddParamsToUrl(url);
-    const {width, height} = this.props.player.getPlayerData();
-    const toReplace = {['{embedUrl}']: url, ['{width}']: width || PLAYER_WIDTH_EMBED_DEFAULT, ['{height}']: height || PLAYER_HEIGHT_EMBED_DEFAULT};
+    const {embedWidth, embedHeight} = this.props.config;
+    const toReplace = {
+      ['{embedUrl}']: url,
+      ['{width}']: embedWidth || PLAYER_WIDTH_EMBED_DEFAULT,
+      ['{height}']: embedHeight || PLAYER_HEIGHT_EMBED_DEFAULT
+    };
     return template.replace(/{embedUrl}|{width}|{height}/g, matched => {
       return toReplace[matched];
     });
