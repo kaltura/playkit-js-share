@@ -675,7 +675,7 @@ class ShareOverlay extends Component {
               isIos={this.isIos}
               videoClippingOption={this.state.videoClippingOption}
             />
-            {this.props.activePresetName !== ReservedPresetNames.MiniAudioUI && this._renderVideoClippingOptions()}
+            {this._renderVideoClippingOptions()}
           </div>
         </div>
       </div>
@@ -689,7 +689,9 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _renderVideoClippingOptions(): React$Element<any> {
-    return (this.props.config.enableTimeOffset || this.props.config.enableClipping) && !this.props.isLive ? (
+    return (this.props.config.enableTimeOffset || this.props.config.enableClipping) &&
+      !this.props.isLive &&
+      this.props.activePresetName !== ReservedPresetNames.MiniAudioUI ? (
       <VideoStartOptions
         addAccessibleChild={this.props.addAccessibleChild}
         startFromValue={this.state.startFromValue}
