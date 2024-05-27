@@ -30,7 +30,7 @@ const defaultShareOptionsConfig = {
   embed: {
     display: true,
     templateUrl:
-      '<iframe src="{embedUrl}" style="width: 560px;height: 395px" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0" allow="accelerometer *; autoplay *; encrypted-media *; gyroscope *; picture-in-picture *"/>',
+      '<iframe src="{embedUrl}" style="width: {width}px;height: {height}px" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0" allow="accelerometer *; autoplay *; encrypted-media *; gyroscope *; picture-in-picture *"/>',
     title: 'share.embed',
     icon: 'M13.9864 6.16443C14.0772 5.61966 13.7092 5.10444 13.1644 5.01364C12.6197 4.92285 12.1044 5.29086 12.0136 5.83564L10.0136 17.8356C9.92284 18.3804 10.2909 18.8956 10.8356 18.9864C11.3804 19.0772 11.8956 18.7092 11.9864 18.1644L13.9864 6.16443Z M15.2929 15.7071C14.9024 15.3166 14.9024 14.6834 15.2929 14.2929L17.5858 12L15.2929 9.70711C14.9024 9.31658 14.9024 8.68342 15.2929 8.29289C15.6834 7.90237 16.3166 7.90237 16.7071 8.29289L19.7071 11.2929C20.0976 11.6834 20.0976 12.3166 19.7071 12.7071L16.7071 15.7071C16.3166 16.0976 15.6834 16.0976 15.2929 15.7071Z M8.70711 8.29289C9.09763 8.68342 9.09763 9.31658 8.70711 9.70711L6.41421 12L8.70711 14.2929C9.09763 14.6834 9.09763 15.3166 8.70711 15.7071C8.31658 16.0976 7.68342 16.0976 7.29289 15.7071L4.29289 12.7071C3.90237 12.3166 3.90237 11.6834 4.29289 11.2929L7.29289 8.29289C7.68342 7.90237 8.31658 7.90237 8.70711 8.29289Z'
   }
