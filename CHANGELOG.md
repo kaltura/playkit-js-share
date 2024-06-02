@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.3.3 (2024-06-02)
+
+
+### Bug Fixes
+
+* **FEC-13844:** do not render clipping options for audio player ([#47](https://github.com/kaltura/playkit-js-share/issues/47)) ([faf0021](https://github.com/kaltura/playkit-js-share/commit/faf0021a261d13a6a05e3493b774a75a64b79b1c))
+
 ### 1.3.2 (2024-05-19)
 
 ### 1.3.1 (2024-04-09)
