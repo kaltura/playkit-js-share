@@ -86,12 +86,16 @@ class Share extends BasePlugin {
         order: 70,
         component: ShareWrapper,
         svgIcon: {path: ICON_PATH},
-        onClick: this.showOverlay.bind(this)
+        onClick: this._openShareOverlay.bind(this)
       });
     });
   }
 
-  showOverlay() {
+  open() {
+    this._openShareOverlay();
+  }
+
+  _openShareOverlay() {
     if (!this.player.paused) {
       this.player.pause();
       this._wasPlayed = true;
