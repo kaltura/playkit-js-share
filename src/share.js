@@ -6,6 +6,7 @@
 import {h} from 'preact';
 import {KalturaPlayer, BasePlugin, core, ui} from '@playkit-js/kaltura-player-js';
 import {ICON_PATH, Share as ShareComponent} from './components/share/share';
+import {ICON_PATH as PLUGIN_ICON_PATH} from './components/plugin-button/plugin-button';
 import {defaultShareOptionsConfig} from './default-share-options-config';
 import {ShareButton} from './components/plugin-button/plugin-button';
 import {ShareEvent} from './event';
@@ -22,6 +23,8 @@ const pluginName: string = 'share';
  * @extends BasePlugin
  */
 class Share extends BasePlugin {
+  displayName = 'Share';
+  symbol = {svgUrl: PLUGIN_ICON_PATH, viewBox: '0 0 1024 1024'};
   /**
    * The default configuration of the plugin.
    * @type {Object}
@@ -45,6 +48,14 @@ class Share extends BasePlugin {
    * @memberof Share
    */
   static isValid() {
+    return true;
+  }
+
+  isAudioPlayerSupported() {
+    return true;
+  }
+  // TEMP - shoud be reomved once kaltura player is merged
+  isEntrySupported() {
     return true;
   }
 
@@ -75,12 +86,12 @@ class Share extends BasePlugin {
         order: 70,
         component: ShareWrapper,
         svgIcon: {path: ICON_PATH},
-        onClick: this._openShareOverlay.bind(this)
+        onClick: this.showOverlay.bind(this)
       });
     });
   }
 
-  _openShareOverlay() {
+  showOverlay() {
     if (!this.player.paused) {
       this.player.pause();
       this._wasPlayed = true;
