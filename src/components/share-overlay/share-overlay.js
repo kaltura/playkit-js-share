@@ -42,10 +42,11 @@ const ShareButton = (props: Object): React$Element<any> => {
    */
   const onClick = (buttonType: string) => {
     const EMAIL = 'email';
-    const {templateUrl, shareUrl, embedUrl} = props.config;
+    const {config, videoDesc, videoClippingOption} = props;
+    const {templateUrl, shareUrl, embedUrl} = config;
     let href = decodeURIComponent(templateUrl);
 
-    href = href.replace(/{description}/g, encodeURIComponent(props.videoDesc));
+    href = href.replace(/{description}/g, encodeURIComponent(videoDesc));
     try {
       href = href.replace(/{shareUrl}/g, encodeURIComponent(shareUrl));
     } catch (e) {
@@ -63,7 +64,7 @@ const ShareButton = (props: Object): React$Element<any> => {
         window.open(href, '_blank', 'width=580,height=580');
         break;
     }
-    props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_NETWORK, {socialNetworkName: buttonType}));
+    props.player.dispatchEvent(new FakeEvent(ShareEvent.SHARE_NETWORK, {socialNetworkName: buttonType, videoClippingOption}));
   };
 
   return (
@@ -652,6 +653,7 @@ class ShareOverlay extends Component {
       return (
         <ShareButton
           key={socialName}
+          videoClippingOption={this.state.videoClippingOption}
           socialName={socialName}
           videoDesc={this.props.videoDesc}
           config={shareButtonConfig}
