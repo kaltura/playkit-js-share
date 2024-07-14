@@ -51,14 +51,6 @@ class Share extends BasePlugin {
     return true;
   }
 
-  isAudioPlayerSupported() {
-    return true;
-  }
-  // TEMP - shoud be reomved once kaltura player is merged
-  isEntrySupported() {
-    return true;
-  }
-
   constructor(name: string, player: KalturaPlayer, config: Object) {
     super(name, player, config);
     if (!this.config.shareOptions) {
@@ -78,6 +70,9 @@ class Share extends BasePlugin {
   }
 
   _addIcon() {
+    const {displayName, symbol} = this;
+    // @ts-ignore
+    this.player.getService('AudioPluginsManager').add({displayName, symbol, open: () => this.open()});
     this.player.ready().then(() => {
       const ShareWrapper = () => <ShareButton config={this.config} setRef={this._setPluginButtonRef.bind(this)} />;
       this.iconId = this.player.getService('upperBarManager').add({
