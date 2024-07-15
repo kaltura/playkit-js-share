@@ -70,20 +70,24 @@ class Share extends BasePlugin {
   }
 
   _addIcon() {
-    const {displayName, symbol} = this;
     // @ts-ignore
-    this.player.getService('AudioPluginsManager').add({displayName, symbol, open: () => this.open()});
-    this.player.ready().then(() => {
-      const ShareWrapper = () => <ShareButton config={this.config} setRef={this._setPluginButtonRef.bind(this)} />;
-      this.iconId = this.player.getService('upperBarManager').add({
-        displayName: 'Share',
-        ariaLabel: <Text id="controls.share">Share</Text>,
-        order: 70,
-        component: ShareWrapper,
-        svgIcon: {path: ICON_PATH},
-        onClick: this._openShareOverlay.bind(this)
+    if (ui.redux.useStore().getState().shell['activePresetName'] !== ReservedPresetNames.MiniAudioUI) {
+      this.player.ready().then(() => {
+        const ShareWrapper = () => <ShareButton config={this.config} setRef={this._setPluginButtonRef.bind(this)} />;
+        this.iconId = this.player.getService('upperBarManager').add({
+          displayName: 'Share',
+          ariaLabel: <Text id="controls.share">Share</Text>,
+          order: 70,
+          component: ShareWrapper,
+          svgIcon: {path: ICON_PATH},
+          onClick: this._openShareOverlay.bind(this)
+        });
       });
-    });
+    } else {
+      const {displayName, symbol} = this;
+      // @ts-ignore
+      this.player.getService('AudioPluginsManager').add({displayName, symbol, open: () => this.open()});
+    }
   }
 
   open() {
