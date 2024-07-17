@@ -24,7 +24,7 @@ const pluginName: string = 'share';
  */
 class Share extends BasePlugin {
   displayName = 'Share';
-  symbol = {svgUrl: PLUGIN_ICON_PATH, viewBox: '0 0 1024 1024'};
+  svgIcon = {path: PLUGIN_ICON_PATH, viewBox: '0 0 1024 1024'};
   /**
    * The default configuration of the plugin.
    * @type {Object}
@@ -84,9 +84,9 @@ class Share extends BasePlugin {
         });
       });
     } else {
-      const {displayName, symbol} = this;
+      const {displayName, svgIcon} = this;
       // @ts-ignore
-      this.player.getService('AudioPluginsManager').add({displayName, symbol, open: () => this.open()});
+      this.player.getService('AudioPluginsManager').add({displayName, svgIcon, onClick: e => this.open(e)});
     }
   }
 
