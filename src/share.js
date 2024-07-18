@@ -6,6 +6,7 @@
 import {h} from 'preact';
 import {KalturaPlayer, BasePlugin, core, ui} from '@playkit-js/kaltura-player-js';
 import {ICON_PATH, Share as ShareComponent} from './components/share/share';
+import {ICON_PATH as PLUGIN_ICON_PATH} from './components/plugin-button/plugin-button';
 import {defaultShareOptionsConfig} from './default-share-options-config';
 import {ShareButton} from './components/plugin-button/plugin-button';
 import {ShareEvent} from './event';
@@ -22,6 +23,8 @@ const pluginName: string = 'share';
  * @extends BasePlugin
  */
 class Share extends BasePlugin {
+  displayName = 'Share';
+  svgIcon = {path: PLUGIN_ICON_PATH, viewBox: '0 0 1024 1024'};
   /**
    * The default configuration of the plugin.
    * @type {Object}
@@ -67,17 +70,28 @@ class Share extends BasePlugin {
   }
 
   _addIcon() {
-    this.player.ready().then(() => {
-      const ShareWrapper = () => <ShareButton config={this.config} setRef={this._setPluginButtonRef.bind(this)} />;
-      this.iconId = this.player.getService('upperBarManager').add({
-        displayName: 'Share',
-        ariaLabel: <Text id="controls.share">Share</Text>,
-        order: 70,
-        component: ShareWrapper,
-        svgIcon: {path: ICON_PATH},
-        onClick: this._openShareOverlay.bind(this)
+    // @ts-ignore
+    if (ui.redux.useStore().getState().shell['activePresetName'] !== ReservedPresetNames.MiniAudioUI) {
+      this.player.ready().then(() => {
+        const ShareWrapper = () => <ShareButton config={this.config} setRef={this._setPluginButtonRef.bind(this)} />;
+        this.iconId = this.player.getService('upperBarManager').add({
+          displayName: 'Share',
+          ariaLabel: <Text id="controls.share">Share</Text>,
+          order: 70,
+          component: ShareWrapper,
+          svgIcon: {path: ICON_PATH},
+          onClick: this._openShareOverlay.bind(this)
+        });
       });
-    });
+    } else {
+      const {displayName, svgIcon} = this;
+      // @ts-ignore
+      this.player.getService('AudioPluginsManager').add({displayName, svgIcon, onClick: e => this.open(e)});
+    }
+  }
+
+  open() {
+    this._openShareOverlay();
   }
 
   _openShareOverlay() {

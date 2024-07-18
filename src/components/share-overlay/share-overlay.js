@@ -122,7 +122,7 @@ const ShareUrl = (props: Object): React$Element<any> => {
 
   return (
     <div className={props.copy ? style.copyUrlRow : ''}>
-      <div className={[style.formGroup, style.inputCopyUrl].join(' ')} style="width: 350px;">
+      <div className={[style.formGroup, style.inputCopyUrl].join(' ')} style="width: 100%;">
         <input tabIndex="-1" type="text" ref={c => (c ? (_ref = c) : undefined)} className={style.formControl} value={props.shareUrl} readOnly />
       </div>
       {props.copy && <CopyButton addAccessibleChild={props.addAccessibleChild} copy={copyUrl} />}
@@ -674,9 +674,7 @@ class ShareOverlay extends Component {
   renderMainState(): React$Element<any> {
     return (
       <div className={this.state.view === shareOverlayView.Main ? 'overlay-screen active' : 'overlay-screen'}>
-        <div className={style.title}>
-          <Text id="share.title" />
-        </div>
+        <div className={shareStyle.header}>{<Text id="share.title" />}</div>
         <div className={shareStyle.shareMainContainer}>
           <div className={shareStyle.shareIcons}>{this._createShareOptions(this.props.config.shareOptions)}</div>
           <div className={shareStyle.linkOptionsContainer}>

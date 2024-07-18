@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Share Plugin</title>
-  <script src="https://cdnapisec.kaltura.com/p/1804331/embedPlaykitJs/uiconf_id/51444112"></script>
+  <script src="https://unpkg.com/@playkit-js/kaltura-player-js@canary/dist/kaltura-ovp-player.js"></script>
   <script src="https://unpkg.com/@playkit-js/ui-managers@latest/dist/playkit-ui-managers.js"></script>
   <script src="./playkit-share.js"></script>
 </head>
@@ -12,7 +12,7 @@
 <body>
 <input type="button" onclick="changeMedia()" value="Change Media"/>
 
-  <div id="player-placeholder" style="width: 940px; height: 595px;"></div>
+  <div id="player-placeholder" style="margin: 100px auto;max-width: 780px;aspect-ratio: 10 / 5.62;"></div>
   <script>
     let config = {
       logLevel: "DEBUG",
