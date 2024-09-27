@@ -12,7 +12,7 @@ import {ShareButton} from './components/plugin-button/plugin-button';
 import {ShareEvent} from './event';
 const {ReservedPresetNames} = ui;
 const {Utils} = core;
-const {Text} = ui.preacti18n;
+const {Text, Localizer} = ui.preacti18n;
 const {focusElement} = ui.Utils;
 const pluginName: string = 'share';
 /**
@@ -76,7 +76,14 @@ class Share extends BasePlugin {
         const ShareWrapper = () => <ShareButton config={this.config} setRef={this._setPluginButtonRef.bind(this)} />;
         this.iconId = this.player.getService('upperBarManager').add({
           displayName: 'Share',
-          ariaLabel: <Text id="controls.share">Share</Text>,
+          ariaLabel: () => {
+            const textJSX = (
+              <Localizer>
+                <Text id="controls.share">Share</Text>
+              </Localizer>
+            );
+            return textJSX
+          },
           order: 70,
           component: ShareWrapper,
           svgIcon: {path: ICON_PATH},
