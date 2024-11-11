@@ -15,6 +15,8 @@ const {Utils} = core;
 const {Text} = ui.preacti18n;
 const {focusElement} = ui.Utils;
 const pluginName: string = 'share';
+const coreUtils = core.Utils;
+
 /**
  * The Share plugin.
  * @class Share
@@ -90,6 +92,11 @@ class Share extends BasePlugin {
     }
   }
 
+  _getVideoDesc(): string {
+    let name = coreUtils.Object.getPropertyPath(this.player.config, 'sources.metadata.name') || 'the video';
+    return `${name}`;
+  }
+
   open() {
     this._openShareOverlay();
   }
@@ -99,8 +106,8 @@ class Share extends BasePlugin {
       this.player.pause();
       this._wasPlayed = true;
     }
+    const videoDesc = this._getVideoDesc();
     if (this.config.useNative && navigator.share) {
-      const videoDesc = this._getVideoDesc();
       navigator
         .share({
           title: `Check out ${videoDesc}`,
@@ -116,7 +123,7 @@ class Share extends BasePlugin {
           area: 'GuiArea',
           presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.MiniAudioUI],
           // eslint-disable-next-line react/display-name
-          get: () => <ShareComponent onClose={this._closeShareOverlay.bind(this)} config={this.config} />
+          get: () => <ShareComponent onClose={this._closeShareOverlay.bind(this)} config={this.config} videoDesc={videoDesc} />
         })
       );
     }
