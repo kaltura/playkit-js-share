@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.3.9 (2024-11-14)
+
+
+### Bug Fixes
+
+* **SUP-45586:** Keiser University | share buttons are not working on videos using specific player ([#56](https://github.com/kaltura/playkit-js-share/issues/56)) ([383ff05](https://github.com/kaltura/playkit-js-share/commit/383ff05fc64cc6abcd84aeb59c590ea1b6e30ec0))
+
 ### 1.3.8 (2024-10-13)
 
 ### 1.3.7 (2024-08-03)
