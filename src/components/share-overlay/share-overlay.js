@@ -486,14 +486,18 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _updateUrlParams(url: string, key: string, value: number): string {
-    const urlObj = new URL(url);
-    const searchParams = urlObj.searchParams;
-    if (searchParams.has(key)) {
-      searchParams.set(key, value);
-    } else {
-      searchParams.append(key, value);
+    try {
+      const urlObj = new URL(url);
+      const searchParams = urlObj.searchParams;
+      if (searchParams.has(key)) {
+        searchParams.set(key, value);
+      } else {
+        searchParams.append(key, value);
+      }
+      return urlObj.toString();
+    } catch (e) {
+      this.props.logger.log(e);
     }
-    return urlObj.toString();
   }
 
   /**
