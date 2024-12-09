@@ -509,7 +509,7 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _addKalturaClipParams(url: string): string {
-    url = this._updateUrlParams(url, 'kalturaStartTime', this.state.clipStartTimeValue);
+    url = this._updateUrlParams(url, 'kalturaSeekFrom', this.state.clipStartTimeValue);
     return this._updateUrlParams(url, 'kalturaClipTo', this.state.clipEndTimeValue);
   }
 
