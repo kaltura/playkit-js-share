@@ -497,6 +497,7 @@ class ShareOverlay extends Component {
       return urlObj.toString();
     } catch (e) {
       this.props.logger.log(e);
+      return '';
     }
   }
 
