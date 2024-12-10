@@ -285,7 +285,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
 
     const clipStartTimeInputProps = {
       'aria-labelledby': 'clip-seek-from-label',
-      value: toHHMMSS(props.clipStartTimeValue),
+      value: toHHMMSS(props.clipOriginalStartTimeValue || props.clipStartTimeValue),
       onChange: e => onInputChangeHandler(e.target.value, _clipStartTimeInputRef),
       onBlur: e => onInputFocusOutHandler(e, props.handleClipStartTimeChange),
       ...sharedAttr
@@ -449,6 +449,7 @@ class ShareOverlay extends Component {
       startFromValue: Math.floor(this.props.player.currentTime),
       videoClippingOption: VIDEO_CLIPPING_OPTIONS.FULL_VIDEO,
       clipStartTimeValue: Math.floor(this.props.player.currentTime),
+      clipOriginalStartTimeValue: Math.floor(this.props.player.currentTime),
       clipEndTimeValue: Math.floor(this.props.player.duration)
     });
   }
@@ -484,7 +485,8 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _addKalturaClipParams(url: string): string {
-    const params = `kalturaSeekFrom=${this.state.clipStartTimeValue}&kalturaClipTo=${this.state.clipEndTimeValue}`;
+    const seekTime = Math.floor(this.state.clipStartTimeValue/2)*2;
+    const params = `kalturaSeekFrom=${seekTime}&kalturaClipTo=${this.state.clipEndTimeValue}&kalturaStartTime=${this.state.clipOriginalStartTimeValue}`;
     return url.indexOf('?') === -1 ? `${url}?${params}` : `${url}&${params}`;
   }
 
@@ -583,7 +585,8 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _handleClipStartTimeChange = (value: string): void => {
-    this.setState({clipStartTimeValue: this._convertTimeValue(value)});
+    const newTime = Math.floor(this._convertTimeValue(value)/2)*2;
+    this.setState({clipStartTimeValue: newTime, clipOriginalStartTimeValue: this._convertTimeValue(value)});
   };
 
   /**
@@ -711,7 +714,7 @@ class ShareOverlay extends Component {
         config={this.props.config}
         videoClippingOption={this.state.videoClippingOption}
         setVideoClippingOption={this._onVideoClippingOptionChange}
-        clipStartTimeValue={this.state.clipStartTimeValue}
+        clipStartTimeValue={this.state.clipOriginalStartTimeValue}
         handleClipStartTimeChange={this._handleClipStartTimeChange}
         handleClipEndTimeChange={this._handleClipEndTimeChange}
         clipEndTimeValue={this.state.clipEndTimeValue}
