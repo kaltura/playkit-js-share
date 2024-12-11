@@ -478,6 +478,31 @@ class ShareOverlay extends Component {
   }
 
   /**
+   * update url with params and values
+   *
+   * @param {string} url - the share url
+   * @param {string} key - the param name
+   * @param {string} value - the param value
+   * @returns {string} - share url with the query parameters
+   * @memberof ShareOverlay
+   */
+  _updateUrlParams(url: string, key: string, value: number): string {
+    try {
+      const urlObj = new URL(url);
+      const searchParams = urlObj.searchParams;
+      if (searchParams.has(key)) {
+        searchParams.set(key, value);
+      } else {
+        searchParams.append(key, value);
+      }
+      return urlObj.toString();
+    } catch (e) {
+      this.props.logger.log(e);
+      return '';
+    }
+  }
+
+  /**
    * add seekFrom and clipTo query parameters to share url
    *
    * @param {string} url - the share url
@@ -485,9 +510,9 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _addKalturaClipParams(url: string): string {
-    const seekTime = Math.floor(this.state.clipStartTimeValue/2)*2;
-    const params = `kalturaSeekFrom=${seekTime}&kalturaClipTo=${this.state.clipEndTimeValue}&kalturaStartTime=${this.state.clipOriginalStartTimeValue}`;
-    return url.indexOf('?') === -1 ? `${url}?${params}` : `${url}&${params}`;
+    url = this._updateUrlParams(url, 'kalturaSeekFrom', seekTime);
+    url = this._updateUrlParams(url, 'kalturaClipTo', this.state.clipEndTimeValue);
+    return this._updateUrlParams(url, 'kalturaStartTime', this.state.clipOriginalStartTimeValue);
   }
 
   /**
@@ -498,8 +523,7 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _addUrlKalturaStartTimeParam(url: string): string {
-    const param = `kalturaStartTime=${this.state.startFromValue}`;
-    return url.indexOf('?') === -1 ? `${url}?${param}` : `${url}&${param}`;
+    return this._updateUrlParams(url, 'kalturaStartTime', this.state.startFromValue);
   }
 
   /**
