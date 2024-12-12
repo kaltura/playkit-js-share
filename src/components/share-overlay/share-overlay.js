@@ -510,6 +510,8 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _addKalturaClipParams(url: string): string {
+    const seekTime = Math.floor(this._convertTimeValue(clipStartTimeValue) / 2) * 2;
+  
     url = this._updateUrlParams(url, 'kalturaSeekFrom', seekTime);
     url = this._updateUrlParams(url, 'kalturaClipTo', this.state.clipEndTimeValue);
     return this._updateUrlParams(url, 'kalturaStartTime', this.state.clipOriginalStartTimeValue);
@@ -609,7 +611,7 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _handleClipStartTimeChange = (value: string): void => {
-    const newTime = Math.floor(this._convertTimeValue(value)/2)*2;
+    const newTime = Math.floor(this._convertTimeValue(value) / 2) * 2;
     this.setState({clipStartTimeValue: newTime, clipOriginalStartTimeValue: this._convertTimeValue(value)});
   };
 
