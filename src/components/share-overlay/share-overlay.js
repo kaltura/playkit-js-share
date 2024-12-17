@@ -432,7 +432,7 @@ const PLAYER_HEIGHT_EMBED_DEFAULT = '395';
  * @returns {Number} - time that has been cropped in multiples of 2
  */
 const cropTimeForFrames = (time: Number) => {
-  return Math.floor(this._convertTimeValue(time) / 2) * 2;
+  return Math.floor(time / 2) * 2;
 };
 
 /**
@@ -457,7 +457,7 @@ class ShareOverlay extends Component {
       view: shareOverlayView.Main,
       startFromValue: Math.floor(this.props.player.currentTime),
       videoClippingOption: VIDEO_CLIPPING_OPTIONS.FULL_VIDEO,
-      clipStartTimeValue: Math.floor(this.props.player.currentTime),
+      clipStartTimeValue: cropTimeForFrames(this.props.player.currentTime),
       clipOriginalStartTimeValue: Math.floor(this.props.player.currentTime),
       clipEndTimeValue: Math.floor(this.props.player.duration)
     });
@@ -521,7 +521,7 @@ class ShareOverlay extends Component {
   _addKalturaClipParams(url: string): string {
     url = this._updateUrlParams(url, 'kalturaSeekFrom', cropTimeForFrames(this.state.clipStartTimeValue));
     url = this._updateUrlParams(url, 'kalturaClipTo', this.state.clipEndTimeValue);
-    return this._updateUrlParams(url, 'kalturaStartTime', this.state.clipOriginalStartTimeValue);
+    return this._updateUrlParams(url, 'kalturaStartTime', this.state.clipOriginalStartTimeValue % 2);
   }
 
   /**
@@ -618,7 +618,8 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _handleClipStartTimeChange = (value: string): void => {
-    this.setState({clipStartTimeValue: cropTimeForFrames(value), clipOriginalStartTimeValue: this._convertTimeValue(value)});
+    const newTime = cropTimeForFrames(this._convertTimeValue(value));
+    this.setState({clipStartTimeValue: newTime, clipOriginalStartTimeValue: this._convertTimeValue(value)});
   };
 
   /**
