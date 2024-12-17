@@ -285,7 +285,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
 
     const clipStartTimeInputProps = {
       'aria-labelledby': 'clip-seek-from-label',
-      value: toHHMMSS(props.clipStartTimeValue),
+      value: toHHMMSS(props.clipOriginalStartTimeValue || props.clipStartTimeValue),
       onChange: e => onInputChangeHandler(e.target.value, _clipStartTimeInputRef),
       onBlur: e => onInputFocusOutHandler(e, props.handleClipStartTimeChange),
       ...sharedAttr
@@ -427,6 +427,15 @@ const PLAYER_WIDTH_EMBED_DEFAULT = '560';
 const PLAYER_HEIGHT_EMBED_DEFAULT = '395';
 
 /**
+ * convert time so it will be aligned with search frame rulings
+ * @param {Number} time - time that needs to be cropped
+ * @returns {Number} - time that has been cropped in multiples of 2
+ */
+const cropTimeForFrames = (time: Number) => {
+  return Math.floor(time / 2) * 2;
+};
+
+/**
  * ShareOverlay component
  *
  * @class ShareOverlay
@@ -448,7 +457,8 @@ class ShareOverlay extends Component {
       view: shareOverlayView.Main,
       startFromValue: Math.floor(this.props.player.currentTime),
       videoClippingOption: VIDEO_CLIPPING_OPTIONS.FULL_VIDEO,
-      clipStartTimeValue: Math.floor(this.props.player.currentTime),
+      clipStartTimeValue: cropTimeForFrames(this.props.player.currentTime),
+      clipOriginalStartTimeValue: Math.floor(this.props.player.currentTime),
       clipEndTimeValue: Math.floor(this.props.player.duration)
     });
   }
@@ -509,8 +519,9 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _addKalturaClipParams(url: string): string {
-    url = this._updateUrlParams(url, 'kalturaSeekFrom', this.state.clipStartTimeValue);
-    return this._updateUrlParams(url, 'kalturaClipTo', this.state.clipEndTimeValue);
+    url = this._updateUrlParams(url, 'kalturaSeekFrom', cropTimeForFrames(this.state.clipStartTimeValue));
+    url = this._updateUrlParams(url, 'kalturaClipTo', this.state.clipEndTimeValue);
+    return this._updateUrlParams(url, 'kalturaStartTime', this.state.clipOriginalStartTimeValue % 2);
   }
 
   /**
@@ -607,7 +618,8 @@ class ShareOverlay extends Component {
    * @memberof ShareOverlay
    */
   _handleClipStartTimeChange = (value: string): void => {
-    this.setState({clipStartTimeValue: this._convertTimeValue(value)});
+    const newTime = cropTimeForFrames(this._convertTimeValue(value));
+    this.setState({clipStartTimeValue: newTime, clipOriginalStartTimeValue: this._convertTimeValue(value)});
   };
 
   /**
@@ -735,7 +747,7 @@ class ShareOverlay extends Component {
         config={this.props.config}
         videoClippingOption={this.state.videoClippingOption}
         setVideoClippingOption={this._onVideoClippingOptionChange}
-        clipStartTimeValue={this.state.clipStartTimeValue}
+        clipStartTimeValue={this.state.clipOriginalStartTimeValue}
         handleClipStartTimeChange={this._handleClipStartTimeChange}
         handleClipEndTimeChange={this._handleClipEndTimeChange}
         clipEndTimeValue={this.state.clipEndTimeValue}
