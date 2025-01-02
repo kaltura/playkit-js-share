@@ -11,6 +11,8 @@
       "embed": "Get embed code",
       "full_video": "Full-length video",
       "clip_video": "Share clip",
+      "clip_seek_from": "Clip seek from",
+      "clip_to": "Clip to",
       "share-on-facebook": "Share on Facebook",
       "share-on-linkedin": "Share on Linkedin",
       "share-on-twitter": "Share on X"
