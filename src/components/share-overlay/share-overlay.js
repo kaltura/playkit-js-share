@@ -11,7 +11,7 @@ import {RadioButton, RadioButtonSelected} from '../radio-button/radio-button';
 const {preact, preacti18n, Components, Utils, style, redux, Reducers, preactHooks, ReservedPresetNames} = ui;
 const {h, Component} = preact;
 const {useRef} = preactHooks;
-const {Text, Localizer} = preacti18n;
+const {Text, Localizer, withText} = preacti18n;
 const {Overlay, Icon, CopyButton, Button, withLogger, Tooltip, ButtonControl} = Components;
 const {bindActions, KeyMap, withKeyboardA11y, toHHMMSS, toSecondsFromHHMMSS, formatOnlyNumbersInput} = Utils;
 const {shell} = Reducers;
@@ -284,7 +284,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
     };
 
     const clipStartTimeInputProps = {
-      'aria-labelledby': 'clip-seek-from-label',
+      'aria-label': props.shareClipLabels.clipSeekFrom,
       value: toHHMMSS(props.clipOriginalStartTimeValue || props.clipStartTimeValue),
       onChange: e => onInputChangeHandler(e.target.value, _clipStartTimeInputRef),
       onBlur: e => onInputFocusOutHandler(e, props.handleClipStartTimeChange),
@@ -295,7 +295,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
     }
 
     const clipToInputProps = {
-      'aria-labelledby': 'clip-to-label',
+      'aria-label': props.shareClipLabels.clipTo,
       value: toHHMMSS(props.clipEndTimeValue),
       onChange: e => onInputChangeHandler(e.target.value, _clipEndTimeInputRef),
       onBlur: e => onInputFocusOutHandler(e, props.handleClipEndTimeChange),
@@ -444,6 +444,7 @@ const cropTimeForFrames = (time: Number) => {
 @connect(mapStateToProps, bindActions(actions))
 @withLogger(COMPONENT_NAME)
 @withKeyboardA11y
+@withText({clipTo: 'share.clip_to', clipSeekFrom: 'share.clip_seek_from'})
 class ShareOverlay extends Component {
   /**
    * before component mount, set initial state
@@ -751,6 +752,7 @@ class ShareOverlay extends Component {
         handleClipStartTimeChange={this._handleClipStartTimeChange}
         handleClipEndTimeChange={this._handleClipEndTimeChange}
         clipEndTimeValue={this.state.clipEndTimeValue}
+        shareClipLabels={{clipTo: this.props.clipTo, clipSeekFrom: this.props.clipSeekFrom}}
       />
     ) : undefined;
   }
