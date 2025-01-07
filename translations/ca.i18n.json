@@ -1,0 +1,19 @@
+{
+  "ca": {
+    "controls": {
+      "share": "Compartir"
+    },
+    "share": {
+      "title": "Compartir",
+      "embed_options": "Opcions d'integració",
+      "start_video_at": "Començar a",
+      "email": "Compartir per correu electrònic",
+      "embed": "Obtenir codi d'integració",
+      "full_video": "Vídeo complet",
+      "clip_video": "Compartir clip",
+      "share-on-facebook": "Compartir a Facebook",
+      "share-on-linkedin": "Compartir a Linkedin",
+      "share-on-twitter": "Compartir a X"
+    }
+  }
+}
