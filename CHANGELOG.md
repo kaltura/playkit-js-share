@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.3.13 (2025-01-09)
+
+
+### Bug Fixes
+
+* **ADA-2126:** Player - Share overlay is missing labels ([#61](https://github.com/kaltura/playkit-js-share/issues/61)) ([1a4ad97](https://github.com/kaltura/playkit-js-share/commit/1a4ad975da9758516d123febfdd3ab5c3f90ac27))
+
 ### 1.3.12 (2024-12-19)
 
 ### 1.3.11 (2024-12-01)
