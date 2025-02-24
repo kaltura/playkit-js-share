@@ -123,14 +123,20 @@ class Share extends BasePlugin {
           area: 'GuiArea',
           presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.MiniAudioUI],
           // eslint-disable-next-line react/display-name
-          get: () => <ShareComponent onClose={this._closeShareOverlay.bind(this)} config={this.config} videoDesc={videoDesc} />
+          get: () => (
+            <ShareComponent
+              onClose={(event, byKeyboard) => this._closeShareOverlay(event, byKeyboard, true)}
+              config={this.config}
+              videoDesc={videoDesc}
+            />
+          )
         })
       );
     }
     this.dispatchEvent(ShareEvent.SHARE_CLICKED);
   }
 
-  _closeShareOverlay(event?: OnClickEvent, byKeyboard?: boolean) {
+  _closeShareOverlay(event?: OnClickEvent, byKeyboard?: boolean, userInteraction = false) {
     this._removeOverlay();
     if (this._wasPlayed) {
       this.player.play();
@@ -141,7 +147,9 @@ class Share extends BasePlugin {
       // @ts-ignore
       focusElement(this._pluginButtonRef);
     }
-    this.dispatchEvent(ShareEvent.SHARE_CLOSE);
+    if (userInteraction) {
+      this.dispatchEvent(ShareEvent.SHARE_CLOSE);
+    }
   }
 
   _setPluginButtonRef(ref: HTMLButtonElement | null) {
