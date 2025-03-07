@@ -123,7 +123,15 @@ const ShareUrl = (props: Object): React$Element<any> => {
   return (
     <div className={props.copy ? style.copyUrlRow : ''}>
       <div className={[style.formGroup, style.inputCopyUrl].join(' ')} style="width: 100%;">
-        <input tabIndex="-1" type="text" ref={c => (c ? (_ref = c) : undefined)} className={style.formControl} value={props.shareUrl} readOnly />
+        <input
+          tabIndex="-1"
+          type="text"
+          ref={c => (c ? (_ref = c) : undefined)}
+          className={style.formControl}
+          value={props.shareUrl}
+          aria-label={props.shareUrl}
+          readOnly
+        />
       </div>
       {props.copy && <CopyButton addAccessibleChild={props.addAccessibleChild} copy={copyUrl} />}
     </div>
