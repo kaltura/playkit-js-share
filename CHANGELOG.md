@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.4.2 (2025-04-02)
+
+
+### Bug Fixes
+
+* **ADA-2306:** Add accessible name to Share URL input ([#67](https://github.com/kaltura/playkit-js-share/issues/67)) ([80f5c9d](https://github.com/kaltura/playkit-js-share/commit/80f5c9db6b2dd2310f84d3dd20ed74d66db57674))
+
 ### 1.4.1 (2025-03-06)
 
 ## 1.4.0 (2025-03-06)
