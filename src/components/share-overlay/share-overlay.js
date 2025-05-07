@@ -315,7 +315,9 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
 
     return (
       <div className={shareStyle.clipTimeSlotsContainer}>
+        <label htmlFor="clipStartInput">{<Text id="share.clip_start" />}</label>
         <input
+          id="clipStartInput"
           ref={el => {
             _clipStartTimeInputRef = el;
             props.addAccessibleChild(el);
@@ -323,7 +325,9 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
           {...clipStartTimeInputProps}
         />
         <div className={shareStyle.clipRectangle} />
+        <label htmlFor="clipEndInput">{<Text id="share.clip_end" />}</label>
         <input
+          id="clipEndInput"
           ref={el => {
             _clipEndTimeInputRef = el;
             props.addAccessibleChild(el);
