@@ -10,7 +10,9 @@
       "email": "Delen via e-mail",
       "embed": "Ingebouwde code verkrijgen",
       "full_video": "Video met volledige lengte",
-      "clip_video": "Clip delen"
+      "clip_video": "Clip delen",
+      "clip_start": "Clip starttijd",
+      "clip_end": "Clip eindtijd"
     }
   }
 }

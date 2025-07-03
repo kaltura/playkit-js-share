@@ -10,7 +10,9 @@
       "email": "Jaa sähköpostitse",
       "embed": "Hanki upotuskoodi",
       "full_video": "Täyspitkä video",
-      "clip_video": "Jaa leike"
+      "clip_video": "Jaa leike",
+      "clip_start": "Leikkeen aloitusaika",
+      "clip_end": "Leikkeen lopetusaika"
     }
   }
 }

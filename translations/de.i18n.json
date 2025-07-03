@@ -13,7 +13,9 @@
       "clip_video": "Clip teilen",
       "share-on-facebook": "Auf Facebook teilen",
       "share-on-linkedin": "Auf Linkedin teilen",
-      "share-on-twitter": "Auf X teilen"
+      "share-on-twitter": "Auf X teilen",
+      "clip_start": "Clip-Startzeit",
+      "clip_end": "Clip-Endzeit"
     }
   }
 }
