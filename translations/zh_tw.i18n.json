@@ -10,7 +10,9 @@
       "email": "以電子郵件分享",
       "embed": "獲得嵌入代碼",
       "full_video": "完整影片",
-      "clip_video": "分享剪輯"
+      "clip_video": "分享剪輯",
+      "clip_start": "剪輯開始時間",
+      "clip_end": "剪輯結束時間"
     }
   }
 }

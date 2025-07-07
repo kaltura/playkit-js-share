@@ -10,7 +10,9 @@
       "email": "Compartilhar no e-mail",
       "embed": "Obter código incorporado",
       "full_video": "Vídeo completo",
-      "clip_video": "Compartilhar clipe"
+      "clip_video": "Compartilhar clipe",
+      "clip_start": "Tempo inicial do clipe",
+      "clip_end": "Tempo final do clipe"
     }
   }
 }
