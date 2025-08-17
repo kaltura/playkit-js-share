@@ -534,7 +534,11 @@ class ShareOverlay extends Component {
   _addKalturaClipParams(url: string): string {
     url = this._updateUrlParams(url, 'kalturaSeekFrom', cropTimeForFrames(this.state.clipStartTimeValue));
     url = this._updateUrlParams(url, 'kalturaClipTo', this.state.clipEndTimeValue);
-    return this._updateUrlParams(url, 'kalturaStartTime', this.state.clipOriginalStartTimeValue % 2);
+    if (this.props.player.config.sources.dash.length === 0 && this.props.player.config.sources.hls.length === 0) {
+      return this._updateUrlParams(url, 'kalturaStartTime', cropTimeForFrames(this.state.clipStartTimeValue));
+    } else {
+      return this._updateUrlParams(url, 'kalturaStartTime', this.state.clipOriginalStartTimeValue % 2);
+    }
   }
 
   /**
