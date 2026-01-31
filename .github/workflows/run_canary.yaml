@@ -5,7 +5,7 @@ run-name: Canary
 on:
   push:
     branches:
-      - SivanA-Kaltura-patch-1
+      - test-share-style-fix
 
 jobs:
   canary:
