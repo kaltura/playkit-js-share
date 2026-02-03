@@ -59,6 +59,7 @@ module.exports = {
           {
             loader: 'style-loader',
             options: {
+              injectType: 'singletonStyleTag',
               attributes: {
                 id: `${packageData.name}`
               },
@@ -88,6 +89,7 @@ module.exports = {
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   externals: {
-    '@playkit-js/kaltura-player-js': ['KalturaPlayer']
+    '@playkit-js/kaltura-player-js': ['KalturaPlayer'],
+    '@playkit-js/playkit-js': 'root KalturaPlayer.core'
   }
 };
