@@ -1,0 +1,73 @@
+{
+  "core_responsibility": "Provides the PlayKit JS Share UI plugin that adds share actions and an overlay (including embed and clip options) to the Kaltura Player JS experience.",
+  "domain_and_logic_ownership": {
+    "feature_ownership": [
+      "Share button integration in player upper bar / audio UI",
+      "Share overlay UI with social network buttons",
+      "Embed code generation and embed options screen",
+      "Copy share URL flow",
+      "Video start-from and clip time selection",
+      "Native share invocation via Web Share API",
+      "Share-related event dispatching (ShareEvent)"
+    ],
+    "data_handling": [
+      "Plugin configuration: shareUrl, embedUrl, shareOptions, enableTimeOffset, enableClipping, useNative",
+      "Kaltura embed template variables (embedBaseUrl, partnerId, uiConfId, entryId)",
+      "Video metadata name (sources.metadata.name)",
+      "Player state for play/pause and duration",
+      "Overlay state: selected clipping option, start time, clip start/end times, embed template/url",
+      "Share URL query params (kalturaStartTime, kalturaSeekFrom, kalturaClipTo)"
+    ]
+  },
+  "integration_points": {
+    "upstream": [
+      "@playkit-js/kaltura-player-js core player instance and UI services",
+      "Player configuration and metadata supplied by host applications"
+    ],
+    "downstream": [
+      "Kaltura Player JS UI presets and overlays",
+      "Host applications that bundle the @playkit-js/share plugin"
+    ],
+    "external_apis": [
+      "Web Share API (navigator.share)",
+      "Facebook share endpoint (sharer.php)",
+      "LinkedIn share endpoint (shareArticle)",
+      "Twitter share endpoint (twitter.com/share)",
+      "mailto: URL scheme"
+    ]
+  },
+  "technical_stack_entry_points": {
+    "languages_frameworks": [
+      "JavaScript (ES6)",
+      "Flow type annotations",
+      "Preact via PlayKit UI",
+      "Redux (PlayKit UI store)",
+      "SCSS styling",
+      "Webpack build"
+    ],
+    "entry_points": [
+      "src/index.js (plugin registration)",
+      "src/share.js (Share plugin core logic)",
+      "src/components/share/share.js (portal host for overlay)",
+      "src/components/share-overlay/share-overlay.js (main UI + URL/clip logic)",
+      "src/default-share-options-config.js (default social share configuration)"
+    ]
+  },
+  "triage_keywords": [
+    "share overlay",
+    "share button",
+    "ShareEvent",
+    "shareOptions",
+    "embed code",
+    "copy url",
+    "kalturaStartTime",
+    "kalturaSeekFrom",
+    "kalturaClipTo",
+    "navigator.share",
+    "useNative",
+    "upperBarManager",
+    "AudioPluginsManager",
+    "shareUrl",
+    "embedUrl"
+  ]
+}
