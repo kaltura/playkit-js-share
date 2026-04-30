@@ -796,7 +796,7 @@ class ShareOverlay extends Component {
             videoClippingOption={this.state.videoClippingOption}
             copy={true}
             isIos={this.isIos}
-            isTiny={this.props.playerSize === 'size-ty'}
+            isTiny={this.props.playerSize === 'tiny'}
           />
           {this._renderVideoClippingOptions()}
         </div>
