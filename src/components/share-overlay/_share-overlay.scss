@@ -160,6 +160,30 @@
   }
 }
 
+.player.size-ty {
+  .overlay.share-overlay {
+    .link-options-container {
+      .copy-url-row {
+        .control-copy-button {
+          display: inline-block !important;
+        }
+      }
+    }
+  }
+}
+
+.hidden-input {
+  position: absolute;
+  left: -9999px;
+}
+
+.copy-url-text {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: $tone-1-color
+}
+
 .startAtInput {
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.4);
