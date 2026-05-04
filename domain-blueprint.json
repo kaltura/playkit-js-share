@@ -1,0 +1,163 @@
+{
+  "repositoryName": "playkit-js-share",
+  "version": "1.0.0",
+  "lastUpdated": "2026-05-04",
+
+  "coreResponsibility": {
+    "summary": "A UI plugin for the Kaltura Player JS that provides social sharing, embed code generation, video clipping, and URL copy functionality for video content.",
+    "type": "UI Plugin"
+  },
+
+  "domainAndLogicOwnership": {
+    "featureOwnership": [
+      "Social media sharing (Facebook, LinkedIn, X/Twitter, Email)",
+      "Embed code generation with customizable dimensions",
+      "Share URL generation and copying",
+      "Video time offset/start-at functionality",
+      "Video clipping (clip start/end time selection)",
+      "Native Web Share API integration",
+      "Share overlay/modal UI component",
+      "Upper bar share button integration",
+      "Mini audio UI share support"
+    ],
+    "dataHandling": [
+      "Share configuration (shareUrl, embedUrl, shareOptions)",
+      "Video clipping state (full video, start-from, clip options)",
+      "Embed dimensions (width, height)",
+      "Social network template URLs",
+      "Player state for pause/resume on share overlay open/close",
+      "Time offset parsing and formatting (HH:MM:SS)"
+    ]
+  },
+
+  "integrationPoints": {
+    "upstream": [
+      {
+        "name": "@playkit-js/kaltura-player-js",
+        "description": "Core Kaltura Player that this plugin extends via BasePlugin"
+      },
+      {
+        "name": "playkit-ui-managers",
+        "description": "Provides upperBarManager and AudioPluginsManager services for button registration"
+      }
+    ],
+    "downstream": [
+      {
+        "name": "Kaltura Player UI",
+        "description": "Renders share button in upper bar and overlay in GuiArea"
+      },
+      {
+        "name": "Social Media Platforms",
+        "description": "Opens share URLs for Facebook, LinkedIn, X/Twitter"
+      }
+    ],
+    "externalAPIs": [
+      {
+        "name": "Web Share API",
+        "description": "navigator.share() for native mobile sharing when useNative is enabled"
+      },
+      {
+        "name": "Facebook Sharer",
+        "description": "https://www.facebook.com/sharer/sharer.php"
+      },
+      {
+        "name": "LinkedIn Share",
+        "description": "https://www.linkedin.com/shareArticle"
+      },
+      {
+        "name": "X/Twitter Share",
+        "description": "https://twitter.com/share"
+      }
+    ]
+  },
+
+  "technicalStack": {
+    "primaryLanguages": ["JavaScript (ES6+)", "Flow"],
+    "frameworks": ["Preact", "Redux"],
+    "buildTools": ["Webpack", "Babel"],
+    "testingTools": ["Karma", "Mocha", "Chai", "Sinon"],
+    "styling": ["SCSS"],
+    "entryPoints": [
+      {
+        "file": "src/index.js",
+        "description": "Main entry point that registers the share plugin with Kaltura Player"
+      },
+      {
+        "file": "src/share.js",
+        "description": "Core Share plugin class extending BasePlugin with configuration and lifecycle methods"
+      },
+      {
+        "file": "src/components/share/share.js",
+        "description": "Share component that renders the share overlay portal"
+      },
+      {
+        "file": "src/components/share-overlay/share-overlay.js",
+        "description": "Main overlay component with social buttons, URL copy, embed options, and video clipping"
+      },
+      {
+        "file": "src/default-share-options-config.js",
+        "description": "Default configuration for social share options (Facebook, LinkedIn, Twitter, Email, Embed)"
+      },
+      {
+        "file": "flow-typed/types/share-config.js",
+        "description": "Type definitions for ShareConfig"
+      }
+    ]
+  },
+
+  "triageKeywords": [
+    "share",
+    "sharing",
+    "share button",
+    "share overlay",
+    "share modal",
+    "embed code",
+    "embed URL",
+    "copy URL",
+    "copy link",
+    "social share",
+    "facebook share",
+    "twitter share",
+    "linkedin share",
+    "email share",
+    "video clipping",
+    "clip start",
+    "clip end",
+    "start at",
+    "time offset",
+    "native share",
+    "navigator.share",
+    "shareUrl",
+    "embedUrl",
+    "share_clicked",
+    "share_close",
+    "share_network",
+    "share_copy",
+    "ShareEvent",
+    "upperBarManager share",
+    "playkit-share"
+  ],
+
+  "errorPatterns": [
+    "share overlay not appearing",
+    "share button missing",
+    "embed code not generated",
+    "copy URL not working",
+    "social share link broken",
+    "clipping time invalid",
+    "share URL incorrect",
+    "native share not working",
+    "share overlay not closing",
+    "share button not clickable",
+    "embed dimensions wrong"
+  ],
+
+  "configurationOptions": {
+    "shareUrl": "Custom share URL (defaults to parent page URL)",
+    "embedUrl": "Embed URL template with placeholders",
+    "enableTimeOffset": "Enable start-at time selection (default: true)",
+    "enableClipping": "Enable video clipping options (default: true)",
+    "useNative": "Use native Web Share API when available (default: false)",
+    "shareOptions": "Configure which social networks to display and their templates"
+  }
+}
