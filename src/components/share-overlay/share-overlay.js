@@ -24,6 +24,7 @@ const shareOverlayView: Object = {
 };
 
 const EMBED = 'embed';
+const TINY = 'tiny';
 /**
  * ShareButton component
  * @param {Object} props - the class props
@@ -122,7 +123,9 @@ const ShareUrl = (props: Object): React$Element<any> => {
 
   return (
     <div className={props.copy ? style.copyUrlRow : ''}>
-      <div className={[style.formGroup, style.inputCopyUrl].join(' ')} style="width: 100%;">
+      <div
+        className={[props.isTiny ? shareStyle.hiddenInput : style.formGroup, style.inputCopyUrl].join(' ')}
+        style={props.isTiny ? '' : 'width: 100%;'}>
         <input
           tabIndex="-1"
           type="text"
@@ -133,6 +136,11 @@ const ShareUrl = (props: Object): React$Element<any> => {
           readOnly
         />
       </div>
+      {props.isTiny && (
+        <div className={shareStyle.copyUrlText}>
+          <Text id="share.copy_url" />
+        </div>
+      )}
       {props.copy && <CopyButton addAccessibleChild={props.addAccessibleChild} copy={copyUrl} />}
     </div>
   );
@@ -432,7 +440,8 @@ const COMPONENT_NAME = 'ShareOverlay';
  */
 const mapStateToProps = state => ({
   isLive: state.engine.isLive,
-  activePresetName: state.shell.activePresetName
+  activePresetName: state.shell.activePresetName,
+  playerSize: state.shell.playerSize
 });
 
 const PLAYER_WIDTH_EMBED_DEFAULT = '560';
@@ -734,6 +743,7 @@ class ShareOverlay extends Component {
               copy={true}
               isIos={this.isIos}
               videoClippingOption={this.state.videoClippingOption}
+              isTiny={this.props.playerSize === TINY}
             />
             {this._renderVideoClippingOptions()}
           </div>
@@ -787,6 +797,7 @@ class ShareOverlay extends Component {
             videoClippingOption={this.state.videoClippingOption}
             copy={true}
             isIos={this.isIos}
+            isTiny={this.props.playerSize === TINY}
           />
           {this._renderVideoClippingOptions()}
         </div>
