@@ -24,6 +24,7 @@ const shareOverlayView: Object = {
 };
 
 const EMBED = 'embed';
+const TINY = 'tiny';
 /**
  * ShareButton component
  * @param {Object} props - the class props
@@ -742,7 +743,7 @@ class ShareOverlay extends Component {
               copy={true}
               isIos={this.isIos}
               videoClippingOption={this.state.videoClippingOption}
-              isTiny={this.props.playerSize === 'tiny'}
+              isTiny={this.props.playerSize === TINY}
             />
             {this._renderVideoClippingOptions()}
           </div>
@@ -796,7 +797,7 @@ class ShareOverlay extends Component {
             videoClippingOption={this.state.videoClippingOption}
             copy={true}
             isIos={this.isIos}
-            isTiny={this.props.playerSize === 'tiny'}
+            isTiny={this.props.playerSize === TINY}
           />
           {this._renderVideoClippingOptions()}
         </div>
