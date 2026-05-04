@@ -181,7 +181,7 @@
   display: flex;
   align-items: center;
   font-size: 14px;
-  color: $tone-1-color
+  color: $tone-1-color;
 }
 
 .startAtInput {
@@ -192,4 +192,12 @@
     background-color: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
+}
+
+.shared-chapter-info {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 16px;
+  margin-top: 16px;
 }

@@ -18,7 +18,8 @@
       "share-on-facebook": "Share on Facebook",
       "share-on-linkedin": "Share on Linkedin",
       "share-on-twitter": "Share on X",
-      "copy_url": "Copy URL"
+      "copy_url": "Copy URL",
+      "start_at": "Start video at {{chapterTime}}"
     }
   }
 }

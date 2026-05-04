@@ -69,6 +69,7 @@ class Share extends BasePlugin {
     }
     this._wasPlayed = false; // keep state of the player so we can resume if needed
     this._addIcon();
+    this._addChapterSharedListener();
   }
 
   _addIcon() {
@@ -92,6 +93,18 @@ class Share extends BasePlugin {
     }
   }
 
+  /**
+   * Add listener for chapter shared event
+   * @returns {void}
+   * @memberof Share
+   */
+  _addChapterSharedListener() {
+    this.player.addEventListener('summary_chapters_chapter_shared', (event: any) => {
+      const chapterInfo = {chapterTime: event?.payload?.time, chapterTitle: event?.payload?.title};
+      this._openShareOverlay(chapterInfo);
+    });
+  }
+
   _getVideoDesc(): string {
     let name = coreUtils.Object.getPropertyPath(this.player.config, 'sources.metadata.name') || 'the video';
     return `${name}`;
@@ -101,7 +114,7 @@ class Share extends BasePlugin {
     this._openShareOverlay();
   }
 
-  _openShareOverlay() {
+  _openShareOverlay(chapterInfo?: Object) {
     if (!this.player.paused) {
       this.player.pause();
       this._wasPlayed = true;
@@ -128,6 +141,7 @@ class Share extends BasePlugin {
               onClose={(event, byKeyboard) => this._closeShareOverlay(event, byKeyboard, true)}
               config={this.config}
               videoDesc={videoDesc}
+              chapterInfo={chapterInfo}
             />
           )
         })
