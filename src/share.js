@@ -99,7 +99,7 @@ class Share extends BasePlugin {
    * @memberof Share
    */
   _addChapterSharedListener() {
-    this.player.addEventListener('summary_chapters_chapter_shared', (event: any) => {
+    this.player.addEventListener('summary_chapters_chapter_share', (event: any) => {
       const chapterInfo = {chapterTime: event?.payload?.time, chapterTitle: event?.payload?.title};
       this._openShareOverlay(chapterInfo);
     });
