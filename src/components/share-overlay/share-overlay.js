@@ -475,10 +475,11 @@ class ShareOverlay extends Component {
    */
   componentWillMount() {
     this.isIos = this.props.player.env.os.name === 'iOS';
+    const times = this._getTimeValues();
     this.setState({
       view: shareOverlayView.Main,
-      startFromValue: Math.floor(this.props.player.currentTime),
-      videoClippingOption: VIDEO_CLIPPING_OPTIONS.FULL_VIDEO,
+      startFromValue: times.startFromTime,
+      videoClippingOption: times.videoClippingOption,
       clipStartTimeValue: cropTimeForFrames(this.props.player.currentTime),
       clipOriginalStartTimeValue: Math.floor(this.props.player.currentTime),
       clipEndTimeValue: Math.floor(this.props.player.duration)
@@ -508,6 +509,23 @@ class ShareOverlay extends Component {
     this.props.setIsModal(true);
   }
 
+  /**
+   * Get time values for video clipping
+   * @returns {Object} - startFromTime and videoClippingOption
+   * @memberof ShareOverlay
+   */
+  _getTimeValues() {
+    const {chapterTime} = this.props.chapterInfo || {};
+    let startFromTime, videoClippingOption;
+    if (chapterTime !== undefined) {
+      startFromTime = Math.floor(chapterTime);
+      videoClippingOption = VIDEO_CLIPPING_OPTIONS.START_FROM;
+    } else {
+      startFromTime = Math.floor(this.props.player.currentTime);
+      videoClippingOption = VIDEO_CLIPPING_OPTIONS.FULL_VIDEO;
+    }
+    return {startFromTime, videoClippingOption};
+  }
   /**
    * update url with params and values
    *
@@ -724,6 +742,24 @@ class ShareOverlay extends Component {
   }
 
   /**
+   * renders the chapter info if exists
+   * @returns {React$Element<any>|null} - the chapter info element
+   * @private
+   */
+  _renderChapterInfo(): React$Element<any> | null {
+    const {chapterTime, chapterTitle} = this.props.chapterInfo;
+    if (chapterTime === undefined && chapterTitle === undefined) {
+      return null;
+    }
+    return (
+      <div className={shareStyle.sharedChapterInfo}>
+        {chapterTime !== undefined && <Text id="share.start_at" fields={{chapterTime: toHHMMSS(chapterTime)}} />}
+        {chapterTitle !== undefined && <span>{chapterTitle}</span>}
+      </div>
+    );
+  }
+
+  /**
    * renders main overlay state
    *
    * @returns {React$Element} - main state element
@@ -735,6 +771,7 @@ class ShareOverlay extends Component {
         <div className={shareStyle.header}>{<Text id="share.title" />}</div>
         <div className={shareStyle.shareMainContainer}>
           <div className={shareStyle.shareIcons}>{this._createShareOptions(this.props.config.shareOptions)}</div>
+          {this._renderChapterInfo()}
           <div className={shareStyle.linkOptionsContainer}>
             <ShareUrl
               player={this.props.player}

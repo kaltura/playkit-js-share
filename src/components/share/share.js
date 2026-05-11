@@ -55,7 +55,13 @@ class Share extends Component {
     const targetId = document.getElementById(this.props.player.config.targetId) || document;
     const portalSelector = `.overlay-portal`;
     return createPortal(
-      <ShareOverlay config={this.props.config} videoDesc={this.props.videoDesc} player={this.props.player} onClose={this.props.onClose} />,
+      <ShareOverlay
+        config={this.props.config}
+        videoDesc={this.props.videoDesc}
+        player={this.props.player}
+        onClose={this.props.onClose}
+        chapterInfo={this.props.chapterInfo}
+      />,
       targetId.querySelector(portalSelector)
     );
   }
