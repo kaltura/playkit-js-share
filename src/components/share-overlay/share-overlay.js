@@ -754,7 +754,7 @@ class ShareOverlay extends Component {
     return (
       <div className={shareStyle.sharedChapterInfo}>
         {chapterTime !== undefined && <Text id="share.start_at" fields={{chapterTime: toHHMMSS(chapterTime)}} />}
-        {chapterTitle !== undefined && <span>{chapterTitle}</span>}
+        {chapterTitle !== undefined && <span>{` ${chapterTitle}`}</span>}
       </div>
     );
   }
