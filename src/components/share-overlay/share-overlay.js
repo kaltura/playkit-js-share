@@ -747,7 +747,7 @@ class ShareOverlay extends Component {
    * @private
    */
   _renderChapterInfo(): React$Element<any> | null {
-    const {chapterTime, chapterTitle} = this.props.chapterInfo;
+    const {chapterTime, chapterTitle} = this.props.chapterInfo || {};
     if (chapterTime === undefined && chapterTitle === undefined) {
       return null;
     }
