@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.4.10 (2026-05-20)
+
+
+### Bug Fixes
+
+* **FEC-14981:** Player V7| automation| Audio player share plugin failed to load ([#79](https://github.com/kaltura/playkit-js-share/issues/79)) ([8d8ebae](https://github.com/kaltura/playkit-js-share/commit/8d8ebaec724b42df0a4440157285154131001d92))
+
 ### 1.4.9 (2026-05-07)
 
 ### 1.4.8 (2026-02-03)
