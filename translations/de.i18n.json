@@ -15,7 +15,8 @@
       "share-on-linkedin": "Auf Linkedin teilen",
       "share-on-twitter": "Auf X teilen",
       "clip_start": "Clip-Startzeit",
-      "clip_end": "Clip-Endzeit"
+      "clip_end": "Clip-Endzeit",
+      "start_at": "Video starten bei {{chapterTime}}"
     }
   }
 }

@@ -13,7 +13,8 @@
       "clip_video": "Compartir clip",
       "share-on-facebook": "Compartir a Facebook",
       "share-on-linkedin": "Compartir a Linkedin",
-      "share-on-twitter": "Compartir a X"
+      "share-on-twitter": "Compartir a X",
+      "start_at": "Començar el vídeo a {{chapterTime}}"
     }
   }
 }

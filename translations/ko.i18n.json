@@ -15,7 +15,8 @@
       "share-on-linkedin": "링크드인에 공유",
       "share-on-twitter": "트위터에 공유",
       "clip_start": "클립 시작 시간",
-      "clip_end": "클립 종료 시간"
+      "clip_end": "클립 종료 시간",
+      "start_at": "동영상 시작 시간 {{chapterTime}}"
     }
   }
 }

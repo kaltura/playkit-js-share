@@ -15,7 +15,8 @@
       "share-on-linkedin": "Compartir en Linkedin",
       "share-on-twitter": "Compartir en X",
       "clip_start": "Hora de inicio del recorte",
-      "clip_end": "Hora de finalización del recorte"
+      "clip_end": "Hora de finalización del recorte",
+      "start_at": "Iniciar vídeo en el {{chapterTime}}"
     }
   }
 }
