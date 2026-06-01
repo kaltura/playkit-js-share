@@ -12,7 +12,8 @@
       "full_video": "完整视频",
       "clip_video": "分享剪辑片段",
       "clip_start": "剪辑开始时间",
-      "clip_end": "剪辑结束时间"
+      "clip_end": "剪辑结束时间",
+      "start_at": "视频开始时间 {{chapterTime}}"
     }
   }
 }

@@ -12,7 +12,8 @@
       "full_video": "Video met volledige lengte",
       "clip_video": "Clip delen",
       "clip_start": "Clip starttijd",
-      "clip_end": "Clip eindtijd"
+      "clip_end": "Clip eindtijd",
+      "start_at": "Video starten op {{chapterTime}}"
     }
   }
 }

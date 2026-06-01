@@ -12,7 +12,8 @@
       "full_video": "Vidéo complète",
       "clip_video": "Partager le clip",
       "clip_start": "Heure de début de la vidéo",
-      "clip_end": "Heure de fin de la vidéo"
+      "clip_end": "Heure de fin de la vidéo",
+      "start_at": "Commencer la vidéo à {{chapterTime}}"
     }
   }
 }

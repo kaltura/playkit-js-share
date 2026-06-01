@@ -12,7 +12,8 @@
       "full_video": "フルレングスビデオ",
       "clip_video": "クリップの共有",
       "clip_start": "クリップ開始時間",
-      "clip_end": "クリップ終了時間"
+      "clip_end": "クリップ終了時間",
+      "start_at": "ビデオ再生開始時点 {{chapterTime}}"
     }
   }
 }
