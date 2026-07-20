@@ -138,7 +138,7 @@ const ShareUrl = (props: Object): React$Element<any> => {
       </div>
       {props.isTiny && (
         <div className={shareStyle.copyUrlText}>
-          <Text id="share.copy_url" />
+          <Text id="share.copy_url">Copy URL</Text>
         </div>
       )}
       {props.copy && <CopyButton addAccessibleChild={props.addAccessibleChild} copy={copyUrl} />}
@@ -323,7 +323,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
 
     return (
       <div className={shareStyle.clipTimeSlotsContainer}>
-        <label htmlFor="clipStartInput">{<Text id="share.clip_start" />}</label>
+        <label htmlFor="clipStartInput">{<Text id="share.clip_start">Clip start time</Text>}</label>
         <input
           id="clipStartInput"
           ref={el => {
@@ -333,7 +333,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
           {...clipStartTimeInputProps}
         />
         <div className={shareStyle.clipRectangle} />
-        <label htmlFor="clipEndInput">{<Text id="share.clip_end" />}</label>
+        <label htmlFor="clipEndInput">{<Text id="share.clip_end">Clip end time</Text>}</label>
         <input
           id="clipEndInput"
           ref={el => {
@@ -353,10 +353,11 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
    * @param {string} inputId - the input element id
    * @param {string} labelId - the label element id
    * @param {string} textId - the text id
+   * @param {string} labelText - the fallback label text
    * @returns {void}
    * @memberof VideoStartOptions
    */
-  const _renderVideoStartOptionsItem = (optionType: string, inputId: string, labelId: string, textId: string) => {
+  const _renderVideoStartOptionsItem = (optionType: string, inputId: string, labelId: string, textId: string, labelText: string) => {
     const styleProps = {};
     if (optionType === VIDEO_CLIPPING_OPTIONS.FULL_VIDEO) {
       styleProps.style = 'width: 100%;';
@@ -372,6 +373,7 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
         inputId={inputId}
         labelId={labelId}
         textId={textId}
+        labelText={labelText}
         {...styleProps}>
         {optionType === VIDEO_CLIPPING_OPTIONS.START_FROM && _renderStartFromInput()}
         {optionType === VIDEO_CLIPPING_OPTIONS.CLIP && _renderClipTimeSlotsInput()}
@@ -381,10 +383,11 @@ const VideoStartOptions = (props: Object): React$Element<any> => {
 
   return (
     <div className={shareStyle.videoStartOptionsContainer} role="radiogroup">
-      {_renderVideoStartOptionsItem(VIDEO_CLIPPING_OPTIONS.FULL_VIDEO, 'full-video', 'full-video-label', 'share.full_video')}
+      {_renderVideoStartOptionsItem(VIDEO_CLIPPING_OPTIONS.FULL_VIDEO, 'full-video', 'full-video-label', 'share.full_video', 'Full-length video')}
       {props.config.enableTimeOffset &&
-        _renderVideoStartOptionsItem(VIDEO_CLIPPING_OPTIONS.START_FROM, 'start-from', 'start-from-label', 'share.start_video_at')}
-      {props.config.enableClipping && _renderVideoStartOptionsItem(VIDEO_CLIPPING_OPTIONS.CLIP, 'clip', 'clip-label', 'share.clip_video')}
+        _renderVideoStartOptionsItem(VIDEO_CLIPPING_OPTIONS.START_FROM, 'start-from', 'start-from-label', 'share.start_video_at', 'Start at')}
+      {props.config.enableClipping &&
+        _renderVideoStartOptionsItem(VIDEO_CLIPPING_OPTIONS.CLIP, 'clip', 'clip-label', 'share.clip_video', 'Share clip')}
     </div>
   );
 };
@@ -423,7 +426,7 @@ const VideoStartOptionsItem = (props: Object): React$Element<any> => {
         />
         {isItemSelected ? <RadioButtonSelected /> : <RadioButton />}
         <label id={props.labelId} htmlFor={props.inputId}>
-          <Text id={props.textId} />
+          <Text id={props.textId}>{props.labelText}</Text>
         </label>
       </div>
       {props.children}
@@ -753,7 +756,9 @@ class ShareOverlay extends Component {
     }
     return (
       <div className={shareStyle.sharedChapterInfo}>
-        {chapterTime !== undefined && <Text id="share.start_at" fields={{chapterTime: toHHMMSS(chapterTime)}} />}
+        {chapterTime !== undefined && (
+          <Text id="share.start_at" fields={{chapterTime: toHHMMSS(chapterTime)}}>{`Start video at ${toHHMMSS(chapterTime)}`}</Text>
+        )}
         {chapterTitle !== undefined && <span>{` ${chapterTitle}`}</span>}
       </div>
     );
@@ -768,7 +773,7 @@ class ShareOverlay extends Component {
   renderMainState(): React$Element<any> {
     return (
       <div className={this.state.view === shareOverlayView.Main ? 'overlay-screen active' : 'overlay-screen'}>
-        <div className={shareStyle.header}>{<Text id="share.title" />}</div>
+        <div className={shareStyle.header}>{<Text id="share.title">Share</Text>}</div>
         <div className={shareStyle.shareMainContainer}>
           <div className={shareStyle.shareIcons}>{this._createShareOptions(this.props.config.shareOptions)}</div>
           {this._renderChapterInfo()}
@@ -852,7 +857,7 @@ class ShareOverlay extends Component {
     this.props.clearAccessibleChildren();
     switch (this.state.view) {
       case shareOverlayView.EmbedOptions:
-        return this.renderOptionsState({title: <Text id="share.embed_options" />, shareUrl: this.getEmbedCode()});
+        return this.renderOptionsState({title: <Text id="share.embed_options">Embed Options</Text>, shareUrl: this.getEmbedCode()});
 
       case shareOverlayView.Main:
       default:
