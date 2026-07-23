@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.4.12 (2026-07-23)
+
+
+### Bug Fixes
+
+* **SUP-52920:** Share plugin missing labels/headers for share options ([#81](https://github.com/kaltura/playkit-js-share/issues/81)) ([16d782a](https://github.com/kaltura/playkit-js-share/commit/16d782aef4e74568caa73d7701eae4d9f5c67db9))
+
 ### 1.4.11 (2026-06-04)
 
 ### 1.4.10 (2026-05-20)
