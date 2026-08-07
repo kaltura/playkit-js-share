@@ -70,7 +70,7 @@ var config = {
 >
 > ##### Default: `false`
 >
-> ##### Description: Defines whenever to use native share.
+> ##### Description: Defines whenever to use native share (uses native share API).
 
 ##
 
@@ -82,17 +82,38 @@ var config = {
 > > {
 > >  shareOptions: {
 > >    facebook: {
-> >       templateUrl: '...',
+> >       templateUrl: 'https://www.facebook.com/sharer/sharer.php?u={shareUrl}',
 > >       display: true,
 > >       title: 'facebook',
 > >       icon: '...'
 > >    },
-> >    linkdin: {
-> >       templateUrl: '...',
-> >       display: false,
-> >       title: 'linkdin',
-> >       icon: '...'
-> >    }
-> >  }
+> >    linkedin: {
+> >      templateUrl: 'https://www.linkedin.com/shareArticle?mini=true&url={shareUrl}',
+> >      display: true,
+> >      title: 'linkedin',
+> >      icon: '...'
+> >    },
+> >    twitter: {
+> >      display: true,
+> >      templateUrl: 'https://twitter.com/share?url={shareUrl}',
+> >      title: 'share.share-on-twitter',
+> >      icon: '...'
+> >   },
+> >   email: {
+> >     templateUrl: 'mailto:?subject=Check out {description}&body=Check out {description} - {shareUrl}',
+> >     display: true,
+> >     title: 'share.email',
+> >     icon: {
+> >      'fill-rule': 'evenodd',
+> >      'clip-rule': 'evenodd',
+> >       d: '...'
+> >     }
+> >   },
+> >   embed: {
+> >     templateUrl: '<iframe src="{embedUrl}" style="width: 560px;height: 395px" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0" allow="accelerometer *; autoplay *; encrypted-media *; gyroscope *; picture-in-picture *"/>',
+> >     display: true,
+> >     title: 'share.embed',
+> >     icon: '...'
+> >   }
 > > }
 > > ```
